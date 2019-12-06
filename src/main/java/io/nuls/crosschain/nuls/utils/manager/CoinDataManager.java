@@ -2,6 +2,7 @@ package io.nuls.crosschain.nuls.utils.manager;
 
 import io.nuls.core.RPCUtil;
 import io.nuls.core.basic.AddressTool;
+import io.nuls.core.basic.TransactionFeeCalculator;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.data.Coin;
@@ -11,7 +12,6 @@ import io.nuls.core.data.CoinTo;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.model.BigIntegerUtils;
 import io.nuls.core.signture.P2PHKSignature;
-import io.nuls.crosschain.base.basic.TransactionFeeCalculator;
 import io.nuls.crosschain.base.model.bo.ChainInfo;
 import io.nuls.crosschain.base.model.dto.input.CoinDTO;
 import io.nuls.crosschain.nuls.constant.NulsCrossChainConfig;

@@ -4,7 +4,7 @@ import io.nuls.core.basic.Result;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.data.CoinTo;
 import io.nuls.core.exception.NulsException;
-import io.nuls.economic.base.service.EconomicService;
+import io.nuls.economic.EconomicService;
 import io.nuls.economic.nuls.constant.NulsEconomicConstant;
 import io.nuls.economic.nuls.constant.ParamConstant;
 import io.nuls.economic.nuls.model.bo.AgentInfo;

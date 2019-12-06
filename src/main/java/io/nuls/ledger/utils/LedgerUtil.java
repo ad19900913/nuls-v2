@@ -1,6 +1,5 @@
 package io.nuls.ledger.utils;
 
-import io.nuls.base.protocol.ProtocolGroupManager;
 import io.nuls.core.basic.AddressTool;
 import io.nuls.core.constant.TxType;
 import io.nuls.core.crypto.HexUtil;
@@ -8,6 +7,7 @@ import io.nuls.core.data.CoinFrom;
 import io.nuls.core.data.Transaction;
 import io.nuls.core.log.Log;
 import io.nuls.ledger.constant.LedgerConstant;
+import io.nuls.protocol.ProtocolGroupManager;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;

@@ -21,12 +21,13 @@
 package io.nuls.protocol.rpc;
 
 import com.google.common.collect.Maps;
-import io.nuls.base.protocol.Protocol;
 import io.nuls.core.RPCUtil;
 import io.nuls.core.basic.NulsByteBuffer;
+import io.nuls.core.basic.ProtocolVersion;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.crypto.HexUtil;
+import io.nuls.core.data.BlockExtendsData;
 import io.nuls.core.data.BlockHeader;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.log.logback.NulsLogger;
@@ -35,8 +36,7 @@ import io.nuls.core.rpc.cmd.BaseCmd;
 import io.nuls.core.rpc.info.Constants;
 import io.nuls.core.rpc.model.*;
 import io.nuls.core.rpc.model.message.Response;
-import io.nuls.crosschain.base.basic.ProtocolVersion;
-import io.nuls.crosschain.base.data.BlockExtendsData;
+import io.nuls.protocol.Protocol;
 import io.nuls.protocol.manager.ContextManager;
 import io.nuls.protocol.model.ProtocolContext;
 import io.nuls.protocol.service.ProtocolService;

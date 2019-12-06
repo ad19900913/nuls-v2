@@ -9,6 +9,7 @@ import io.nuls.core.model.ArraysTool;
 import io.nuls.core.model.BigIntegerUtils;
 import io.nuls.core.model.DoubleUtils;
 import io.nuls.economic.nuls.constant.NulsEconomicConstant;
+import io.nuls.economic.nuls.model.bo.*;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

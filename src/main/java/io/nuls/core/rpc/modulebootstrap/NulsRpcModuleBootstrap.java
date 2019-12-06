@@ -29,7 +29,6 @@ public class NulsRpcModuleBootstrap {
     }
 
     public static void run(String scanPackage, String[] args) {
-        printLogo("/logo");
         Log.info("RUN MODULE:{}", System.getProperty("app.name"));
         SpringLiteContext.init(scanPackage, "io.nuls.core.rpc.modulebootstrap", "io.nuls.core.rpc.cmd", "io.nuls.base.protocol");
         RpcModule module;
@@ -78,25 +77,6 @@ public class NulsRpcModuleBootstrap {
             });
         }
         module.run(scanPackage, args[0]);
-    }
-
-    public static void printLogo(String logoFile) {
-        if (printLogoed) {
-            return;
-        }
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(Class.forName(NulsRpcModuleBootstrap.class.getName()).getResourceAsStream(logoFile)))) {
-            String line = reader.readLine();
-            while (line != null) {
-                System.out.println(line);
-                line = reader.readLine();
-            }
-            System.out.println("Module:" + System.getProperty("app.name"));
-            System.out.println();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-            System.exit(0);
-        }
-        printLogoed = true;
     }
 
 }

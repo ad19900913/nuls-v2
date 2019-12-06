@@ -2,9 +2,9 @@ package io.nuls.transaction.message;
 
 import io.nuls.core.basic.NulsByteBuffer;
 import io.nuls.core.basic.NulsOutputStreamBuffer;
+import io.nuls.core.data.BaseBusinessMessage;
 import io.nuls.core.data.NulsHash;
 import io.nuls.core.exception.NulsException;
-import io.nuls.crosschain.base.data.BaseBusinessMessage;
 
 import java.io.IOException;
 

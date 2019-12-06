@@ -1,6 +1,7 @@
 package io.nuls.poc.utils.validator;
 
 import io.nuls.core.basic.AddressTool;
+import io.nuls.core.basic.TransactionFeeCalculator;
 import io.nuls.core.constant.TxType;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
@@ -12,9 +13,8 @@ import io.nuls.core.data.Transaction;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.model.BigIntegerUtils;
 import io.nuls.core.model.StringUtils;
+import io.nuls.core.signture.MultiSignTxSignature;
 import io.nuls.core.signture.P2PHKSignature;
-import io.nuls.crosschain.base.basic.TransactionFeeCalculator;
-import io.nuls.crosschain.base.signture.MultiSignTxSignature;
 import io.nuls.poc.constant.ConsensusConstant;
 import io.nuls.poc.constant.ConsensusErrorCode;
 import io.nuls.poc.model.bo.Chain;

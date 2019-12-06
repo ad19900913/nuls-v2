@@ -1,12 +1,12 @@
 package io.nuls.crosschain.base.tx.v1;
 
-import io.nuls.base.protocol.TransactionProcessor;
 import io.nuls.core.constant.TxType;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.data.BlockHeader;
 import io.nuls.core.data.Transaction;
 import io.nuls.crosschain.base.service.VerifierInitService;
+import io.nuls.protocol.TransactionProcessor;
 
 import java.util.List;
 import java.util.Map;

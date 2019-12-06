@@ -24,6 +24,7 @@
  */
 package io.nuls.contract.vm.program.impl;
 
+import io.nuls.contract.sdk.*;
 import io.nuls.contract.sdk.annotation.Payable;
 import io.nuls.contract.sdk.annotation.Required;
 import io.nuls.contract.sdk.annotation.View;

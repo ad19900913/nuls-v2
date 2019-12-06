@@ -13,14 +13,14 @@ import io.nuls.core.rpc.modulebootstrap.RpcModule;
 import io.nuls.core.rpc.modulebootstrap.RpcModuleState;
 import io.nuls.core.rpc.util.AddressPrefixDatas;
 import io.nuls.core.rpc.util.NulsDateUtils;
-import io.nuls.crosschain.base.protocol.ModuleHelper;
-import io.nuls.crosschain.base.protocol.RegisterHelper;
 import io.nuls.poc.constant.ConsensusConfig;
 import io.nuls.poc.constant.ConsensusConstant;
 import io.nuls.poc.model.bo.Chain;
 import io.nuls.poc.rpc.call.CallMethodUtils;
 import io.nuls.poc.utils.enumeration.ConsensusStatus;
 import io.nuls.poc.utils.manager.ChainManager;
+import io.nuls.protocol.ModuleHelper;
+import io.nuls.protocol.RegisterHelper;
 
 import java.lang.reflect.Field;
 import java.nio.charset.Charset;

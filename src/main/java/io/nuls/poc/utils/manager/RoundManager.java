@@ -2,6 +2,7 @@ package io.nuls.poc.utils.manager;
 
 import io.nuls.core.basic.AddressTool;
 import io.nuls.core.core.annotation.Component;
+import io.nuls.core.data.BlockExtendsData;
 import io.nuls.core.data.BlockHeader;
 import io.nuls.core.data.NulsHash;
 import io.nuls.core.exception.NulsException;
@@ -9,7 +10,6 @@ import io.nuls.core.log.Log;
 import io.nuls.core.model.DoubleUtils;
 import io.nuls.core.model.StringUtils;
 import io.nuls.core.rpc.util.NulsDateUtils;
-import io.nuls.crosschain.base.data.BlockExtendsData;
 import io.nuls.poc.constant.ConsensusConstant;
 import io.nuls.poc.model.bo.Chain;
 import io.nuls.poc.model.bo.round.MeetingMember;

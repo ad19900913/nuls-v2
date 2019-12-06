@@ -24,7 +24,7 @@
  */
 package io.nuls.contract.vm.natives.io.nuls.contract.sdk;
 
-import io.nuls.contract.sdk.Address;
+import io.nuls.contract.vm.*;
 import io.nuls.contract.vm.code.MethodCode;
 import io.nuls.contract.vm.exception.ErrorException;
 import io.nuls.contract.vm.natives.NativeMethod;
@@ -34,6 +34,7 @@ import io.nuls.contract.vm.program.ProgramResult;
 import io.nuls.contract.vm.program.ProgramTransfer;
 import io.nuls.contract.vm.program.impl.ProgramInvoke;
 import io.nuls.core.basic.AddressTool;
+import io.nuls.core.data.Address;
 
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -125,7 +126,6 @@ public class NativeAddress {
     /**
      * native
      *
-     * @see Address#balance()
      */
     private static Result balance(MethodCode methodCode, MethodArgs methodArgs, Frame frame) {
         ObjectRef objectRef = methodArgs.objectRef;
@@ -139,7 +139,6 @@ public class NativeAddress {
     /**
      * native
      *
-     * @see Address#totalBalance()
      */
     private static Result totalBalance(MethodCode methodCode, MethodArgs methodArgs, Frame frame) {
         ObjectRef objectRef = methodArgs.objectRef;
@@ -153,7 +152,6 @@ public class NativeAddress {
     /**
      * native
      *
-     * @see Address#transfer(BigInteger)
      */
     private static Result transfer(MethodCode methodCode, MethodArgs methodArgs, Frame frame) {
         ObjectRef addressRef = methodArgs.objectRef;
@@ -189,7 +187,6 @@ public class NativeAddress {
     /**
      * native
      *
-     * @see Address#call(String, String, String[][], BigInteger)
      */
     private static Result call(MethodCode methodCode, MethodArgs methodArgs, Frame frame) {
         return call(methodCode, methodArgs, frame, false);

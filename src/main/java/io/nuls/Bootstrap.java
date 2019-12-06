@@ -18,7 +18,7 @@
  * SOFTWARE.
  */
 
-package io.nuls.mykernel;
+package io.nuls;
 
 import io.nuls.core.basic.ModuleConfig;
 import io.nuls.core.core.annotation.Component;
@@ -32,7 +32,6 @@ import io.nuls.core.model.StringUtils;
 import io.nuls.core.parse.config.IniEntity;
 import io.nuls.core.rpc.info.NoUse;
 import io.nuls.core.rpc.model.ModuleE;
-import io.nuls.core.rpc.modulebootstrap.NulsRpcModuleBootstrap;
 import io.nuls.core.rpc.netty.channel.manager.ConnectManager;
 import io.nuls.core.thread.ThreadUtils;
 import lombok.Cleanup;
@@ -59,7 +58,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 @Setter
 @Configuration(domain = ModuleE.Constant.KERNEL)
-public class MyKernelBootstrap implements ModuleConfig {
+public class Bootstrap implements ModuleConfig {
 
     @Value("logLevel")
     private String logLevel = "INFO";
@@ -83,11 +82,10 @@ public class MyKernelBootstrap implements ModuleConfig {
     static NulsLogger log = LoggerBuilder.getLogger("kernel");
 
     public static void main(String[] args) throws Exception {
-        NulsRpcModuleBootstrap.printLogo("/logo");
         System.setProperty("io.netty.tryReflectionSetAccessible", "true");
-        MyKernelBootstrap.args = args;
-        SpringLiteContext.init("io.nuls.mykernel","io.nuls.core.rpc.cmd.kernel");
-        MyKernelBootstrap bootstrap = SpringLiteContext.getBean(MyKernelBootstrap.class);
+        Bootstrap.args = args;
+        SpringLiteContext.init("io.nuls");
+        Bootstrap bootstrap = SpringLiteContext.getBean(Bootstrap.class);
         bootstrap.doStart();
     }
 

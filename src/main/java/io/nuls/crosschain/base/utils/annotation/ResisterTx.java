@@ -1,7 +1,7 @@
 package io.nuls.crosschain.base.utils.annotation;
 
-import io.nuls.crosschain.nuls.utils.enumeration.TxMethodType;
-import io.nuls.crosschain.nuls.utils.enumeration.TxProperty;
+import io.nuls.crosschain.base.utils.enumeration.TxMethodType;
+import io.nuls.crosschain.base.utils.enumeration.TxProperty;
 
 import java.lang.annotation.*;
 

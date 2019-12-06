@@ -1,6 +1,5 @@
 package io.nuls.crosschain.nuls.utils.manager;
 
-import io.nuls.base.protocol.ProtocolLoader;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.data.BlockHeader;
@@ -18,7 +17,9 @@ import io.nuls.crosschain.nuls.rpc.call.BlockCall;
 import io.nuls.crosschain.nuls.srorage.ConfigService;
 import io.nuls.crosschain.nuls.srorage.RegisteredCrossChainService;
 import io.nuls.crosschain.nuls.utils.LoggerUtil;
+import io.nuls.crosschain.nuls.utils.thread.handler.*;
 import io.nuls.crosschain.nuls.utils.thread.task.GetRegisteredChainTask;
+import io.nuls.protocol.ProtocolLoader;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

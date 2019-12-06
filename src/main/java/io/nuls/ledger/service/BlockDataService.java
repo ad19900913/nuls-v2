@@ -24,7 +24,7 @@
  */
 package io.nuls.ledger.service;
 
-import io.nuls.crosschain.base.data.Block;
+import io.nuls.core.data.Block;
 import io.nuls.ledger.model.ChainHeight;
 
 import java.util.List;

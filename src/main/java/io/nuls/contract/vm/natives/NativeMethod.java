@@ -34,6 +34,7 @@ import io.nuls.contract.vm.natives.io.nuls.contract.sdk.NativeAddress;
 import io.nuls.contract.vm.natives.io.nuls.contract.sdk.NativeBlock;
 import io.nuls.contract.vm.natives.io.nuls.contract.sdk.NativeMsg;
 import io.nuls.contract.vm.natives.io.nuls.contract.sdk.NativeUtils;
+import io.nuls.contract.vm.natives.java.lang.*;
 import io.nuls.contract.vm.natives.java.lang.reflect.NativeArray;
 import io.nuls.contract.vm.natives.java.sun.misc.NativeVM;
 

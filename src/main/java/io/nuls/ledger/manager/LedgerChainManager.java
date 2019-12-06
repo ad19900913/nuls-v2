@@ -24,7 +24,6 @@
  */
 package io.nuls.ledger.manager;
 
-import io.nuls.base.protocol.ProtocolLoader;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.core.ioc.SpringLiteContext;
@@ -37,6 +36,7 @@ import io.nuls.ledger.storage.Repository;
 import io.nuls.ledger.storage.impl.LgBlockSyncRepositoryImpl;
 import io.nuls.ledger.storage.impl.RepositoryImpl;
 import io.nuls.ledger.utils.LoggerUtil;
+import io.nuls.protocol.ProtocolLoader;
 
 import java.io.File;
 import java.util.Map;

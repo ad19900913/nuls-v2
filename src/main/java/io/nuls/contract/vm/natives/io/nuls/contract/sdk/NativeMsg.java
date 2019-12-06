@@ -24,7 +24,6 @@
  */
 package io.nuls.contract.vm.natives.io.nuls.contract.sdk;
 
-import io.nuls.contract.sdk.Msg;
 import io.nuls.contract.vm.Frame;
 import io.nuls.contract.vm.MethodArgs;
 import io.nuls.contract.vm.Result;
@@ -91,7 +90,6 @@ public class NativeMsg {
     /**
      * native
      *
-     * @see Msg#gasleft()
      */
     private static Result gasleft(MethodCode methodCode, MethodArgs methodArgs, Frame frame) {
         Result result = NativeMethod.result(methodCode, frame.vm.getGasLeft(), frame);
@@ -103,7 +101,6 @@ public class NativeMsg {
     /**
      * native
      *
-     * @see Msg#sender()
      */
     private static Result sender(MethodCode methodCode, MethodArgs methodArgs, Frame frame) {
         Result result = NativeMethod.result(methodCode, frame.vm.getProgramContext().getSender(), frame);
@@ -115,7 +112,6 @@ public class NativeMsg {
     /**
      * native
      *
-     * @see Msg#senderPublicKey()
      */
     private static Result senderPublicKey(MethodCode methodCode, MethodArgs methodArgs, Frame frame) {
         Result result = NativeMethod.result(methodCode, frame.vm.getProgramContext().getSenderPublicKey(), frame);
@@ -127,7 +123,6 @@ public class NativeMsg {
     /**
      * native
      *
-     * @see Msg#value()
      */
     private static Result value(MethodCode methodCode, MethodArgs methodArgs, Frame frame) {
         Result result = NativeMethod.result(methodCode, frame.vm.getProgramContext().getValue(), frame);
@@ -139,7 +134,6 @@ public class NativeMsg {
     /**
      * native
      *
-     * @see Msg#gasprice()
      */
     private static Result gasprice(MethodCode methodCode, MethodArgs methodArgs, Frame frame) {
         Result result = NativeMethod.result(methodCode, frame.vm.getProgramContext().getGasPrice(), frame);
@@ -151,7 +145,6 @@ public class NativeMsg {
     /**
      * native
      *
-     * @see Msg#address()
      */
     private static Result address(MethodCode methodCode, MethodArgs methodArgs, Frame frame) {
         Result result = NativeMethod.result(methodCode, frame.vm.getProgramContext().getAddress(), frame);

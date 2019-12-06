@@ -1,7 +1,5 @@
 package io.nuls.crosschain.nuls;
 
-import io.nuls.base.protocol.ProtocolGroupManager;
-import io.nuls.base.protocol.RegisterHelper;
 import io.nuls.core.basic.AddressTool;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
@@ -22,6 +20,8 @@ import io.nuls.crosschain.nuls.rpc.call.ChainManagerCall;
 import io.nuls.crosschain.nuls.rpc.call.NetWorkCall;
 import io.nuls.crosschain.nuls.srorage.RegisteredCrossChainService;
 import io.nuls.crosschain.nuls.utils.manager.ChainManager;
+import io.nuls.protocol.ProtocolGroupManager;
+import io.nuls.protocol.RegisterHelper;
 
 import java.lang.reflect.Field;
 import java.nio.charset.Charset;
