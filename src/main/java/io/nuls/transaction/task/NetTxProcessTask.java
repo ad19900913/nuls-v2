@@ -26,8 +26,8 @@ package io.nuls.transaction.task;
 
 import io.nuls.core.constant.BaseConstant;
 import io.nuls.core.core.ioc.SpringLiteContext;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.exception.NulsException;
-import io.nuls.crosschain.base.data.Transaction;
 import io.nuls.transaction.cache.PackablePool;
 import io.nuls.transaction.constant.TxConstant;
 import io.nuls.transaction.constant.TxErrorCode;

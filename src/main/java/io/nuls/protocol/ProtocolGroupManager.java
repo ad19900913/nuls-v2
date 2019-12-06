@@ -6,8 +6,8 @@ import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.core.ioc.SpringLiteContext;
 import io.nuls.core.model.StringUtils;
-import io.nuls.crosschain.base.protocol.cmd.MessageDispatcher;
-import io.nuls.crosschain.base.protocol.cmd.TransactionDispatcher;
+import io.nuls.protocol.cmd.MessageDispatcher;
+import io.nuls.protocol.cmd.TransactionDispatcher;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;

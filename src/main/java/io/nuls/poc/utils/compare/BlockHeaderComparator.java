@@ -1,6 +1,6 @@
 package io.nuls.poc.utils.compare;
 
-import io.nuls.crosschain.base.data.BlockHeader;
+import io.nuls.core.data.BlockHeader;
 
 import java.util.Comparator;
 

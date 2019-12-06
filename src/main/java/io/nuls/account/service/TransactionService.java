@@ -30,9 +30,9 @@ import io.nuls.account.model.dto.MultiSignTransactionResultDTO;
 import io.nuls.account.model.dto.MultiSignTransferDTO;
 import io.nuls.account.model.dto.TransferDTO;
 import io.nuls.core.basic.Result;
+import io.nuls.core.data.Address;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.exception.NulsException;
-import io.nuls.crosschain.base.data.Address;
-import io.nuls.crosschain.base.data.Transaction;
 
 /**
  * 账户相关交易接口定义

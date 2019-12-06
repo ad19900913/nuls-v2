@@ -28,6 +28,7 @@ import io.nuls.contract.helper.ContractHelper;
 import io.nuls.contract.helper.ContractNewTxHandler;
 import io.nuls.contract.manager.ChainManager;
 import io.nuls.contract.manager.ContractTempBalanceManager;
+import io.nuls.contract.model.bo.*;
 import io.nuls.contract.model.txdata.ContractData;
 import io.nuls.contract.service.ContractExecutor;
 import io.nuls.contract.util.ContractUtil;

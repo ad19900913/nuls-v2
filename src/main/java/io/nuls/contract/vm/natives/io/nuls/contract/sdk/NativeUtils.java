@@ -30,7 +30,7 @@ import io.nuls.contract.helper.ContractNewTxFromOtherModuleHandler;
 import io.nuls.contract.manager.CmdRegisterManager;
 import io.nuls.contract.model.bo.CmdRegister;
 import io.nuls.contract.model.dto.BlockHeaderDto;
-import io.nuls.contract.sdk.Event;
+import io.nuls.contract.vm.*;
 import io.nuls.contract.vm.code.ClassCode;
 import io.nuls.contract.vm.code.FieldCode;
 import io.nuls.contract.vm.code.MethodCode;
@@ -44,11 +44,11 @@ import io.nuls.contract.vm.program.impl.ProgramInvoke;
 import io.nuls.contract.vm.util.Constants;
 import io.nuls.contract.vm.util.JsonUtils;
 import io.nuls.contract.vm.util.Utils;
+import io.nuls.core.basic.AddressTool;
 import io.nuls.core.core.ioc.SpringLiteContext;
 import io.nuls.core.crypto.Sha3Hash;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.rpc.model.message.Response;
-import io.nuls.crosschain.base.basic.AddressTool;
-import io.nuls.crosschain.base.data.Transaction;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
@@ -158,7 +158,6 @@ public class NativeUtils {
     /**
      * native
      *
-     * @see Utils#revert(String)
      */
     private static Result revert(MethodCode methodCode, MethodArgs methodArgs, Frame frame) {
         ObjectRef objectRef = (ObjectRef) methodArgs.invokeArgs[0];
@@ -172,7 +171,6 @@ public class NativeUtils {
     /**
      * native
      *
-     * @see Utils#emit(Event)
      */
     private static Result emit(MethodCode methodCode, MethodArgs methodArgs, Frame frame) {
         ObjectRef objectRef = (ObjectRef) methodArgs.invokeArgs[0];
@@ -328,7 +326,6 @@ public class NativeUtils {
     /**
      * native
      *
-     * @see Utils#sha3(String)
      */
     private static Result sha3(MethodCode methodCode, MethodArgs methodArgs, Frame frame) {
         frame.vm.addGasUsed(GasCost.SHA3);
@@ -346,7 +343,6 @@ public class NativeUtils {
     /**
      * native
      *
-     * @see Utils#sha3(byte[])
      */
     private static Result sha3Bytes(MethodCode methodCode, MethodArgs methodArgs, Frame frame) {
         frame.vm.addGasUsed(GasCost.SHA3);
@@ -639,7 +635,6 @@ public class NativeUtils {
      * native
      * s
      *
-     * @see io.nuls.contract.sdk.Utils#obj2Json(Object)
      */
     private static Result obj2Json(MethodCode methodCode, MethodArgs methodArgs, Frame frame) {
         frame.vm.addGasUsed(GasCost.OBJ_TO_JSON);

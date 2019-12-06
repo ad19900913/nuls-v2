@@ -29,9 +29,9 @@ import io.nuls.block.model.Node;
 import io.nuls.block.service.BlockService;
 import io.nuls.block.utils.BlockUtil;
 import io.nuls.core.core.ioc.SpringLiteContext;
+import io.nuls.core.data.Block;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.log.logback.NulsLogger;
-import io.nuls.crosschain.base.data.Block;
 
 import java.util.List;
 import java.util.concurrent.Callable;

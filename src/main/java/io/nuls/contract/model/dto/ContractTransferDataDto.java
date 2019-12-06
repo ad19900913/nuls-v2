@@ -25,10 +25,10 @@ package io.nuls.contract.model.dto;
 
 
 import io.nuls.contract.model.txdata.ContractTransferData;
+import io.nuls.core.basic.AddressTool;
+import io.nuls.core.data.NulsHash;
 import io.nuls.core.rpc.model.ApiModel;
 import io.nuls.core.rpc.model.ApiModelProperty;
-import io.nuls.crosschain.base.basic.AddressTool;
-import io.nuls.crosschain.base.data.NulsHash;
 
 /**
  * @Author: PierreLuo

@@ -24,7 +24,7 @@
 
 package io.nuls.transaction.model.bo;
 
-import io.nuls.crosschain.base.data.Transaction;
+import io.nuls.core.data.Transaction;
 
 /**
  * 交易模块打包区块交易时对交易临时封装

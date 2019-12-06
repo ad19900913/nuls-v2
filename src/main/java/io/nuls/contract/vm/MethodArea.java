@@ -24,6 +24,7 @@
  */
 package io.nuls.contract.vm;
 
+import io.nuls.contract.vm.code.*;
 import io.nuls.contract.vm.util.Constants;
 import org.apache.commons.lang3.StringUtils;
 

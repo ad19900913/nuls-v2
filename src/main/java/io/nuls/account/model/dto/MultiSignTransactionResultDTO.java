@@ -25,7 +25,7 @@
 
 package io.nuls.account.model.dto;
 
-import io.nuls.crosschain.base.data.Transaction;
+import io.nuls.core.data.Transaction;
 
 /**
  * @author: EdwardChan

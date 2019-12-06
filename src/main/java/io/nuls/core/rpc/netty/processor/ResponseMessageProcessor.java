@@ -13,7 +13,6 @@ import io.nuls.core.rpc.netty.channel.manager.ConnectManager;
 import io.nuls.core.rpc.netty.processor.container.RequestContainer;
 import io.nuls.core.rpc.netty.processor.container.ResponseContainer;
 import io.nuls.core.rpc.util.SerializeUtil;
-import io.nuls.rpc.model.message.*;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;

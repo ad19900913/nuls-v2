@@ -35,13 +35,13 @@ import io.nuls.block.storage.BlockStorageService;
 import io.nuls.block.utils.BlockUtil;
 import io.nuls.block.utils.ChainGenerator;
 import io.nuls.core.core.ioc.SpringLiteContext;
+import io.nuls.core.data.Block;
+import io.nuls.core.data.BlockHeader;
+import io.nuls.core.data.NulsHash;
+import io.nuls.core.data.po.BlockHeaderPo;
 import io.nuls.core.log.logback.NulsLogger;
 import io.nuls.core.model.DoubleUtils;
 import io.nuls.core.thread.ThreadUtils;
-import io.nuls.crosschain.base.data.Block;
-import io.nuls.crosschain.base.data.BlockHeader;
-import io.nuls.crosschain.base.data.NulsHash;
-import io.nuls.crosschain.base.data.po.BlockHeaderPo;
 
 import java.util.HashMap;
 import java.util.List;

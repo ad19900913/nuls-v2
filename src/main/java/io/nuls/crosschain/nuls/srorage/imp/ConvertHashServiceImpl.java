@@ -1,10 +1,10 @@
 package io.nuls.crosschain.nuls.srorage.imp;
 
 import io.nuls.core.core.annotation.Component;
+import io.nuls.core.data.NulsHash;
 import io.nuls.core.log.Log;
 import io.nuls.core.rockdb.model.Entry;
 import io.nuls.core.rockdb.service.RocksDBService;
-import io.nuls.crosschain.base.data.NulsHash;
 import io.nuls.crosschain.nuls.constant.NulsCrossChainConstant;
 import io.nuls.crosschain.nuls.srorage.ConvertHashService;
 

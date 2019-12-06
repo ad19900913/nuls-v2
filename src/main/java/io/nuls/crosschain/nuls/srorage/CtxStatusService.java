@@ -1,6 +1,6 @@
 package io.nuls.crosschain.nuls.srorage;
 
-import io.nuls.crosschain.base.data.NulsHash;
+import io.nuls.core.data.NulsHash;
 import io.nuls.crosschain.nuls.model.po.CtxStatusPO;
 
 import java.util.List;

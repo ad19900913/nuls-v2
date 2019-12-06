@@ -23,7 +23,7 @@
  */
 package io.nuls.contract.model.bo;
 
-import io.nuls.crosschain.base.data.Transaction;
+import io.nuls.core.data.Transaction;
 
 /**
  * @author: PierreLuo

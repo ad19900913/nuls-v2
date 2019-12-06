@@ -22,19 +22,19 @@ package io.nuls.block.model;
 
 import io.nuls.block.constant.BlockErrorCode;
 import io.nuls.block.utils.LoggerUtil;
+import io.nuls.core.basic.AddressTool;
 import io.nuls.core.basic.VarInt;
 import io.nuls.core.constant.ToolsConstant;
 import io.nuls.core.constant.TxType;
 import io.nuls.core.crypto.ECKey;
 import io.nuls.core.crypto.HexUtil;
+import io.nuls.core.data.*;
 import io.nuls.core.exception.NulsRuntimeException;
 import io.nuls.core.io.IoUtils;
 import io.nuls.core.model.StringUtils;
 import io.nuls.core.parse.JSONUtils;
-import io.nuls.crosschain.base.basic.AddressTool;
-import io.nuls.crosschain.base.data.*;
-import io.nuls.crosschain.base.signture.BlockSignature;
-import io.nuls.crosschain.base.signture.SignatureUtil;
+import io.nuls.core.signture.BlockSignature;
+import io.nuls.core.signture.SignatureUtil;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -62,7 +62,7 @@ public final class GenesisBlock extends Block {
      */
     private static final String CONFIG_FILED_HEIGHT = "height";
     /**
-     * 扩展字段,详细注释见${@link BlockExtendsData},如果不清楚如何设置extend的值,可以参考${@link BlockExtendsDataTest}
+     * 扩展字段,详细注释见${@link BlockExtendsData},如果不清楚如何设置extend的值
      */
     private static final String CONFIG_FILED_EXTEND = "extend";
     /**

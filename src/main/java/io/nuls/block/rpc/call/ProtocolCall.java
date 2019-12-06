@@ -20,16 +20,16 @@
 
 package io.nuls.block.rpc.call;
 
-import io.nuls.base.protocol.ModuleHelper;
 import io.nuls.block.manager.ContextManager;
 import io.nuls.block.model.ChainContext;
 import io.nuls.core.crypto.HexUtil;
+import io.nuls.core.data.BlockHeader;
 import io.nuls.core.log.logback.NulsLogger;
 import io.nuls.core.rpc.info.Constants;
 import io.nuls.core.rpc.model.ModuleE;
 import io.nuls.core.rpc.model.message.Response;
 import io.nuls.core.rpc.netty.processor.ResponseMessageProcessor;
-import io.nuls.crosschain.base.data.BlockHeader;
+import io.nuls.protocol.ModuleHelper;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,12 +1,12 @@
 package io.nuls.crosschain.nuls.rpc.call;
 
+import io.nuls.core.RPCUtil;
+import io.nuls.core.basic.AddressTool;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.rpc.info.Constants;
 import io.nuls.core.rpc.model.ModuleE;
-import io.nuls.crosschain.base.RPCUtil;
-import io.nuls.crosschain.base.basic.AddressTool;
+import io.nuls.core.signture.P2PHKSignature;
 import io.nuls.crosschain.base.data.MultiSigAccount;
-import io.nuls.crosschain.base.signture.P2PHKSignature;
 import io.nuls.crosschain.nuls.utils.CommonUtil;
 
 import java.util.HashMap;

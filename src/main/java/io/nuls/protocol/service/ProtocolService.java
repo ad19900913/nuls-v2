@@ -20,8 +20,8 @@
 
 package io.nuls.protocol.service;
 
+import io.nuls.core.data.BlockHeader;
 import io.nuls.core.exception.NulsException;
-import io.nuls.crosschain.base.data.BlockHeader;
 
 /**
  * 区块服务

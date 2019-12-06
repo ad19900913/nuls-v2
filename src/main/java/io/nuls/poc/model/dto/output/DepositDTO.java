@@ -26,11 +26,11 @@
 package io.nuls.poc.model.dto.output;
 
 
+import io.nuls.core.basic.AddressTool;
 import io.nuls.core.core.ioc.SpringLiteContext;
 import io.nuls.core.model.BigIntegerUtils;
 import io.nuls.core.rpc.model.ApiModel;
 import io.nuls.core.rpc.model.ApiModelProperty;
-import io.nuls.crosschain.base.basic.AddressTool;
 import io.nuls.poc.model.bo.tx.txdata.Agent;
 import io.nuls.poc.model.bo.tx.txdata.Deposit;
 import io.nuls.poc.utils.manager.AgentManager;

@@ -25,9 +25,9 @@
 
 package io.nuls.network.model.message.body;
 
+import io.nuls.core.basic.NulsByteBuffer;
+import io.nuls.core.basic.NulsOutputStreamBuffer;
 import io.nuls.core.exception.NulsException;
-import io.nuls.crosschain.base.basic.NulsByteBuffer;
-import io.nuls.crosschain.base.basic.NulsOutputStreamBuffer;
 
 import java.io.IOException;
 

@@ -24,13 +24,13 @@
  */
 package io.nuls.network.manager.handler.message;
 
+import io.nuls.core.RPCUtil;
 import io.nuls.core.constant.BaseConstant;
 import io.nuls.core.rpc.info.Constants;
 import io.nuls.core.rpc.model.CmdPriority;
 import io.nuls.core.rpc.model.message.MessageUtil;
 import io.nuls.core.rpc.model.message.Request;
 import io.nuls.core.rpc.netty.processor.ResponseMessageProcessor;
-import io.nuls.crosschain.base.RPCUtil;
 import io.nuls.network.constant.NetworkConstant;
 import io.nuls.network.manager.NodeGroupManager;
 import io.nuls.network.manager.handler.MessageHandlerFactory;

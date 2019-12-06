@@ -1,9 +1,5 @@
 package io.nuls.contract;
 
-import io.nuls.base.protocol.ModuleHelper;
-import io.nuls.base.protocol.ProtocolGroupManager;
-import io.nuls.base.protocol.RegisterHelper;
-import io.nuls.base.protocol.cmd.TransactionDispatcher;
 import io.nuls.contract.config.ContractConfig;
 import io.nuls.contract.config.NulsConfig;
 import io.nuls.contract.constant.ContractConstant;
@@ -15,6 +11,7 @@ import io.nuls.contract.util.ContractUtil;
 import io.nuls.contract.util.LogUtil;
 import io.nuls.contract.util.VMContext;
 import io.nuls.contract.vm.program.ProgramMethod;
+import io.nuls.core.basic.AddressTool;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.core.ioc.SpringLiteContext;
@@ -30,7 +27,10 @@ import io.nuls.core.rpc.modulebootstrap.RpcModule;
 import io.nuls.core.rpc.modulebootstrap.RpcModuleState;
 import io.nuls.core.rpc.util.AddressPrefixDatas;
 import io.nuls.core.rpc.util.NulsDateUtils;
-import io.nuls.crosschain.base.basic.AddressTool;
+import io.nuls.protocol.ModuleHelper;
+import io.nuls.protocol.ProtocolGroupManager;
+import io.nuls.protocol.RegisterHelper;
+import io.nuls.protocol.cmd.TransactionDispatcher;
 
 import java.io.File;
 import java.io.IOException;

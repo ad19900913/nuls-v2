@@ -31,8 +31,8 @@ import io.nuls.chain.service.CmTransferService;
 import io.nuls.chain.util.LoggerUtil;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Service;
-import io.nuls.crosschain.base.data.BlockHeader;
-import io.nuls.crosschain.base.data.Transaction;
+import io.nuls.core.data.BlockHeader;
+import io.nuls.core.data.Transaction;
 
 import java.util.List;
 

@@ -1,10 +1,10 @@
 package io.nuls.transaction.message.handler;
 
-import io.nuls.base.protocol.MessageProcessor;
+import io.nuls.core.RPCUtil;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
-import io.nuls.crosschain.base.RPCUtil;
-import io.nuls.crosschain.base.data.NulsHash;
+import io.nuls.core.data.NulsHash;
+import io.nuls.protocol.MessageProcessor;
 import io.nuls.transaction.manager.ChainManager;
 import io.nuls.transaction.message.ForwardTxMessage;
 import io.nuls.transaction.message.GetTxMessage;

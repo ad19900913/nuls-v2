@@ -24,8 +24,8 @@
 package io.nuls.contract.model.bo;
 
 import io.nuls.contract.model.txdata.ContractData;
-import io.nuls.crosschain.base.data.BlockHeader;
-import io.nuls.crosschain.base.data.Transaction;
+import io.nuls.core.data.BlockHeader;
+import io.nuls.core.data.Transaction;
 
 /**
  * @author: PierreLuo

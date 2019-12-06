@@ -25,10 +25,10 @@
 package io.nuls.transaction.utils;
 
 import io.nuls.core.core.annotation.Component;
+import io.nuls.core.data.CoinData;
+import io.nuls.core.data.CoinFrom;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.exception.NulsException;
-import io.nuls.crosschain.base.data.CoinData;
-import io.nuls.crosschain.base.data.CoinFrom;
-import io.nuls.crosschain.base.data.Transaction;
 import io.nuls.transaction.model.bo.OrphanSortItem;
 import io.nuls.transaction.model.bo.OrphanSortResult;
 import io.nuls.transaction.model.po.TransactionNetPO;

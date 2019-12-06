@@ -3,7 +3,7 @@ package io.nuls.chain.service;
 
 import io.nuls.chain.model.po.Asset;
 import io.nuls.chain.model.po.BlockChain;
-import io.nuls.crosschain.base.data.Transaction;
+import io.nuls.core.data.Transaction;
 
 import java.util.List;
 import java.util.Map;

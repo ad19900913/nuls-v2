@@ -36,6 +36,7 @@ import io.nuls.account.service.AccountService;
 import io.nuls.account.service.AliasService;
 import io.nuls.account.storage.AccountStorageService;
 import io.nuls.account.util.LoggerUtil;
+import io.nuls.core.basic.AddressTool;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.crypto.HexUtil;
@@ -43,7 +44,6 @@ import io.nuls.core.exception.NulsRuntimeException;
 import io.nuls.core.model.StringUtils;
 import io.nuls.core.parse.JSONUtils;
 import io.nuls.core.rockdb.util.DBUtils;
-import io.nuls.crosschain.base.basic.AddressTool;
 
 import java.io.File;
 import java.io.FileOutputStream;

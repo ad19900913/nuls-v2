@@ -29,9 +29,9 @@ import io.nuls.contract.model.po.ContractTokenTransferInfoPo;
 import io.nuls.contract.storage.ContractTokenTransferStorageService;
 import io.nuls.core.basic.Result;
 import io.nuls.core.core.annotation.Component;
+import io.nuls.core.data.Address;
 import io.nuls.core.rockdb.model.Entry;
 import io.nuls.core.rockdb.service.RocksDBService;
-import io.nuls.crosschain.base.data.Address;
 
 import java.util.ArrayList;
 import java.util.List;

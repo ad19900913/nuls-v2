@@ -25,8 +25,8 @@
 package io.nuls.contract.vm.program;
 
 
+import io.nuls.core.basic.AddressTool;
 import io.nuls.core.crypto.HexUtil;
-import io.nuls.crosschain.base.basic.AddressTool;
 
 import java.math.BigInteger;
 import java.util.Arrays;

@@ -24,7 +24,7 @@
  */
 package io.nuls.chain.model.tx;
 
-import io.nuls.crosschain.base.data.Transaction;
+import io.nuls.core.data.Transaction;
 
 /**
  * @author lan

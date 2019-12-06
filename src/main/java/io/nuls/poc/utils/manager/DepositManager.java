@@ -2,10 +2,10 @@ package io.nuls.poc.utils.manager;
 
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
+import io.nuls.core.data.BlockHeader;
+import io.nuls.core.data.NulsHash;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.exception.NulsException;
-import io.nuls.crosschain.base.data.BlockHeader;
-import io.nuls.crosschain.base.data.NulsHash;
-import io.nuls.crosschain.base.data.Transaction;
 import io.nuls.poc.constant.ConsensusErrorCode;
 import io.nuls.poc.model.bo.Chain;
 import io.nuls.poc.model.bo.tx.txdata.CancelDeposit;

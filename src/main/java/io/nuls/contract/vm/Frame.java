@@ -27,6 +27,7 @@ package io.nuls.contract.vm;
 import io.nuls.contract.vm.code.MethodCode;
 import io.nuls.contract.vm.code.VariableType;
 import io.nuls.contract.vm.instructions.references.Athrow;
+import org.objectweb.asm.tree.*;
 
 public class Frame {
 

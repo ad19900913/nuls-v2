@@ -24,7 +24,7 @@
 package io.nuls.contract.helper;
 
 import io.nuls.contract.model.bo.ContractResult;
-import io.nuls.crosschain.base.data.Transaction;
+import io.nuls.core.data.Transaction;
 
 import java.util.List;
 import java.util.Set;

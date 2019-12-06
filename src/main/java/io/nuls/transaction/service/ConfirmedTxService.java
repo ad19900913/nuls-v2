@@ -1,7 +1,7 @@
 package io.nuls.transaction.service;
 
+import io.nuls.core.data.NulsHash;
 import io.nuls.core.exception.NulsException;
-import io.nuls.crosschain.base.data.NulsHash;
 import io.nuls.transaction.model.bo.Chain;
 import io.nuls.transaction.model.po.TransactionConfirmedPO;
 

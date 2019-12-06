@@ -2,8 +2,8 @@ package io.nuls.poc.utils.manager;
 
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
+import io.nuls.core.data.BlockHeader;
 import io.nuls.crosschain.base.data.BlockExtendsData;
-import io.nuls.crosschain.base.data.BlockHeader;
 import io.nuls.poc.constant.ConsensusConstant;
 import io.nuls.poc.model.bo.Chain;
 import io.nuls.poc.rpc.call.CallMethodUtils;

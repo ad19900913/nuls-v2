@@ -29,6 +29,7 @@ import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.objectweb.asm.Attribute;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.tree.*;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

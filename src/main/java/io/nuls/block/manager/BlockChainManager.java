@@ -30,10 +30,10 @@ import io.nuls.block.storage.ChainStorageService;
 import io.nuls.block.utils.BlockUtil;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
+import io.nuls.core.data.Block;
+import io.nuls.core.data.NulsHash;
 import io.nuls.core.exception.NulsRuntimeException;
 import io.nuls.core.log.logback.NulsLogger;
-import io.nuls.crosschain.base.data.Block;
-import io.nuls.crosschain.base.data.NulsHash;
 
 import java.util.*;
 

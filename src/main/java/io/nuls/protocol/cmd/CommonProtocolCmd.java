@@ -30,7 +30,7 @@ import io.nuls.core.rpc.info.Constants;
 import io.nuls.core.rpc.model.CmdAnnotation;
 import io.nuls.core.rpc.model.Parameter;
 import io.nuls.core.rpc.model.message.Response;
-import io.nuls.crosschain.base.protocol.ProtocolGroupManager;
+import io.nuls.protocol.ProtocolGroupManager;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;

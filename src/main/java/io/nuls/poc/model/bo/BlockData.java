@@ -25,9 +25,9 @@
  */
 package io.nuls.poc.model.bo;
 
+import io.nuls.core.data.NulsHash;
+import io.nuls.core.data.Transaction;
 import io.nuls.crosschain.base.data.BlockExtendsData;
-import io.nuls.crosschain.base.data.NulsHash;
-import io.nuls.crosschain.base.data.Transaction;
 
 import java.util.List;
 

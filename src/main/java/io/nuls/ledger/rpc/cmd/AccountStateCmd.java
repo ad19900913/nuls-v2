@@ -25,11 +25,11 @@
  */
 package io.nuls.ledger.rpc.cmd;
 
+import io.nuls.core.RPCUtil;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.rpc.model.*;
 import io.nuls.core.rpc.model.message.Response;
-import io.nuls.crosschain.base.RPCUtil;
 import io.nuls.ledger.constant.CmdConstant;
 import io.nuls.ledger.constant.LedgerConstant;
 import io.nuls.ledger.constant.LedgerErrorCode;

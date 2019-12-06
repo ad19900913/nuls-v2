@@ -24,9 +24,9 @@
  */
 package io.nuls.network.model.message;
 
+import io.nuls.core.basic.NulsByteBuffer;
+import io.nuls.core.data.BaseNulsData;
 import io.nuls.core.exception.NulsException;
-import io.nuls.crosschain.base.basic.NulsByteBuffer;
-import io.nuls.crosschain.base.data.BaseNulsData;
 import io.nuls.network.constant.NetworkConstant;
 import io.nuls.network.model.message.base.BaseMessage;
 import io.nuls.network.model.message.body.MessageBody;

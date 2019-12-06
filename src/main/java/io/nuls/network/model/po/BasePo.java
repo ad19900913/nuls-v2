@@ -24,7 +24,7 @@
  */
 package io.nuls.network.model.po;
 
-import io.nuls.crosschain.base.data.BaseNulsData;
+import io.nuls.core.data.BaseNulsData;
 import io.nuls.network.model.dto.Dto;
 
 /**

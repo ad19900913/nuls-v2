@@ -26,7 +26,7 @@ package io.nuls.contract.storage;
 
 import io.nuls.contract.model.bo.ContractResult;
 import io.nuls.core.basic.Result;
-import io.nuls.crosschain.base.data.NulsHash;
+import io.nuls.core.data.NulsHash;
 
 /**
  * @desription:

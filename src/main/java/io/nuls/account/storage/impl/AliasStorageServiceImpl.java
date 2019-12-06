@@ -31,13 +31,13 @@ import io.nuls.account.model.bo.tx.txdata.Alias;
 import io.nuls.account.model.po.AliasPO;
 import io.nuls.account.storage.AliasStorageService;
 import io.nuls.account.util.LoggerUtil;
+import io.nuls.core.basic.AddressTool;
 import io.nuls.core.basic.InitializingBean;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.exception.NulsRuntimeException;
 import io.nuls.core.model.StringUtils;
 import io.nuls.core.rockdb.service.RocksDBService;
-import io.nuls.crosschain.base.basic.AddressTool;
 
 /**
  * @author EdwardChan

@@ -1,5 +1,6 @@
 package io.nuls.poc;
 
+import io.nuls.core.basic.AddressTool;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.log.Log;
@@ -12,7 +13,6 @@ import io.nuls.core.rpc.modulebootstrap.RpcModule;
 import io.nuls.core.rpc.modulebootstrap.RpcModuleState;
 import io.nuls.core.rpc.util.AddressPrefixDatas;
 import io.nuls.core.rpc.util.NulsDateUtils;
-import io.nuls.crosschain.base.basic.AddressTool;
 import io.nuls.crosschain.base.protocol.ModuleHelper;
 import io.nuls.crosschain.base.protocol.RegisterHelper;
 import io.nuls.poc.constant.ConsensusConfig;

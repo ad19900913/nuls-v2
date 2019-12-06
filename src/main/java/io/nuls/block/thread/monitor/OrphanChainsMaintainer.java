@@ -30,9 +30,9 @@ import io.nuls.block.rpc.call.NetworkCall;
 import io.nuls.block.storage.ChainStorageService;
 import io.nuls.block.utils.BlockUtil;
 import io.nuls.core.core.ioc.SpringLiteContext;
+import io.nuls.core.data.Block;
+import io.nuls.core.data.NulsHash;
 import io.nuls.core.log.logback.NulsLogger;
-import io.nuls.crosschain.base.data.Block;
-import io.nuls.crosschain.base.data.NulsHash;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;

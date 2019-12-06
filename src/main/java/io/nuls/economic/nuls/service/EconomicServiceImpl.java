@@ -2,8 +2,8 @@ package io.nuls.economic.nuls.service;
 
 import io.nuls.core.basic.Result;
 import io.nuls.core.core.annotation.Component;
+import io.nuls.core.data.CoinTo;
 import io.nuls.core.exception.NulsException;
-import io.nuls.crosschain.base.data.CoinTo;
 import io.nuls.economic.base.service.EconomicService;
 import io.nuls.economic.nuls.constant.NulsEconomicConstant;
 import io.nuls.economic.nuls.constant.ParamConstant;

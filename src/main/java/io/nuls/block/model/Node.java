@@ -22,7 +22,7 @@ package io.nuls.block.model;
 
 import io.nuls.block.constant.NodeEnum;
 import io.nuls.block.utils.LoggerUtil;
-import io.nuls.crosschain.base.data.NulsHash;
+import io.nuls.core.data.NulsHash;
 
 import java.util.StringJoiner;
 

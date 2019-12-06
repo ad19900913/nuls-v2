@@ -1,6 +1,6 @@
 package io.nuls.crosschain.nuls.model.bo.message;
 
-import io.nuls.crosschain.base.data.NulsHash;
+import io.nuls.core.data.NulsHash;
 import io.nuls.crosschain.base.message.base.BaseMessage;
 
 /**

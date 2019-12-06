@@ -27,10 +27,10 @@ package io.nuls.contract.model.dto;
 
 import io.nuls.contract.enums.ContractStatus;
 import io.nuls.contract.model.po.ContractAddressInfoPo;
+import io.nuls.core.basic.AddressTool;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.rpc.model.ApiModel;
 import io.nuls.core.rpc.model.ApiModelProperty;
-import io.nuls.crosschain.base.basic.AddressTool;
 
 /**
  * @author: PierreLuo

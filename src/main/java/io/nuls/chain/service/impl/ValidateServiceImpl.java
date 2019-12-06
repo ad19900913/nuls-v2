@@ -37,11 +37,11 @@ import io.nuls.chain.service.ChainService;
 import io.nuls.chain.service.ValidateService;
 import io.nuls.chain.util.ChainManagerUtil;
 import io.nuls.chain.util.LoggerUtil;
+import io.nuls.core.basic.AddressTool;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Service;
 import io.nuls.core.log.Log;
 import io.nuls.core.model.ByteUtils;
-import io.nuls.crosschain.base.basic.AddressTool;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

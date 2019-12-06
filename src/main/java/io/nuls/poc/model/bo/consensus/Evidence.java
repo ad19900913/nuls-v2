@@ -25,7 +25,7 @@
 package io.nuls.poc.model.bo.consensus;
 
 
-import io.nuls.crosschain.base.data.BlockHeader;
+import io.nuls.core.data.BlockHeader;
 
 /**
  * 分叉证据信息类

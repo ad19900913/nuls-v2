@@ -28,12 +28,12 @@ import io.nuls.chain.model.po.Asset;
 import io.nuls.chain.model.po.BlockChain;
 import io.nuls.chain.model.tx.txdata.TxAsset;
 import io.nuls.chain.model.tx.txdata.TxChain;
+import io.nuls.core.RPCUtil;
+import io.nuls.core.basic.NulsByteBuffer;
 import io.nuls.core.crypto.HexUtil;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.log.Log;
 import io.nuls.core.model.StringUtils;
-import io.nuls.crosschain.base.RPCUtil;
-import io.nuls.crosschain.base.basic.NulsByteBuffer;
-import io.nuls.crosschain.base.data.Transaction;
 
 import java.util.HashSet;
 import java.util.List;

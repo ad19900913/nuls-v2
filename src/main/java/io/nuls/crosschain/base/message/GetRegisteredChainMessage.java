@@ -1,8 +1,8 @@
 package io.nuls.crosschain.base.message;
 
+import io.nuls.core.basic.NulsByteBuffer;
+import io.nuls.core.basic.NulsOutputStreamBuffer;
 import io.nuls.core.constant.ToolsConstant;
-import io.nuls.crosschain.base.basic.NulsByteBuffer;
-import io.nuls.crosschain.base.basic.NulsOutputStreamBuffer;
 import io.nuls.crosschain.base.message.base.BaseMessage;
 
 import java.io.IOException;

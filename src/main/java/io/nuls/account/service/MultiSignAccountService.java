@@ -25,8 +25,8 @@
 package io.nuls.account.service;
 
 import io.nuls.account.model.bo.Chain;
+import io.nuls.core.data.MultiSigAccount;
 import io.nuls.core.exception.NulsException;
-import io.nuls.crosschain.base.data.MultiSigAccount;
 
 import java.util.List;
 

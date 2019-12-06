@@ -1,20 +1,20 @@
 package io.nuls.poc.utils.validator;
 
+import io.nuls.core.basic.AddressTool;
 import io.nuls.core.constant.TxType;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.crypto.HexUtil;
+import io.nuls.core.data.CoinData;
+import io.nuls.core.data.CoinTo;
+import io.nuls.core.data.NulsHash;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.model.BigIntegerUtils;
 import io.nuls.core.model.StringUtils;
-import io.nuls.crosschain.base.basic.AddressTool;
+import io.nuls.core.signture.P2PHKSignature;
 import io.nuls.crosschain.base.basic.TransactionFeeCalculator;
-import io.nuls.crosschain.base.data.CoinData;
-import io.nuls.crosschain.base.data.CoinTo;
-import io.nuls.crosschain.base.data.NulsHash;
-import io.nuls.crosschain.base.data.Transaction;
 import io.nuls.crosschain.base.signture.MultiSignTxSignature;
-import io.nuls.crosschain.base.signture.P2PHKSignature;
 import io.nuls.poc.constant.ConsensusConstant;
 import io.nuls.poc.constant.ConsensusErrorCode;
 import io.nuls.poc.model.bo.Chain;

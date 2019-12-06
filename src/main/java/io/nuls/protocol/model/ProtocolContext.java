@@ -22,9 +22,9 @@
 
 package io.nuls.protocol.model;
 
-import io.nuls.base.protocol.Protocol;
+import io.nuls.core.basic.ProtocolVersion;
 import io.nuls.core.log.logback.NulsLogger;
-import io.nuls.crosschain.base.basic.ProtocolVersion;
+import io.nuls.protocol.Protocol;
 import io.nuls.protocol.model.po.StatisticsInfo;
 
 import java.util.Deque;

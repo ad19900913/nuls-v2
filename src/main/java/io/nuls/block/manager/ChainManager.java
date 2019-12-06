@@ -24,7 +24,6 @@
  */
 package io.nuls.block.manager;
 
-import io.nuls.base.protocol.ProtocolLoader;
 import io.nuls.block.rpc.call.TransactionCall;
 import io.nuls.block.service.BlockService;
 import io.nuls.block.utils.ConfigLoader;
@@ -34,6 +33,7 @@ import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.log.logback.NulsLogger;
 import io.nuls.core.rockdb.service.RocksDBService;
+import io.nuls.protocol.ProtocolLoader;
 
 import java.util.List;
 

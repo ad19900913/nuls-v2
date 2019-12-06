@@ -1,7 +1,7 @@
 package io.nuls.poc.utils.compare;
 
-import io.nuls.crosschain.base.basic.AddressTool;
-import io.nuls.crosschain.base.data.CoinFrom;
+import io.nuls.core.basic.AddressTool;
+import io.nuls.core.data.CoinFrom;
 
 import java.util.Arrays;
 import java.util.Comparator;

@@ -20,7 +20,6 @@
 
 package io.nuls.block.message.handler;
 
-import io.nuls.base.protocol.MessageProcessor;
 import io.nuls.block.constant.BlockForwardEnum;
 import io.nuls.block.constant.StatusEnum;
 import io.nuls.block.manager.ContextManager;
@@ -36,14 +35,15 @@ import io.nuls.block.service.BlockService;
 import io.nuls.block.thread.monitor.TxGroupRequestor;
 import io.nuls.block.utils.BlockUtil;
 import io.nuls.block.utils.SmallBlockCacher;
+import io.nuls.core.RPCUtil;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
+import io.nuls.core.data.*;
 import io.nuls.core.log.logback.NulsLogger;
 import io.nuls.core.model.CollectionUtils;
 import io.nuls.core.model.DateUtils;
 import io.nuls.core.rpc.util.NulsDateUtils;
-import io.nuls.crosschain.base.RPCUtil;
-import io.nuls.crosschain.base.data.*;
+import io.nuls.protocol.MessageProcessor;
 
 import java.util.ArrayList;
 import java.util.HashMap;

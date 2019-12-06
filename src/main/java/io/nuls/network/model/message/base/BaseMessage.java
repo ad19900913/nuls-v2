@@ -24,15 +24,15 @@
 package io.nuls.network.model.message.base;
 
 
+import io.nuls.core.basic.NulsByteBuffer;
+import io.nuls.core.basic.NulsOutputStreamBuffer;
 import io.nuls.core.constant.ToolsConstant;
 import io.nuls.core.crypto.Sha256Hash;
+import io.nuls.core.data.BaseNulsData;
+import io.nuls.core.data.NulsHash;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.log.Log;
 import io.nuls.core.model.ByteUtils;
-import io.nuls.crosschain.base.basic.NulsByteBuffer;
-import io.nuls.crosschain.base.basic.NulsOutputStreamBuffer;
-import io.nuls.crosschain.base.data.BaseNulsData;
-import io.nuls.crosschain.base.data.NulsHash;
 
 import java.io.IOException;
 

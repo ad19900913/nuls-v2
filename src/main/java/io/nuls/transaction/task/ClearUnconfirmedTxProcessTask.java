@@ -25,8 +25,8 @@
 package io.nuls.transaction.task;
 
 import io.nuls.core.core.ioc.SpringLiteContext;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.rpc.util.NulsDateUtils;
-import io.nuls.crosschain.base.data.Transaction;
 import io.nuls.transaction.cache.PackablePool;
 import io.nuls.transaction.constant.TxConfig;
 import io.nuls.transaction.model.bo.Chain;

@@ -22,12 +22,12 @@
 
 package io.nuls.protocol.utils;
 
+import io.nuls.core.basic.ProtocolVersion;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.io.IoUtils;
 import io.nuls.core.log.Log;
 import io.nuls.core.parse.JSONUtils;
-import io.nuls.crosschain.base.basic.ProtocolVersion;
 import io.nuls.protocol.manager.ContextManager;
 import io.nuls.protocol.model.ChainParameters;
 import io.nuls.protocol.storage.ParametersStorageService;

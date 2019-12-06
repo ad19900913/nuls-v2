@@ -33,9 +33,9 @@ import io.nuls.contract.rpc.call.ConsensusCall;
 import io.nuls.contract.vm.program.ProgramMethod;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
+import io.nuls.core.data.BlockHeader;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.model.StringUtils;
-import io.nuls.crosschain.base.data.BlockHeader;
 
 import java.io.IOException;
 import java.math.BigInteger;

@@ -40,15 +40,15 @@ import io.nuls.contract.storage.ContractTokenTransferStorageService;
 import io.nuls.contract.util.ContractUtil;
 import io.nuls.contract.util.Log;
 import io.nuls.contract.util.MapUtil;
+import io.nuls.core.basic.AddressTool;
 import io.nuls.core.basic.Result;
 import io.nuls.core.basic.VarInt;
 import io.nuls.core.constant.CommonCodeConstanst;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
+import io.nuls.core.data.NulsHash;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.model.ArraysTool;
-import io.nuls.crosschain.base.basic.AddressTool;
-import io.nuls.crosschain.base.data.NulsHash;
 
 import java.io.IOException;
 import java.math.BigInteger;

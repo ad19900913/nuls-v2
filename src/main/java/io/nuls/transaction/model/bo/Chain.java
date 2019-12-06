@@ -1,10 +1,10 @@
 package io.nuls.transaction.model.bo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.nuls.core.data.NulsHash;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.log.logback.NulsLogger;
 import io.nuls.core.model.ByteArrayWrapper;
-import io.nuls.crosschain.base.data.NulsHash;
-import io.nuls.crosschain.base.data.Transaction;
 import io.nuls.transaction.constant.TxConstant;
 import io.nuls.transaction.model.bo.config.ConfigBean;
 import io.nuls.transaction.model.po.TransactionNetPO;

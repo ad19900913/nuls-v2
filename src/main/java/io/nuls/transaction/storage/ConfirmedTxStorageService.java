@@ -1,7 +1,7 @@
 package io.nuls.transaction.storage;
 
-import io.nuls.crosschain.base.data.NulsHash;
-import io.nuls.crosschain.base.data.Transaction;
+import io.nuls.core.data.NulsHash;
+import io.nuls.core.data.Transaction;
 import io.nuls.transaction.model.po.TransactionConfirmedPO;
 
 import java.util.List;

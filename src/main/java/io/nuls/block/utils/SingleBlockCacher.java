@@ -21,9 +21,9 @@
 package io.nuls.block.utils;
 
 import io.nuls.block.message.BlockMessage;
-import io.nuls.crosschain.base.cache.DataCacher;
-import io.nuls.crosschain.base.data.Block;
-import io.nuls.crosschain.base.data.NulsHash;
+import io.nuls.core.cache.DataCacher;
+import io.nuls.core.data.Block;
+import io.nuls.core.data.NulsHash;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;

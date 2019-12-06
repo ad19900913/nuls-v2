@@ -26,7 +26,9 @@ package io.nuls.contract.vm.program.impl;
 
 import com.google.common.base.Joiner;
 import io.nuls.contract.vm.OpCode;
+import io.nuls.contract.vm.code.*;
 import org.apache.commons.collections4.CollectionUtils;
+import org.objectweb.asm.tree.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -24,8 +24,8 @@
  */
 package io.nuls.chain.service;
 
-import io.nuls.crosschain.base.data.BlockHeader;
-import io.nuls.crosschain.base.data.Transaction;
+import io.nuls.core.data.BlockHeader;
+import io.nuls.core.data.Transaction;
 
 import java.util.List;
 

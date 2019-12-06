@@ -28,10 +28,10 @@ import io.nuls.block.thread.monitor.TxGroupRequestor;
 import io.nuls.block.utils.LoggerUtil;
 import io.nuls.block.utils.SingleBlockCacher;
 import io.nuls.block.utils.SmallBlockCacher;
+import io.nuls.core.data.Block;
+import io.nuls.core.data.NulsHash;
 import io.nuls.core.log.logback.NulsLogger;
 import io.nuls.core.model.CollectionUtils;
-import io.nuls.crosschain.base.data.Block;
-import io.nuls.crosschain.base.data.NulsHash;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

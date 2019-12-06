@@ -23,13 +23,13 @@ package io.nuls.block.storage.impl;
 import io.nuls.block.constant.BlockErrorCode;
 import io.nuls.block.manager.ContextManager;
 import io.nuls.block.storage.ChainStorageService;
+import io.nuls.core.basic.NulsByteBuffer;
 import io.nuls.core.core.annotation.Component;
+import io.nuls.core.data.Block;
+import io.nuls.core.data.NulsHash;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.exception.NulsRuntimeException;
 import io.nuls.core.rockdb.service.RocksDBService;
-import io.nuls.crosschain.base.basic.NulsByteBuffer;
-import io.nuls.crosschain.base.data.Block;
-import io.nuls.crosschain.base.data.NulsHash;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;

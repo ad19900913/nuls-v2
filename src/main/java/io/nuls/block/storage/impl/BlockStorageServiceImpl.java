@@ -21,15 +21,15 @@
 package io.nuls.block.storage.impl;
 
 import io.nuls.block.storage.BlockStorageService;
+import io.nuls.core.basic.NulsByteBuffer;
 import io.nuls.core.core.annotation.Component;
+import io.nuls.core.data.BlockHeader;
+import io.nuls.core.data.NulsHash;
+import io.nuls.core.data.po.BlockHeaderPo;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.model.ByteUtils;
 import io.nuls.core.parse.SerializeUtils;
 import io.nuls.core.rockdb.service.RocksDBService;
-import io.nuls.crosschain.base.basic.NulsByteBuffer;
-import io.nuls.crosschain.base.data.BlockHeader;
-import io.nuls.crosschain.base.data.NulsHash;
-import io.nuls.crosschain.base.data.po.BlockHeaderPo;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,7 +37,7 @@ import java.util.List;
 
 import static io.nuls.block.constant.Constant.*;
 import static io.nuls.block.utils.LoggerUtil.COMMON_LOG;
-import static io.nuls.crosschain.base.data.BlockHeader.BLOCK_HEADER_COMPARATOR;
+import static io.nuls.core.data.BlockHeader.BLOCK_HEADER_COMPARATOR;
 
 /**
  * 区块存储服务实现类

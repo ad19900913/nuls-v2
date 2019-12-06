@@ -10,7 +10,7 @@ import io.nuls.core.rpc.info.Constants;
 import io.nuls.core.rpc.model.CmdAnnotation;
 import io.nuls.core.rpc.model.Parameter;
 import io.nuls.core.rpc.model.message.Response;
-import io.nuls.crosschain.base.protocol.MessageProcessor;
+import io.nuls.protocol.MessageProcessor;
 
 import java.util.List;
 import java.util.Map;

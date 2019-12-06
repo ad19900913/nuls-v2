@@ -32,9 +32,9 @@ import io.nuls.account.storage.AccountStorageService;
 import io.nuls.account.util.LoggerUtil;
 import io.nuls.core.basic.InitializingBean;
 import io.nuls.core.core.annotation.Component;
+import io.nuls.core.data.Address;
 import io.nuls.core.exception.NulsRuntimeException;
 import io.nuls.core.rockdb.service.RocksDBService;
-import io.nuls.crosschain.base.data.Address;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,10 +1,10 @@
 package io.nuls.poc.utils;
 
+import io.nuls.core.basic.AddressTool;
+import io.nuls.core.data.NulsHash;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.model.BigIntegerUtils;
 import io.nuls.core.model.StringUtils;
-import io.nuls.crosschain.base.basic.AddressTool;
-import io.nuls.crosschain.base.data.NulsHash;
 import io.nuls.poc.constant.ConsensusErrorCode;
 import io.nuls.poc.model.bo.Chain;
 import io.nuls.poc.model.bo.tx.txdata.Agent;

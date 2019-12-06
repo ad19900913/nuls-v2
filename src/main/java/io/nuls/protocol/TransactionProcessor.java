@@ -1,11 +1,11 @@
 package io.nuls.protocol;
 
 import io.nuls.core.constant.TxType;
+import io.nuls.core.data.BlockHeader;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.rpc.model.Key;
 import io.nuls.core.rpc.model.ResponseData;
 import io.nuls.core.rpc.model.TypeDescriptor;
-import io.nuls.crosschain.base.data.BlockHeader;
-import io.nuls.crosschain.base.data.Transaction;
 
 import java.util.Comparator;
 import java.util.List;

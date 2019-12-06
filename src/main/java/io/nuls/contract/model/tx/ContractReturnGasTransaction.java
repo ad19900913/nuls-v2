@@ -25,7 +25,7 @@
 package io.nuls.contract.model.tx;
 
 
-import io.nuls.crosschain.base.data.BaseNulsData;
+import io.nuls.core.data.BaseNulsData;
 
 import static io.nuls.core.constant.TxType.CONTRACT_RETURN_GAS;
 

@@ -20,12 +20,12 @@
 
 package io.nuls.protocol.service.impl;
 
+import io.nuls.core.basic.ProtocolVersion;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
+import io.nuls.core.data.BlockExtendsData;
+import io.nuls.core.data.BlockHeader;
 import io.nuls.core.log.logback.NulsLogger;
-import io.nuls.crosschain.base.basic.ProtocolVersion;
-import io.nuls.crosschain.base.data.BlockExtendsData;
-import io.nuls.crosschain.base.data.BlockHeader;
 import io.nuls.protocol.manager.ContextManager;
 import io.nuls.protocol.model.ChainParameters;
 import io.nuls.protocol.model.ProtocolContext;
@@ -41,7 +41,7 @@ import io.nuls.protocol.utils.PoUtil;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static io.nuls.crosschain.base.data.BlockHeader.BLOCK_HEADER_COMPARATOR;
+import static io.nuls.core.data.BlockHeader.BLOCK_HEADER_COMPARATOR;
 
 /**
  * 区块服务实现类

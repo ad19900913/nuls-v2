@@ -4,16 +4,16 @@ import io.nuls.core.constant.TxType;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.crypto.HexUtil;
+import io.nuls.core.data.BlockHeader;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.exception.NulsException;
-import io.nuls.crosschain.base.data.BlockHeader;
-import io.nuls.crosschain.base.data.Transaction;
-import io.nuls.crosschain.base.protocol.TransactionProcessor;
 import io.nuls.poc.constant.ConsensusErrorCode;
 import io.nuls.poc.model.bo.Chain;
 import io.nuls.poc.model.bo.tx.txdata.RedPunishData;
 import io.nuls.poc.utils.LoggerUtil;
 import io.nuls.poc.utils.manager.ChainManager;
 import io.nuls.poc.utils.manager.PunishManager;
+import io.nuls.protocol.TransactionProcessor;
 
 import java.util.*;
 

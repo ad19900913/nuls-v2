@@ -25,11 +25,11 @@
 package io.nuls.contract.rpc.call;
 
 import io.nuls.contract.rpc.CallHelper;
+import io.nuls.core.RPCUtil;
+import io.nuls.core.data.BlockHeader;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.rpc.info.Constants;
 import io.nuls.core.rpc.model.ModuleE;
-import io.nuls.crosschain.base.RPCUtil;
-import io.nuls.crosschain.base.data.BlockHeader;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -26,7 +26,7 @@ package io.nuls.chain.service;
 
 import io.nuls.chain.model.po.BlockHeight;
 import io.nuls.chain.model.po.CacheDatas;
-import io.nuls.crosschain.base.data.Transaction;
+import io.nuls.core.data.Transaction;
 
 import java.util.List;
 

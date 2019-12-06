@@ -26,7 +26,7 @@
 package io.nuls.account.storage;
 
 import io.nuls.account.model.po.AccountPO;
-import io.nuls.crosschain.base.data.Address;
+import io.nuls.core.data.Address;
 
 import java.util.List;
 

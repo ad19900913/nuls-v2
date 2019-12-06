@@ -33,7 +33,7 @@ import io.nuls.contract.vm.program.ProgramInternalCall;
 import io.nuls.contract.vm.program.ProgramResult;
 import io.nuls.contract.vm.program.ProgramTransfer;
 import io.nuls.contract.vm.program.impl.ProgramInvoke;
-import io.nuls.crosschain.base.basic.AddressTool;
+import io.nuls.core.basic.AddressTool;
 
 import java.math.BigInteger;
 import java.util.Arrays;

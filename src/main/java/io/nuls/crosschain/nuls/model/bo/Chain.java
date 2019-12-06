@@ -1,10 +1,10 @@
 package io.nuls.crosschain.nuls.model.bo;
 
+import io.nuls.core.data.NulsHash;
 import io.nuls.core.log.logback.NulsLogger;
+import io.nuls.core.signture.P2PHKSignature;
 import io.nuls.core.thread.ThreadUtils;
 import io.nuls.core.thread.commom.NulsThreadFactory;
-import io.nuls.crosschain.base.data.NulsHash;
-import io.nuls.crosschain.base.signture.P2PHKSignature;
 import io.nuls.crosschain.nuls.model.bo.config.ConfigBean;
 import io.nuls.crosschain.nuls.model.bo.message.UntreatedMessage;
 import io.nuls.crosschain.nuls.model.bo.message.WaitBroadSignMessage;

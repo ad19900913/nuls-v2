@@ -12,9 +12,13 @@ import io.nuls.account.service.AliasService;
 import io.nuls.account.service.MultiSignAccountService;
 import io.nuls.account.service.TransactionService;
 import io.nuls.account.util.manager.ChainManager;
+import io.nuls.core.RPCUtil;
+import io.nuls.core.basic.AddressTool;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.crypto.HexUtil;
+import io.nuls.core.data.MultiSigAccount;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.exception.NulsRuntimeException;
 import io.nuls.core.model.FormatValidUtils;
@@ -22,10 +26,6 @@ import io.nuls.core.model.StringUtils;
 import io.nuls.core.rpc.cmd.BaseCmd;
 import io.nuls.core.rpc.model.*;
 import io.nuls.core.rpc.model.message.Response;
-import io.nuls.crosschain.base.RPCUtil;
-import io.nuls.crosschain.base.basic.AddressTool;
-import io.nuls.crosschain.base.data.MultiSigAccount;
-import io.nuls.crosschain.base.data.Transaction;
 
 import java.util.*;
 

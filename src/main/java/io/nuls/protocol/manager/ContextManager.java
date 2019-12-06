@@ -20,7 +20,7 @@
 
 package io.nuls.protocol.manager;
 
-import io.nuls.crosschain.base.basic.ProtocolVersion;
+import io.nuls.core.basic.ProtocolVersion;
 import io.nuls.protocol.model.ChainParameters;
 import io.nuls.protocol.model.ProtocolContext;
 import io.nuls.protocol.utils.LoggerUtil;

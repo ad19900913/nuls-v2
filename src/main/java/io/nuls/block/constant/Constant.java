@@ -20,7 +20,7 @@
 
 package io.nuls.block.constant;
 
-import io.nuls.crosschain.base.data.Block;
+import io.nuls.core.data.Block;
 
 import java.util.Comparator;
 

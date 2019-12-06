@@ -20,10 +20,11 @@
 
 package io.nuls.block.model;
 
+import com.google.common.base.Objects;
 import io.nuls.block.constant.ChainTypeEnum;
-import io.nuls.crosschain.base.data.Block;
-import io.nuls.crosschain.base.data.BlockHeader;
-import io.nuls.crosschain.base.data.NulsHash;
+import io.nuls.core.data.Block;
+import io.nuls.core.data.BlockHeader;
+import io.nuls.core.data.NulsHash;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;

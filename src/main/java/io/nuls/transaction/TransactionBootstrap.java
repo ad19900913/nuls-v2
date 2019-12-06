@@ -24,9 +24,7 @@
 
 package io.nuls.transaction;
 
-import io.nuls.base.protocol.ModuleHelper;
-import io.nuls.base.protocol.ProtocolGroupManager;
-import io.nuls.base.protocol.RegisterHelper;
+import io.nuls.core.basic.AddressTool;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.rockdb.service.RocksDBService;
@@ -38,7 +36,9 @@ import io.nuls.core.rpc.modulebootstrap.RpcModule;
 import io.nuls.core.rpc.modulebootstrap.RpcModuleState;
 import io.nuls.core.rpc.util.AddressPrefixDatas;
 import io.nuls.core.rpc.util.NulsDateUtils;
-import io.nuls.crosschain.base.basic.AddressTool;
+import io.nuls.protocol.ModuleHelper;
+import io.nuls.protocol.ProtocolGroupManager;
+import io.nuls.protocol.RegisterHelper;
 import io.nuls.transaction.constant.TxConfig;
 import io.nuls.transaction.constant.TxConstant;
 import io.nuls.transaction.constant.TxDBConstant;

@@ -23,7 +23,6 @@
  */
 package io.nuls.contract.tx.v1;
 
-import io.nuls.base.protocol.CommonAdvice;
 import io.nuls.contract.enums.BlockType;
 import io.nuls.contract.helper.ContractHelper;
 import io.nuls.contract.manager.ChainManager;
@@ -34,8 +33,9 @@ import io.nuls.contract.storage.ContractOfflineTxHashListStorageService;
 import io.nuls.contract.util.Log;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
-import io.nuls.crosschain.base.data.BlockHeader;
-import io.nuls.crosschain.base.data.Transaction;
+import io.nuls.core.data.BlockHeader;
+import io.nuls.core.data.Transaction;
+import io.nuls.protocol.CommonAdvice;
 
 import java.util.List;
 

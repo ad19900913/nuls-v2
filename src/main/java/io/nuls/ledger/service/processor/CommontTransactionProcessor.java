@@ -27,8 +27,8 @@ package io.nuls.ledger.service.processor;
 
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
-import io.nuls.crosschain.base.data.CoinFrom;
-import io.nuls.crosschain.base.data.CoinTo;
+import io.nuls.core.data.CoinFrom;
+import io.nuls.core.data.CoinTo;
 import io.nuls.ledger.model.po.AccountState;
 import io.nuls.ledger.service.AccountStateService;
 

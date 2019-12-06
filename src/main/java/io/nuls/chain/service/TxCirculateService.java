@@ -27,8 +27,8 @@ package io.nuls.chain.service;
 import io.nuls.chain.model.dto.ChainEventResult;
 import io.nuls.chain.model.dto.CoinDataAssets;
 import io.nuls.chain.model.po.ChainAsset;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.exception.NulsException;
-import io.nuls.crosschain.base.data.Transaction;
 
 import java.util.List;
 

@@ -28,8 +28,8 @@ import io.nuls.account.model.bo.Account;
 import io.nuls.account.model.bo.AccountKeyStore;
 import io.nuls.account.model.bo.Chain;
 import io.nuls.core.exception.NulsException;
-import io.nuls.crosschain.base.signture.BlockSignature;
-import io.nuls.crosschain.base.signture.P2PHKSignature;
+import io.nuls.core.signture.BlockSignature;
+import io.nuls.core.signture.P2PHKSignature;
 
 import java.util.List;
 

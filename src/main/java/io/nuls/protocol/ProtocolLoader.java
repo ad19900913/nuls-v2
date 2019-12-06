@@ -6,8 +6,8 @@ import io.nuls.core.parse.JSONUtils;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static io.nuls.crosschain.base.protocol.ProtocolConstant.PROTOCOL_CONFIG_COMPARATOR;
-import static io.nuls.crosschain.base.protocol.ProtocolConstant.PROTOCOL_CONFIG_FILE;
+import static io.nuls.protocol.ProtocolConstant.PROTOCOL_CONFIG_COMPARATOR;
+import static io.nuls.protocol.ProtocolConstant.PROTOCOL_CONFIG_FILE;
 
 /**
  * 把协议配置文件解析成对象

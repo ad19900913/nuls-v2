@@ -1,5 +1,7 @@
 package io.nuls.crosschain.base.service;
 
+import io.nuls.crosschain.base.message.*;
+
 /**
  * 跨链模块协议处理接口类
  *

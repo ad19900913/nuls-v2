@@ -19,8 +19,7 @@ package org.ethereum.config;
 
 import org.ethereum.core.Repository;
 import org.ethereum.crypto.HashUtil;
-import org.ethereum.datasource.NodeKeyCompositor;
-import org.ethereum.datasource.Source;
+import org.ethereum.datasource.*;
 import org.ethereum.datasource.inmem.HashMapDB;
 import org.ethereum.datasource.rocksdb.RocksDbDataSource;
 import org.ethereum.db.DbFlushManager;

@@ -27,7 +27,7 @@ package io.nuls.network.manager.handler.base;
 
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
-import io.nuls.crosschain.base.data.BaseNulsData;
+import io.nuls.core.data.BaseNulsData;
 import io.nuls.network.constant.NetworkErrorCode;
 import io.nuls.network.model.NetworkEventResult;
 import io.nuls.network.model.Node;

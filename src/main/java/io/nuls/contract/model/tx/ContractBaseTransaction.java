@@ -24,10 +24,10 @@
 package io.nuls.contract.model.tx;
 
 import io.nuls.contract.model.bo.ContractResult;
+import io.nuls.core.data.BaseNulsData;
+import io.nuls.core.data.CoinData;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.exception.NulsException;
-import io.nuls.crosschain.base.data.BaseNulsData;
-import io.nuls.crosschain.base.data.CoinData;
-import io.nuls.crosschain.base.data.Transaction;
 
 import java.io.IOException;
 

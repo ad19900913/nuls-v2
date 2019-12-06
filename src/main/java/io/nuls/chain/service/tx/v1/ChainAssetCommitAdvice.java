@@ -1,6 +1,5 @@
 package io.nuls.chain.service.tx.v1;
 
-import io.nuls.base.protocol.CommonAdvice;
 import io.nuls.chain.info.CmRuntimeInfo;
 import io.nuls.chain.model.po.BlockHeight;
 import io.nuls.chain.rpc.call.RpcService;
@@ -8,8 +7,9 @@ import io.nuls.chain.service.CacheDataService;
 import io.nuls.chain.util.LoggerUtil;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
-import io.nuls.crosschain.base.data.BlockHeader;
-import io.nuls.crosschain.base.data.Transaction;
+import io.nuls.core.data.BlockHeader;
+import io.nuls.core.data.Transaction;
+import io.nuls.protocol.CommonAdvice;
 
 import java.util.List;
 

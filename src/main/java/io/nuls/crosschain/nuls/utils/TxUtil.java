@@ -1,20 +1,20 @@
 package io.nuls.crosschain.nuls.utils;
 
+import io.nuls.core.basic.AddressTool;
 import io.nuls.core.constant.TxStatusEnum;
 import io.nuls.core.constant.TxType;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
+import io.nuls.core.data.*;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.model.StringUtils;
-import io.nuls.crosschain.base.basic.AddressTool;
+import io.nuls.core.signture.P2PHKSignature;
+import io.nuls.core.signture.TransactionSignature;
 import io.nuls.crosschain.base.constant.CommandConstant;
-import io.nuls.crosschain.base.data.*;
 import io.nuls.crosschain.base.message.BroadCtxSignMessage;
 import io.nuls.crosschain.base.message.GetCtxStateMessage;
 import io.nuls.crosschain.base.model.bo.txdata.VerifierChangeData;
 import io.nuls.crosschain.base.model.bo.txdata.VerifierInitData;
-import io.nuls.crosschain.base.signture.P2PHKSignature;
-import io.nuls.crosschain.base.signture.TransactionSignature;
 import io.nuls.crosschain.nuls.constant.NulsCrossChainConfig;
 import io.nuls.crosschain.nuls.constant.NulsCrossChainConstant;
 import io.nuls.crosschain.nuls.constant.ParamConstant;

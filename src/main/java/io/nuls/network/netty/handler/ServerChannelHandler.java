@@ -31,7 +31,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
-import io.nuls.crosschain.base.basic.NulsByteBuffer;
+import io.nuls.core.basic.NulsByteBuffer;
 import io.nuls.network.constant.NetworkConstant;
 import io.nuls.network.manager.ConnectionManager;
 import io.nuls.network.manager.MessageManager;

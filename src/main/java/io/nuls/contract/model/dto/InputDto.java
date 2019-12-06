@@ -26,11 +26,11 @@
 package io.nuls.contract.model.dto;
 
 
+import io.nuls.core.RPCUtil;
+import io.nuls.core.basic.AddressTool;
+import io.nuls.core.data.CoinFrom;
 import io.nuls.core.rpc.model.ApiModel;
 import io.nuls.core.rpc.model.ApiModelProperty;
-import io.nuls.crosschain.base.RPCUtil;
-import io.nuls.crosschain.base.basic.AddressTool;
-import io.nuls.crosschain.base.data.CoinFrom;
 
 import static io.nuls.contract.util.ContractUtil.bigInteger2String;
 

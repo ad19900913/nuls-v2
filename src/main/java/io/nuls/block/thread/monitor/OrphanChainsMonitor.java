@@ -27,9 +27,9 @@ import io.nuls.block.model.Chain;
 import io.nuls.block.model.ChainContext;
 import io.nuls.block.rpc.call.ConsensusCall;
 import io.nuls.block.rpc.call.TransactionCall;
+import io.nuls.core.data.NulsHash;
 import io.nuls.core.exception.NulsRuntimeException;
 import io.nuls.core.log.logback.NulsLogger;
-import io.nuls.crosschain.base.data.NulsHash;
 
 import java.util.Deque;
 import java.util.SortedSet;

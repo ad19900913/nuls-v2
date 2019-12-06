@@ -22,9 +22,9 @@
 
 package io.nuls.block.model;
 
-import io.nuls.crosschain.base.data.NulsHash;
-import io.nuls.crosschain.base.data.SmallBlock;
-import io.nuls.crosschain.base.data.Transaction;
+import io.nuls.core.data.NulsHash;
+import io.nuls.core.data.SmallBlock;
+import io.nuls.core.data.Transaction;
 
 import java.util.List;
 import java.util.Map;

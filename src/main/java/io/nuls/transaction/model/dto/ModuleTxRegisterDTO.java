@@ -25,7 +25,7 @@
 
 package io.nuls.transaction.model.dto;
 
-import io.nuls.base.protocol.TxRegisterDetail;
+import io.nuls.protocol.TxRegisterDetail;
 
 import java.util.List;
 

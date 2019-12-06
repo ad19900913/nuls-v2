@@ -25,12 +25,12 @@
 package io.nuls.poc.model.bo.tx.txdata;
 
 
+import io.nuls.core.basic.NulsByteBuffer;
+import io.nuls.core.basic.NulsOutputStreamBuffer;
+import io.nuls.core.data.Address;
+import io.nuls.core.data.BaseNulsData;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.parse.SerializeUtils;
-import io.nuls.crosschain.base.basic.NulsByteBuffer;
-import io.nuls.crosschain.base.basic.NulsOutputStreamBuffer;
-import io.nuls.crosschain.base.data.Address;
-import io.nuls.crosschain.base.data.BaseNulsData;
 
 import java.io.IOException;
 import java.util.ArrayList;

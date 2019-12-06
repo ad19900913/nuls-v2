@@ -3,14 +3,14 @@ package io.nuls.poc.tx.v1;
 import io.nuls.core.constant.TxType;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
+import io.nuls.core.data.BlockHeader;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.log.Log;
-import io.nuls.crosschain.base.data.BlockHeader;
-import io.nuls.crosschain.base.data.Transaction;
-import io.nuls.crosschain.base.protocol.TransactionProcessor;
 import io.nuls.poc.model.bo.Chain;
 import io.nuls.poc.service.impl.RandomSeedService;
 import io.nuls.poc.utils.manager.ChainManager;
 import io.nuls.poc.utils.manager.RoundManager;
+import io.nuls.protocol.TransactionProcessor;
 
 import java.util.List;
 import java.util.Map;

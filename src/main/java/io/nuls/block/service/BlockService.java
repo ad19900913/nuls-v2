@@ -20,10 +20,10 @@
 
 package io.nuls.block.service;
 
-import io.nuls.crosschain.base.data.Block;
-import io.nuls.crosschain.base.data.BlockHeader;
-import io.nuls.crosschain.base.data.NulsHash;
-import io.nuls.crosschain.base.data.po.BlockHeaderPo;
+import io.nuls.core.data.Block;
+import io.nuls.core.data.BlockHeader;
+import io.nuls.core.data.NulsHash;
+import io.nuls.core.data.po.BlockHeaderPo;
 
 import java.util.List;
 

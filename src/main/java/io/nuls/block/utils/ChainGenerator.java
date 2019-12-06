@@ -27,9 +27,9 @@ import io.nuls.block.manager.ContextManager;
 import io.nuls.block.model.Chain;
 import io.nuls.block.model.ChainParameters;
 import io.nuls.block.service.BlockService;
-import io.nuls.crosschain.base.data.Block;
-import io.nuls.crosschain.base.data.BlockHeader;
-import io.nuls.crosschain.base.data.NulsHash;
+import io.nuls.core.data.Block;
+import io.nuls.core.data.BlockHeader;
+import io.nuls.core.data.NulsHash;
 
 import java.util.ArrayDeque;
 

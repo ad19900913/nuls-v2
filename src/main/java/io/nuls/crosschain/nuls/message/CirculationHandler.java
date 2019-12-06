@@ -1,12 +1,12 @@
 package io.nuls.crosschain.nuls.message;
 
-import io.nuls.base.protocol.MessageProcessor;
+import io.nuls.core.RPCUtil;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
-import io.nuls.crosschain.base.RPCUtil;
 import io.nuls.crosschain.base.constant.CommandConstant;
 import io.nuls.crosschain.base.message.CirculationMessage;
 import io.nuls.crosschain.nuls.servive.MainNetService;
+import io.nuls.protocol.MessageProcessor;
 
 /**
  * CirculationMessage处理类

@@ -12,8 +12,8 @@ import io.nuls.chain.util.TxUtil;
 import io.nuls.core.constant.TxType;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Service;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.model.ByteUtils;
-import io.nuls.crosschain.base.data.Transaction;
 
 import java.math.BigInteger;
 import java.util.*;

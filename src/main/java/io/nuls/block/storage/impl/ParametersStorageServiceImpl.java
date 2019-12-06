@@ -25,10 +25,10 @@ package io.nuls.block.storage.impl;
 import io.nuls.block.constant.Constant;
 import io.nuls.block.model.ChainParameters;
 import io.nuls.block.storage.ParametersStorageService;
+import io.nuls.core.basic.NulsByteBuffer;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.model.ByteUtils;
 import io.nuls.core.rockdb.service.RocksDBService;
-import io.nuls.crosschain.base.basic.NulsByteBuffer;
 
 import java.util.ArrayList;
 import java.util.Collections;

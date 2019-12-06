@@ -20,17 +20,17 @@
 
 package io.nuls.block.message.handler;
 
-import io.nuls.base.protocol.MessageProcessor;
 import io.nuls.block.manager.ContextManager;
 import io.nuls.block.message.HashMessage;
 import io.nuls.block.message.SmallBlockMessage;
 import io.nuls.block.rpc.call.NetworkCall;
 import io.nuls.block.utils.SmallBlockCacher;
+import io.nuls.core.RPCUtil;
 import io.nuls.core.core.annotation.Component;
+import io.nuls.core.data.NulsHash;
+import io.nuls.core.data.SmallBlock;
 import io.nuls.core.log.logback.NulsLogger;
-import io.nuls.crosschain.base.RPCUtil;
-import io.nuls.crosschain.base.data.NulsHash;
-import io.nuls.crosschain.base.data.SmallBlock;
+import io.nuls.protocol.MessageProcessor;
 
 import static io.nuls.block.constant.CommandConstant.GET_SMALL_BLOCK_MESSAGE;
 import static io.nuls.block.constant.CommandConstant.SMALL_BLOCK_MESSAGE;

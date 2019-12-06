@@ -28,8 +28,8 @@ package io.nuls.account.service;
 import io.nuls.account.model.bo.Chain;
 import io.nuls.account.model.bo.tx.txdata.Alias;
 import io.nuls.core.basic.Result;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.exception.NulsException;
-import io.nuls.crosschain.base.data.Transaction;
 
 /**
  * 账户模块内部功能服务类

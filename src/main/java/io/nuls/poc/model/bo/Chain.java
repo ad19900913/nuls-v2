@@ -1,10 +1,10 @@
 package io.nuls.poc.model.bo;
 
+import io.nuls.core.basic.AddressTool;
+import io.nuls.core.data.BlockHeader;
+import io.nuls.core.data.NulsHash;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.log.logback.NulsLogger;
-import io.nuls.crosschain.base.basic.AddressTool;
-import io.nuls.crosschain.base.data.BlockHeader;
-import io.nuls.crosschain.base.data.NulsHash;
-import io.nuls.crosschain.base.data.Transaction;
 import io.nuls.poc.model.bo.config.ConfigBean;
 import io.nuls.poc.model.bo.consensus.Evidence;
 import io.nuls.poc.model.bo.round.MeetingRound;

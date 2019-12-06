@@ -27,6 +27,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import io.nuls.contract.enums.BlockType;
 import io.nuls.contract.enums.CmdRegisterMode;
 import io.nuls.contract.helper.ContractHelper;
+import io.nuls.contract.manager.*;
 import io.nuls.contract.model.bo.BatchInfo;
 import io.nuls.contract.model.bo.ContractTempTransaction;
 import io.nuls.contract.model.dto.ContractPackageDto;
@@ -36,22 +37,23 @@ import io.nuls.contract.service.ContractService;
 import io.nuls.contract.util.ContractUtil;
 import io.nuls.contract.util.Log;
 import io.nuls.contract.util.MapUtil;
+import io.nuls.contract.vm.program.*;
+import io.nuls.core.RPCUtil;
+import io.nuls.core.basic.AddressTool;
 import io.nuls.core.basic.Result;
 import io.nuls.core.constant.TxType;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.crypto.HexUtil;
+import io.nuls.core.data.CoinData;
+import io.nuls.core.data.CoinTo;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.model.ObjectUtils;
 import io.nuls.core.model.StringUtils;
 import io.nuls.core.parse.JSONUtils;
 import io.nuls.core.rpc.cmd.BaseCmd;
 import io.nuls.core.rpc.model.*;
 import io.nuls.core.rpc.model.message.Response;
-import io.nuls.crosschain.base.RPCUtil;
-import io.nuls.crosschain.base.basic.AddressTool;
-import io.nuls.crosschain.base.data.CoinData;
-import io.nuls.crosschain.base.data.CoinTo;
-import io.nuls.crosschain.base.data.Transaction;
 
 import java.math.BigInteger;
 import java.util.*;
@@ -380,7 +382,6 @@ public class ContractCmd extends BaseCmd {
     /**
      * 其他模块向合约模块注册可被合约调用的命令
      *
-     * @see ModuleCmdRegisterDto#cmdRegisterList cmdRegisterList结构
      */
     @CmdAnnotation(cmd = REGISTER_CMD_FOR_CONTRACT, version = 1.0, description = "其他模块向合约模块注册可被合约调用的命令，注册后，可在合约代码内调用注册的命令/register cmd for contract")
     @Parameters(value = {

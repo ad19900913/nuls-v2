@@ -10,11 +10,11 @@ import io.nuls.account.service.AliasService;
 import io.nuls.account.util.manager.ChainManager;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.exception.NulsRuntimeException;
 import io.nuls.core.rpc.cmd.BaseCmd;
 import io.nuls.core.rpc.model.*;
 import io.nuls.core.rpc.model.message.Response;
-import io.nuls.crosschain.base.data.Transaction;
 
 import java.util.HashMap;
 import java.util.Map;

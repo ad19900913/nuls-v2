@@ -24,13 +24,13 @@
 
 package io.nuls.crosschain.nuls.model.po;
 
+import io.nuls.core.basic.NulsByteBuffer;
+import io.nuls.core.basic.NulsOutputStreamBuffer;
 import io.nuls.core.constant.TxStatusEnum;
+import io.nuls.core.data.BaseNulsData;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.parse.SerializeUtils;
-import io.nuls.crosschain.base.basic.NulsByteBuffer;
-import io.nuls.crosschain.base.basic.NulsOutputStreamBuffer;
-import io.nuls.crosschain.base.data.BaseNulsData;
-import io.nuls.crosschain.base.data.Transaction;
 
 import java.io.IOException;
 

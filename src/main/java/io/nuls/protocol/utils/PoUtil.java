@@ -1,6 +1,6 @@
 package io.nuls.protocol.utils;
 
-import io.nuls.crosschain.base.basic.ProtocolVersion;
+import io.nuls.core.basic.ProtocolVersion;
 import io.nuls.protocol.model.po.ProtocolVersionPo;
 
 /**

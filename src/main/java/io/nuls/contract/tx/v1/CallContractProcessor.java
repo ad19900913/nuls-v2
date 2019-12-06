@@ -1,6 +1,5 @@
 package io.nuls.contract.tx.v1;
 
-import io.nuls.base.protocol.TransactionProcessor;
 import io.nuls.contract.helper.ContractHelper;
 import io.nuls.contract.manager.ChainManager;
 import io.nuls.contract.model.bo.ContractResult;
@@ -15,9 +14,10 @@ import io.nuls.core.basic.Result;
 import io.nuls.core.constant.TxType;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
+import io.nuls.core.data.BlockHeader;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.exception.NulsException;
-import io.nuls.crosschain.base.data.BlockHeader;
-import io.nuls.crosschain.base.data.Transaction;
+import io.nuls.protocol.TransactionProcessor;
 
 import java.util.ArrayList;
 import java.util.HashMap;

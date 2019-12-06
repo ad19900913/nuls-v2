@@ -22,10 +22,10 @@
 
 package io.nuls.protocol.storage.impl;
 
+import io.nuls.core.basic.NulsByteBuffer;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.model.ByteUtils;
 import io.nuls.core.rockdb.service.RocksDBService;
-import io.nuls.crosschain.base.basic.NulsByteBuffer;
 import io.nuls.protocol.constant.Constant;
 import io.nuls.protocol.manager.ContextManager;
 import io.nuls.protocol.model.po.StatisticsInfo;

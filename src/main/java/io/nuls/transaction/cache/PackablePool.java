@@ -2,8 +2,8 @@ package io.nuls.transaction.cache;
 
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.model.ByteArrayWrapper;
-import io.nuls.crosschain.base.data.Transaction;
 import io.nuls.transaction.model.bo.Chain;
 import io.nuls.transaction.storage.UnconfirmedTxStorageService;
 

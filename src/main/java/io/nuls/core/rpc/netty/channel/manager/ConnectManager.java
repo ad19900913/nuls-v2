@@ -26,7 +26,6 @@ import io.nuls.core.rpc.netty.thread.RequestOnlyProcessor;
 import io.nuls.core.rpc.netty.thread.ResponseAutoProcessor;
 import io.nuls.core.rpc.util.NulsDateUtils;
 import io.nuls.core.rpc.util.SerializeUtil;
-import io.nuls.rpc.model.*;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

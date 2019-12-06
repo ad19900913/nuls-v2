@@ -29,8 +29,8 @@ import io.nuls.contract.helper.ContractConflictChecker;
 import io.nuls.contract.manager.ContractTempBalanceManager;
 import io.nuls.contract.model.dto.ContractPackageDto;
 import io.nuls.contract.vm.program.ProgramExecutor;
+import io.nuls.core.data.BlockHeader;
 import io.nuls.core.model.StringUtils;
-import io.nuls.crosschain.base.data.BlockHeader;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

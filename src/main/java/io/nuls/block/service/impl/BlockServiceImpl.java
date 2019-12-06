@@ -37,11 +37,14 @@ import io.nuls.block.utils.BlockUtil;
 import io.nuls.block.utils.ChainGenerator;
 import io.nuls.block.utils.LoggerUtil;
 import io.nuls.block.utils.SmallBlockCacher;
+import io.nuls.core.RPCUtil;
 import io.nuls.core.basic.Result;
 import io.nuls.core.constant.TxType;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.core.config.ConfigurationLoader;
+import io.nuls.core.data.*;
+import io.nuls.core.data.po.BlockHeaderPo;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.exception.NulsRuntimeException;
 import io.nuls.core.log.logback.NulsLogger;
@@ -51,9 +54,6 @@ import io.nuls.core.rockdb.service.RocksDBService;
 import io.nuls.core.rpc.model.message.MessageUtil;
 import io.nuls.core.rpc.model.message.Response;
 import io.nuls.core.rpc.netty.channel.manager.ConnectManager;
-import io.nuls.crosschain.base.RPCUtil;
-import io.nuls.crosschain.base.data.*;
-import io.nuls.crosschain.base.data.po.BlockHeaderPo;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -64,7 +64,7 @@ import java.util.concurrent.locks.StampedLock;
 import static io.nuls.block.constant.BlockForwardEnum.COMPLETE;
 import static io.nuls.block.constant.CommandConstant.*;
 import static io.nuls.block.constant.Constant.BLOCK_HEADER_INDEX;
-import static io.nuls.crosschain.base.data.BlockHeader.BLOCK_HEADER_COMPARATOR;
+import static io.nuls.core.data.BlockHeader.BLOCK_HEADER_COMPARATOR;
 
 /**
  * 区块服务实现类

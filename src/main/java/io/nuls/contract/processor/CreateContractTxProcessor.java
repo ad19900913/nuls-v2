@@ -35,12 +35,12 @@ import io.nuls.contract.service.ContractTxService;
 import io.nuls.contract.storage.ContractAddressStorageService;
 import io.nuls.contract.storage.ContractTokenAddressStorageService;
 import io.nuls.contract.util.Log;
+import io.nuls.core.basic.AddressTool;
 import io.nuls.core.basic.Result;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
-import io.nuls.crosschain.base.basic.AddressTool;
-import io.nuls.crosschain.base.data.BlockHeader;
-import io.nuls.crosschain.base.data.NulsHash;
+import io.nuls.core.data.BlockHeader;
+import io.nuls.core.data.NulsHash;
 
 import static io.nuls.contract.util.ContractUtil.getSuccess;
 

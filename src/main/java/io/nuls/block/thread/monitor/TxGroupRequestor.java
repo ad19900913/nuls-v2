@@ -31,10 +31,10 @@ import io.nuls.block.service.BlockService;
 import io.nuls.block.utils.BlockUtil;
 import io.nuls.block.utils.SmallBlockCacher;
 import io.nuls.core.core.ioc.SpringLiteContext;
+import io.nuls.core.data.*;
 import io.nuls.core.log.logback.NulsLogger;
 import io.nuls.core.model.CollectionUtils;
 import io.nuls.core.model.DateUtils;
-import io.nuls.crosschain.base.data.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;

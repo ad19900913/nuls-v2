@@ -31,12 +31,12 @@ import io.nuls.core.constant.BaseConstant;
 import io.nuls.core.crypto.ECKey;
 import io.nuls.core.crypto.HexUtil;
 import io.nuls.core.crypto.Sha256Hash;
+import io.nuls.core.data.Address;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.exception.NulsRuntimeException;
 import io.nuls.core.model.StringUtils;
 import io.nuls.core.parse.SerializeUtils;
 import io.nuls.core.rpc.util.NulsDateUtils;
-import io.nuls.crosschain.base.data.Address;
 
 import java.math.BigInteger;
 

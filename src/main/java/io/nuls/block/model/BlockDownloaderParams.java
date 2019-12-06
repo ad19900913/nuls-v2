@@ -20,7 +20,7 @@
 
 package io.nuls.block.model;
 
-import io.nuls.crosschain.base.data.NulsHash;
+import io.nuls.core.data.NulsHash;
 
 import java.util.List;
 import java.util.Map;

@@ -25,9 +25,9 @@
 package io.nuls.chain.model.dto;
 
 import io.nuls.chain.model.po.BlockChain;
+import io.nuls.core.basic.AddressTool;
 import io.nuls.core.rpc.model.ApiModel;
 import io.nuls.core.rpc.model.ApiModelProperty;
-import io.nuls.crosschain.base.basic.AddressTool;
 
 import java.util.ArrayList;
 import java.util.List;

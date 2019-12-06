@@ -20,12 +20,12 @@
 
 package io.nuls.block.message;
 
+import io.nuls.core.basic.NulsByteBuffer;
+import io.nuls.core.basic.NulsOutputStreamBuffer;
+import io.nuls.core.data.BaseBusinessMessage;
+import io.nuls.core.data.SmallBlock;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.parse.SerializeUtils;
-import io.nuls.crosschain.base.basic.NulsByteBuffer;
-import io.nuls.crosschain.base.basic.NulsOutputStreamBuffer;
-import io.nuls.crosschain.base.data.BaseBusinessMessage;
-import io.nuls.crosschain.base.data.SmallBlock;
 
 import java.io.IOException;
 

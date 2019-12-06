@@ -28,8 +28,8 @@ import io.nuls.contract.model.bo.ContractResult;
 import io.nuls.contract.model.bo.ContractTempTransaction;
 import io.nuls.contract.model.po.ContractOfflineTxHashPo;
 import io.nuls.core.basic.Result;
+import io.nuls.core.data.NulsHash;
 import io.nuls.core.exception.NulsException;
-import io.nuls.crosschain.base.data.NulsHash;
 
 import java.util.List;
 

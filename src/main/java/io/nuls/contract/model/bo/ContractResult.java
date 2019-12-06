@@ -31,7 +31,7 @@ import io.nuls.contract.model.txdata.ContractData;
 import io.nuls.contract.vm.program.ProgramAccount;
 import io.nuls.contract.vm.program.ProgramInvokeRegisterCmd;
 import io.nuls.contract.vm.program.ProgramTransfer;
-import io.nuls.crosschain.base.basic.AddressTool;
+import io.nuls.core.basic.AddressTool;
 import org.ethereum.db.ByteArrayWrapper;
 
 import java.math.BigInteger;

@@ -24,8 +24,8 @@
 
 package io.nuls.transaction.model.bo;
 
-import io.nuls.crosschain.base.data.CoinData;
-import io.nuls.crosschain.base.data.CoinFrom;
+import io.nuls.core.data.CoinData;
+import io.nuls.core.data.CoinFrom;
 import io.nuls.transaction.model.po.TransactionNetPO;
 import io.nuls.transaction.utils.LoggerUtil;
 import io.nuls.transaction.utils.TxUtil;

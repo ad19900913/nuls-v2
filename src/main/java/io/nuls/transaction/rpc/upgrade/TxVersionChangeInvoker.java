@@ -2,9 +2,9 @@ package io.nuls.transaction.rpc.upgrade;
 
 import io.nuls.core.basic.VersionChangeInvoker;
 import io.nuls.core.core.ioc.SpringLiteContext;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.log.Log;
-import io.nuls.crosschain.base.data.Transaction;
 import io.nuls.transaction.cache.PackablePool;
 import io.nuls.transaction.constant.TxErrorCode;
 import io.nuls.transaction.manager.ChainManager;

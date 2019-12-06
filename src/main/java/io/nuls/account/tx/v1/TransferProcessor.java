@@ -6,14 +6,14 @@ import io.nuls.account.model.bo.Chain;
 import io.nuls.account.service.TransactionService;
 import io.nuls.account.util.LoggerUtil;
 import io.nuls.account.util.manager.ChainManager;
-import io.nuls.base.protocol.TransactionProcessor;
 import io.nuls.core.basic.Result;
 import io.nuls.core.constant.TxType;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
+import io.nuls.core.data.BlockHeader;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.exception.NulsException;
-import io.nuls.crosschain.base.data.BlockHeader;
-import io.nuls.crosschain.base.data.Transaction;
+import io.nuls.protocol.TransactionProcessor;
 
 import java.util.ArrayList;
 import java.util.HashMap;

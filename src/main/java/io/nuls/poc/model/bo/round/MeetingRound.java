@@ -25,6 +25,8 @@
  */
 package io.nuls.poc.model.bo.round;
 
+import io.nuls.core.basic.AddressTool;
+import io.nuls.core.data.Address;
 import io.nuls.core.exception.NulsRuntimeException;
 import io.nuls.core.log.Log;
 import io.nuls.core.model.DoubleUtils;
@@ -33,8 +35,6 @@ import io.nuls.core.rpc.model.ApiModel;
 import io.nuls.core.rpc.model.ApiModelProperty;
 import io.nuls.core.rpc.model.TypeDescriptor;
 import io.nuls.core.rpc.util.NulsDateUtils;
-import io.nuls.crosschain.base.basic.AddressTool;
-import io.nuls.crosschain.base.data.Address;
 import io.nuls.poc.constant.ConsensusErrorCode;
 import io.nuls.poc.model.bo.Chain;
 import io.nuls.poc.rpc.call.CallMethodUtils;

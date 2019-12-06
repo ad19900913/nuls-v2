@@ -23,7 +23,7 @@
  */
 package io.nuls.contract.model.bo;
 
-import io.nuls.crosschain.base.data.NulsHash;
+import io.nuls.core.data.NulsHash;
 
 import java.math.BigInteger;
 import java.util.ArrayList;

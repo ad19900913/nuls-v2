@@ -27,11 +27,11 @@ import io.nuls.block.model.ChainParameters;
 import io.nuls.block.service.BlockService;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
+import io.nuls.core.data.Block;
+import io.nuls.core.data.NulsHash;
+import io.nuls.core.data.SmallBlock;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.model.CollectionUtils;
-import io.nuls.crosschain.base.data.Block;
-import io.nuls.crosschain.base.data.NulsHash;
-import io.nuls.crosschain.base.data.SmallBlock;
-import io.nuls.crosschain.base.data.Transaction;
 
 import java.util.HashMap;
 import java.util.List;

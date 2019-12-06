@@ -31,12 +31,12 @@ import io.nuls.contract.model.tx.ContractBaseTransaction;
 import io.nuls.contract.model.txdata.ContractData;
 import io.nuls.contract.util.ContractUtil;
 import io.nuls.contract.vm.program.ProgramInvokeRegisterCmd;
+import io.nuls.core.basic.AddressTool;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.model.LongUtils;
 import io.nuls.core.rpc.model.ApiModel;
 import io.nuls.core.rpc.model.ApiModelProperty;
 import io.nuls.core.rpc.model.TypeDescriptor;
-import io.nuls.crosschain.base.basic.AddressTool;
 
 import java.math.BigInteger;
 import java.util.ArrayList;

@@ -26,7 +26,7 @@
 package io.nuls.ledger.service;
 
 
-import io.nuls.crosschain.base.data.Transaction;
+import io.nuls.core.data.Transaction;
 import io.nuls.ledger.model.ValidateResult;
 import io.nuls.ledger.model.po.sub.AccountStateSnapshot;
 

@@ -28,7 +28,6 @@ import io.nuls.core.basic.InitializingBean;
 import io.nuls.core.core.annotation.*;
 import io.nuls.core.core.config.ConfigSetting;
 import io.nuls.core.core.config.ConfigurationLoader;
-import io.nuls.core.core.core.annotation.*;
 import io.nuls.core.core.inteceptor.DefaultMethodInterceptor;
 import io.nuls.core.core.inteceptor.base.BeanMethodInterceptor;
 import io.nuls.core.core.inteceptor.base.BeanMethodInterceptorManager;

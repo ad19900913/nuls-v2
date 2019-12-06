@@ -4,13 +4,13 @@ import io.nuls.account.constant.AccountErrorCode;
 import io.nuls.account.constant.RpcParameterNameConstant;
 import io.nuls.account.util.LoggerUtil;
 import io.nuls.account.util.Preconditions;
+import io.nuls.core.basic.AddressTool;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.exception.NulsRuntimeException;
 import io.nuls.core.parse.JSONUtils;
 import io.nuls.core.rpc.cmd.BaseCmd;
 import io.nuls.core.rpc.model.*;
 import io.nuls.core.rpc.model.message.Response;
-import io.nuls.crosschain.base.basic.AddressTool;
 
 import java.util.ArrayList;
 import java.util.HashMap;

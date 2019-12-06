@@ -28,7 +28,7 @@ package io.nuls.chain.model.dto;
 
 import io.nuls.chain.info.CmErrorCode;
 import io.nuls.core.constant.ErrorCode;
-import io.nuls.crosschain.base.data.BaseNulsData;
+import io.nuls.core.data.BaseNulsData;
 
 /**
  * NetworkEventResult

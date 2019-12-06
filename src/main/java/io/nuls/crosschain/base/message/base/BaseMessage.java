@@ -1,6 +1,6 @@
 package io.nuls.crosschain.base.message.base;
 
-import io.nuls.crosschain.base.data.BaseNulsData;
+import io.nuls.core.data.BaseNulsData;
 
 /**
  * 通用消息体

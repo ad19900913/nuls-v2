@@ -1,5 +1,6 @@
 package io.nuls.poc.utils.manager;
 
+import io.nuls.core.basic.AddressTool;
 import io.nuls.core.basic.VarInt;
 import io.nuls.core.constant.TxType;
 import io.nuls.core.core.annotation.Autowired;
@@ -9,7 +10,6 @@ import io.nuls.core.exception.NulsException;
 import io.nuls.core.model.ByteUtils;
 import io.nuls.core.model.DoubleUtils;
 import io.nuls.core.parse.SerializeUtils;
-import io.nuls.crosschain.base.basic.AddressTool;
 import io.nuls.crosschain.base.data.*;
 import io.nuls.poc.constant.ConsensusConstant;
 import io.nuls.poc.constant.ConsensusErrorCode;

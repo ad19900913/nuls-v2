@@ -27,7 +27,7 @@ package io.nuls.network.model;
 
 
 import io.nuls.core.constant.ErrorCode;
-import io.nuls.crosschain.base.data.BaseNulsData;
+import io.nuls.core.data.BaseNulsData;
 import io.nuls.network.constant.NetworkErrorCode;
 
 /**

@@ -26,7 +26,7 @@ package io.nuls.contract.model.dto;
 
 
 import io.nuls.contract.util.ContractUtil;
-import io.nuls.crosschain.base.data.BlockHeader;
+import io.nuls.core.data.BlockHeader;
 
 import java.io.Serializable;
 

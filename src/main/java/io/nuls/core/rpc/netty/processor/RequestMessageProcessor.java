@@ -15,7 +15,6 @@ import io.nuls.core.rpc.netty.channel.ConnectData;
 import io.nuls.core.rpc.netty.channel.manager.ConnectManager;
 import io.nuls.core.rpc.util.NulsDateUtils;
 import io.nuls.core.rpc.util.SerializeUtil;
-import io.nuls.rpc.model.message.*;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;

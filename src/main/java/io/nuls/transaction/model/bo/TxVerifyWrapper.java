@@ -24,7 +24,7 @@
 
 package io.nuls.transaction.model.bo;
 
-import io.nuls.crosschain.base.data.Transaction;
+import io.nuls.core.data.Transaction;
 
 /**
  * 验证区块交易时的交易包装器
