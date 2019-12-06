@@ -60,7 +60,6 @@ cachedBlockSizeLimit=20971520
 genesisBlockPath=genesis-block.json
 dependent=cross-chain,smart-contract,protocol-update
 
-
 [consensus]
 #种子节点列表
 seedNodes=NULSd6Hge7xHDnvsSpnzbR2gWHd31zJ1How11,NULSd6Hgc5VNP4rF4wxdiXEQKpBKUE4w5RS22,NULSd6HgeQwXLdre69ArkqVZNDqMLU4CaAz33,NULSd6HgcjAKAgq8jjXgBCcNLEJUvJEYcoj44,NULSd6HgiDdTjcuvhqzm3bomyBFZmosV3ei55
@@ -93,29 +92,6 @@ dependent=protocol-update,smart-contract,cross-chain
 [smart-contract]
 #合约视图方法调用最大消耗的Gas
 maxViewGas=100000000
-
-[public-service]
-#public-service模块对外的rpc端口号
-rpcPort=8003
-#数据库url地址
-databaseUrl=127.0.0.1
-#数据库端口号
-databasePort=27017
-#连接池最大数
-maxAliveConnect=20
-#连接最大等待时间
-maxWaitTime=120000
-#连接最大持续时间
-socketTimeout=300000
-#连接超时时间
-connectTimeOut=30000
-developerNodeAddress=NULSd6Hgf15aUZj6918tEwy9aT4JG1ZQotXRF
-ambassadorNodeAddress=NULSd6HgcfGtsmm79QDoBK1MAjqNmm3rgKXSj
-mappingAddress=NULSd6HgcfwWCD5TLEfehrJ1fFYuZ6nqGbfiu,NULSd6HggAGpQbhhSHU9R1yRxKKuCCTFwayaB
-businessAddress=NULSd6HgdemcQDAaiEJWq9ESMhtUHXRsNJ4KM
-teamAddress=NULSd6HgbfkSuRGKSLJJzAPAihgDQtaUhuE4L
-communityAddress=NULSd6HgjDZmLMbZSmH9tqb6smdzZHCxsCRD3
-dependent=smart-contract,cross-chain
 
 [cross-chain]
 dataPath=../../../../../data
