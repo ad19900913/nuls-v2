@@ -24,15 +24,10 @@
 
 package io.nuls.contract.rpc.call;
 
-import io.nuls.contract.rpc.CallHelper;
-import io.nuls.core.RPCUtil;
+import io.nuls.block.rpc.BlockResource;
+import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.data.BlockHeader;
-import io.nuls.core.exception.NulsException;
-import io.nuls.core.rpc.info.Constants;
-import io.nuls.core.rpc.model.ModuleE;
-
-import java.util.HashMap;
-import java.util.Map;
+import io.nuls.core.data.NulsHash;
 
 /**
  * @author: PierreLuo
@@ -40,59 +35,22 @@ import java.util.Map;
  */
 public class BlockCall {
 
-    public static long getLatestHeight(int chainId) throws NulsException {
-        try {
-            Map<String, Object> params = new HashMap<>(4);
-            params.put(Constants.VERSION_KEY_STR, "1.0");
-            params.put(Constants.CHAIN_ID, chainId);
-            Map resultMap = (Map) CallHelper.request(ModuleE.BL.abbr, "latestHeight", params);
-            return Long.parseLong(resultMap.get("value").toString());
-        } catch (Exception e) {
-            throw new NulsException(e);
-        }
+    @Autowired
+    private static BlockResource blockResource;
+
+    public static long getLatestHeight(int chainId) {
+        return blockResource.latestHeight(chainId);
     }
 
-    public static BlockHeader getLatestBlockHeader(int chainId) throws NulsException {
-        try {
-            Map<String, Object> params = new HashMap<>(4);
-            params.put(Constants.VERSION_KEY_STR, "1.0");
-            params.put(Constants.CHAIN_ID, chainId);
-            Map resultMap = (Map) CallHelper.request(ModuleE.BL.abbr, "latestBlockHeader", params);
-            BlockHeader header = new BlockHeader();
-            header.parse(RPCUtil.decode((String) resultMap.get("value")), 0);
-            return header;
-        } catch (Exception e) {
-            throw new NulsException(e);
-        }
+    public static BlockHeader getLatestBlockHeader(int chainId) {
+        return blockResource.latestBlockHeader(chainId);
     }
 
-    public static BlockHeader getBlockHeader(int chainId, long height) throws NulsException {
-        try {
-            Map<String, Object> params = new HashMap<>(4);
-            params.put(Constants.VERSION_KEY_STR, "1.0");
-            params.put(Constants.CHAIN_ID, chainId);
-            params.put("height", height);
-            Map resultMap = (Map) CallHelper.request(ModuleE.BL.abbr, "getBlockHeaderByHeight", params);
-            BlockHeader header = new BlockHeader();
-            header.parse(RPCUtil.decode((String) resultMap.get("value")), 0);
-            return header;
-        } catch (Exception e) {
-            throw new NulsException(e);
-        }
+    public static BlockHeader getBlockHeader(int chainId, long height) {
+        return blockResource.getBlockHeaderByHeight(chainId, height);
     }
 
-    public static BlockHeader getBlockHeader(int chainId, String hash) throws NulsException {
-        try {
-            Map<String, Object> params = new HashMap<>(4);
-            params.put(Constants.VERSION_KEY_STR, "1.0");
-            params.put(Constants.CHAIN_ID, chainId);
-            params.put("hash", hash);
-            Map resultMap = (Map) CallHelper.request(ModuleE.BL.abbr, "getBlockHeaderByHash", params);
-            BlockHeader header = new BlockHeader();
-            header.parse(RPCUtil.decode((String) resultMap.get("value")), 0);
-            return header;
-        } catch (Exception e) {
-            throw new NulsException(e);
-        }
+    public static BlockHeader getBlockHeader(int chainId, String hash) {
+        return blockResource.getBlockHeaderByHash(chainId, NulsHash.fromHex(hash));
     }
 }

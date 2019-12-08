@@ -2,7 +2,6 @@ package io.nuls.network.rpc.cmd;
 
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.core.ioc.SpringLiteContext;
-import io.nuls.core.rpc.cmd.BaseCmd;
 import io.nuls.core.rpc.model.*;
 import io.nuls.core.rpc.model.message.Response;
 import io.nuls.network.constant.CmdConstant;
@@ -24,7 +23,7 @@ import java.util.Map;
  * @Description: 网络信息查询接口
  */
 @Component
-public class NetworkInfoRpc extends BaseCmd {
+public class NetworkInfoRpc {
 
     @CmdAnnotation(cmd = CmdConstant.CMD_NW_INFO, version = 1.0,
             description = "获取节点网络基本信息")

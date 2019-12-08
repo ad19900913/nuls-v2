@@ -10,7 +10,6 @@ import io.nuls.core.data.Transaction;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.model.ObjectUtils;
 import io.nuls.core.parse.JSONUtils;
-import io.nuls.core.rpc.cmd.BaseCmd;
 import io.nuls.core.rpc.model.*;
 import io.nuls.core.rpc.model.message.Response;
 import io.nuls.protocol.TxRegisterDetail;
@@ -41,7 +40,7 @@ import static io.nuls.transaction.utils.LoggerUtil.LOG;
  * @date: 2018/11/12
  */
 @Component
-public class TransactionCmd extends BaseCmd {
+public class TransactionCmd {
 
     @Autowired
     private TxService txService;

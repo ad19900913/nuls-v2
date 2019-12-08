@@ -27,8 +27,8 @@ package io.nuls.account.constant;
 
 
 import com.google.common.primitives.UnsignedBytes;
+import io.nuls.core.ModuleE;
 import io.nuls.core.crypto.HexUtil;
-import io.nuls.core.rpc.model.ModuleE;
 
 import java.math.BigInteger;
 import java.util.Comparator;

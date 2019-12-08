@@ -1,5 +1,6 @@
 package io.nuls.poc.utils.thread.process;
 
+import io.nuls.core.NulsDateUtils;
 import io.nuls.core.RPCUtil;
 import io.nuls.core.basic.AddressTool;
 import io.nuls.core.basic.ProtocolVersion;
@@ -12,7 +13,6 @@ import io.nuls.core.exception.NulsException;
 import io.nuls.core.log.logback.NulsLogger;
 import io.nuls.core.model.StringUtils;
 import io.nuls.core.parse.JSONUtils;
-import io.nuls.core.rpc.util.NulsDateUtils;
 import io.nuls.poc.constant.ConsensusConstant;
 import io.nuls.poc.constant.ConsensusErrorCode;
 import io.nuls.poc.model.bo.BlockData;
@@ -160,7 +160,7 @@ public class ConsensusProcess {
             return;
         }
         try {
-            CallMethodUtils.receivePackingBlock(chain.getConfig().getChainId(), RPCUtil.encode(block.serialize()), 0);
+            CallMethodUtils.receivePackingBlock(chain.getConfig().getChainId(), block);
         } catch (Exception e) {
             consensusLogger.error(e);
         }

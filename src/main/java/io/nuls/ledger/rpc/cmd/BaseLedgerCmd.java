@@ -30,7 +30,6 @@ import io.nuls.core.core.ioc.SpringLiteContext;
 import io.nuls.core.data.Transaction;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.model.StringUtils;
-import io.nuls.core.rpc.cmd.BaseCmd;
 import io.nuls.core.rpc.model.message.Response;
 import io.nuls.ledger.constant.LedgerErrorCode;
 import io.nuls.ledger.manager.LedgerChainManager;
@@ -45,7 +44,7 @@ import static io.nuls.ledger.utils.LoggerUtil.logger;
  * @description
  * @date 2019/03/13
  **/
-public class BaseLedgerCmd extends BaseCmd {
+public class BaseLedgerCmd {
     boolean chainHanlder(int chainId) {
         //链判断？判断是否是有效的.
         //进行初始化

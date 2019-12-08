@@ -26,9 +26,9 @@ package io.nuls.block.utils;
 
 import io.nuls.block.manager.ContextManager;
 import io.nuls.block.model.ChainContext;
+import io.nuls.core.ModuleE;
 import io.nuls.core.log.logback.LoggerBuilder;
 import io.nuls.core.log.logback.NulsLogger;
-import io.nuls.core.rpc.model.ModuleE;
 
 /**
  * @author lan

@@ -27,7 +27,6 @@ package io.nuls.network.rpc.cmd;
 import io.nuls.core.RPCUtil;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.log.Log;
-import io.nuls.core.rpc.cmd.BaseCmd;
 import io.nuls.core.rpc.model.*;
 import io.nuls.core.rpc.model.message.Response;
 import io.nuls.network.constant.CmdConstant;
@@ -51,7 +50,7 @@ import java.util.*;
  * @date 2018/11/12
  **/
 @Component
-public class MessageRpc extends BaseCmd {
+public class MessageRpc {
 
     private MessageHandlerFactory messageHandlerFactory = MessageHandlerFactory.getInstance();
 

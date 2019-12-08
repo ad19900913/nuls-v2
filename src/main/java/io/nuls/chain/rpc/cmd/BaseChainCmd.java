@@ -42,7 +42,6 @@ import io.nuls.core.exception.NulsException;
 import io.nuls.core.exception.NulsRuntimeException;
 import io.nuls.core.model.BigIntegerUtils;
 import io.nuls.core.model.StringUtils;
-import io.nuls.core.rpc.cmd.BaseCmd;
 import io.nuls.core.rpc.model.message.Response;
 import io.nuls.core.signture.P2PHKSignature;
 
@@ -53,7 +52,7 @@ import java.util.List;
  * @author lan
  * @date 2018/11/28
  */
-public class BaseChainCmd extends BaseCmd {
+public class BaseChainCmd {
 
 
     boolean isMainAsset(String assetKey) {

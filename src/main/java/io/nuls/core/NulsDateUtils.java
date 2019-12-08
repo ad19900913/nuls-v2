@@ -23,14 +23,13 @@
  *
  */
 
-package io.nuls.core.rpc.util;
+package io.nuls.core;
 
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.log.Log;
 import io.nuls.core.model.DateUtils;
 import io.nuls.core.parse.JSONUtils;
 import io.nuls.core.rpc.info.Constants;
-import io.nuls.core.rpc.model.ModuleE;
 import io.nuls.core.rpc.model.message.Response;
 import io.nuls.core.rpc.netty.processor.ResponseMessageProcessor;
 import io.nuls.core.thread.ThreadUtils;
@@ -47,17 +46,68 @@ import java.util.Map;
 public class NulsDateUtils extends DateUtils implements Runnable {
 
     private static NulsDateUtils instance = new NulsDateUtils();
+
     private static long offset;
+
     /**
      * 重新同步时间间隔
      * Resynchronize the interval.
      * 1 minutes;
      */
     private long NET_REFRESH_TIME = 60 * 1000L;
-    private boolean running;
 
     public static NulsDateUtils getInstance() {
         return instance;
+    }
+
+    private boolean running;
+
+
+    /**
+     * 启动时间同步线程
+     * Start the time synchronization thread.
+     */
+    public void start() {
+        start(0);
+    }
+
+    public void start(long refreshTime) {
+        if (running) {
+            return;
+        }
+        running = true;
+        if (refreshTime > 0) {
+            NET_REFRESH_TIME = refreshTime;
+        }
+        Log.debug("----------- NulsDateUtils start -------------");
+        ThreadUtils.createAndRunThread("NulsDateUtils", this, true);
+    }
+
+
+    @Override
+    public void run() {
+        while (true) {
+            getNetworkTime();
+            try {
+                Thread.sleep(NET_REFRESH_TIME);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void getNetworkTime() {
+        Map<String, Object> params = new HashMap<>(8);
+        params.put(Constants.VERSION_KEY_STR, "1.0");
+        try {
+            HashMap hashMap = (HashMap) request(ModuleE.NW.abbr, "nw_currentTimeMillis", params, 200L);
+            long time = Long.valueOf(hashMap.get("currentTimeMillis").toString());
+            offset = time - System.currentTimeMillis();
+        } catch (NulsException e) {
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
     }
 
     public static Object request(String moduleCode, String cmd, Map params, Long timeout) throws NulsException {
@@ -102,52 +152,6 @@ public class NulsDateUtils extends DateUtils implements Runnable {
 
     public static long getNanoTime() {
         return System.nanoTime() + (offset * 1000000);
-    }
-
-    /**
-     * 启动时间同步线程
-     * Start the time synchronization thread.
-     */
-    public void start() {
-        start(0);
-    }
-
-    public void start(long refreshTime) {
-        if (running) {
-            return;
-        }
-        running = true;
-        if (refreshTime > 0) {
-            NET_REFRESH_TIME = refreshTime;
-        }
-        Log.debug("----------- NulsDateUtils start -------------");
-        ThreadUtils.createAndRunThread("NulsDateUtils", this, true);
-    }
-
-    @Override
-    public void run() {
-        while (true) {
-            getNetworkTime();
-            try {
-                Thread.sleep(NET_REFRESH_TIME);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void getNetworkTime() {
-        Map<String, Object> params = new HashMap<>(8);
-        params.put(Constants.VERSION_KEY_STR, "1.0");
-        try {
-            HashMap hashMap = (HashMap) request(ModuleE.NW.abbr, "nw_currentTimeMillis", params, 200L);
-            long time = Long.valueOf(hashMap.get("currentTimeMillis").toString());
-            offset = time - System.currentTimeMillis();
-        } catch (NulsException e) {
-            e.printStackTrace();
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
     }
 
 }

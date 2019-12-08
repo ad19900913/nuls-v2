@@ -5,7 +5,6 @@ import io.nuls.core.basic.NulsByteBuffer;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.exception.NulsException;
-import io.nuls.core.rpc.cmd.BaseCmd;
 import io.nuls.core.rpc.model.CmdAnnotation;
 import io.nuls.core.rpc.model.Parameter;
 import io.nuls.core.rpc.model.ResponseData;
@@ -25,7 +24,7 @@ import java.util.Map;
  * @date 2019/4/8
  */
 @Component
-public class CrossChainProtocolCmd extends BaseCmd {
+public class CrossChainProtocolCmd {
     @Autowired
     private ProtocolService service;
 

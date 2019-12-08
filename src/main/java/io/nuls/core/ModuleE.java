@@ -22,7 +22,7 @@
  * SOFTWARE.
  *
  */
-package io.nuls.core.rpc.model;
+package io.nuls.core;
 
 import java.util.Arrays;
 
@@ -52,9 +52,15 @@ public enum ModuleE {
     AP("ap", Constant.PUBLIC_SERVICE, ModuleE.DOMAIN);
 
     public static final String DOMAIN = "Nuls";
+
+    public static ModuleE valueOfAbbr(String abbr) {
+        return Arrays.stream(ModuleE.values()).filter(m -> m.abbr.equals(abbr)).findFirst().orElseThrow(() -> new IllegalArgumentException("can not found abbr of " + abbr));
+    }
+
     public final String abbr;
     public final String name;
     public final String domain;
+
     public final String prefix;
 
     ModuleE(String prefix, String name, String domain) {
@@ -62,10 +68,6 @@ public enum ModuleE {
         this.name = name.toLowerCase();
         this.domain = domain;
         this.prefix = prefix;
-    }
-
-    public static ModuleE valueOfAbbr(String abbr) {
-        return Arrays.stream(ModuleE.values()).filter(m -> m.abbr.equals(abbr)).findFirst().orElseThrow(() -> new IllegalArgumentException("can not found abbr of " + abbr));
     }
 
     public static boolean hasOfAbbr(String abbr) {
@@ -78,11 +80,6 @@ public enum ModuleE {
 
     public String getName() {
         return this.name;
-    }
-
-    @Override
-    public String toString() {
-        return domain + "/" + name + "/" + abbr;
     }
 
     public static class Constant {
@@ -114,5 +111,10 @@ public enum ModuleE {
         public static final String PUBLIC_SERVICE = "public-service";
 
         public static final String CMD = "cmd-client";
+    }
+
+    @Override
+    public String toString() {
+        return domain + "/" + name + "/" + abbr;
     }
 }

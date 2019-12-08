@@ -1,10 +1,10 @@
 package io.nuls.poc.constant;
 
+import io.nuls.core.ModuleE;
 import io.nuls.core.basic.ModuleConfig;
 import io.nuls.core.basic.VersionChangeInvoker;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.core.annotation.Configuration;
-import io.nuls.core.rpc.model.ModuleE;
 import io.nuls.poc.model.bo.config.ConfigBean;
 
 import java.io.File;

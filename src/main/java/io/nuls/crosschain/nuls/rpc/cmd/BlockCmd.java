@@ -3,7 +3,6 @@ package io.nuls.crosschain.nuls.rpc.cmd;
 import io.nuls.core.basic.Result;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
-import io.nuls.core.rpc.cmd.BaseCmd;
 import io.nuls.core.rpc.model.CmdAnnotation;
 import io.nuls.core.rpc.model.Parameter;
 import io.nuls.core.rpc.model.ResponseData;
@@ -20,7 +19,7 @@ import java.util.Map;
  * @date 2019/4/25
  */
 @Component
-public class BlockCmd extends BaseCmd {
+public class BlockCmd {
     @Autowired
     private BlockService service;
 

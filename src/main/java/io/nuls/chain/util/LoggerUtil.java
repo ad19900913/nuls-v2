@@ -24,9 +24,9 @@
  */
 package io.nuls.chain.util;
 
+import io.nuls.core.ModuleE;
 import io.nuls.core.log.logback.LoggerBuilder;
 import io.nuls.core.log.logback.NulsLogger;
-import io.nuls.core.rpc.model.ModuleE;
 
 /**
  * @author lan

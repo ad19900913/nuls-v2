@@ -66,7 +66,7 @@ public interface ProtocolService {
      * @return
      * @throws NulsException
      */
-    boolean save(int chainId, BlockHeader blockHeader) throws NulsException;
+    boolean save(int chainId, BlockHeader blockHeader);
 
     /**
      * 回滚区块头
@@ -76,6 +76,6 @@ public interface ProtocolService {
      * @return
      * @throws NulsException
      */
-    boolean rollback(int chainId, BlockHeader blockHeader) throws NulsException;
+    boolean rollback(int chainId, BlockHeader blockHeader);
 
 }

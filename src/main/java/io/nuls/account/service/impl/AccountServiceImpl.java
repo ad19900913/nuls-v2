@@ -33,7 +33,6 @@ import io.nuls.account.model.bo.AccountKeyStore;
 import io.nuls.account.model.bo.Chain;
 import io.nuls.account.model.po.AccountPO;
 import io.nuls.account.rpc.call.ContractCall;
-import io.nuls.account.rpc.call.EventCall;
 import io.nuls.account.service.AccountCacheService;
 import io.nuls.account.service.AccountKeyStoreService;
 import io.nuls.account.service.AccountService;

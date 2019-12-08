@@ -26,9 +26,9 @@
 package io.nuls.network.constant;
 
 
+import io.nuls.core.ModuleE;
 import io.nuls.core.constant.CommonCodeConstanst;
 import io.nuls.core.constant.ErrorCode;
-import io.nuls.core.rpc.model.ModuleE;
 
 /**
  * 错误码管理器

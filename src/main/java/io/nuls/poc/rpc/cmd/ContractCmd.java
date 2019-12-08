@@ -3,7 +3,6 @@ package io.nuls.poc.rpc.cmd;
 import io.nuls.core.basic.Result;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
-import io.nuls.core.rpc.cmd.BaseCmd;
 import io.nuls.core.rpc.model.*;
 import io.nuls.core.rpc.model.message.Response;
 import io.nuls.poc.service.ContractService;
@@ -13,11 +12,12 @@ import java.util.Map;
 
 /**
  * 智能合约与共识交互接口
+ *
  * @author tag
  * 2019/5/5
- * */
+ */
 @Component
-public class ContractCmd extends BaseCmd {
+public class ContractCmd {
     @Autowired
     private ContractService service;
 
@@ -26,7 +26,7 @@ public class ContractCmd extends BaseCmd {
      * */
     @CmdAnnotation(cmd = "cs_createContractAgent", version = 1.0, description = "智能合约创建节点/contract create agent")
     @Parameter(parameterName = "chainId", requestType = @TypeDescriptor(value = int.class), parameterDes = "链id")
-    @Parameter(parameterName = "packingAddress", parameterType = "String",parameterDes = "出块地址")
+    @Parameter(parameterName = "packingAddress", parameterType = "String", parameterDes = "出块地址")
     @Parameter(parameterName = "deposit", parameterDes = "抵押金额")
     @Parameter(parameterName = "commissionRate", parameterDes = "佣金比例")
     @Parameter(parameterName = "contractAddress", parameterDes = "合约地址")

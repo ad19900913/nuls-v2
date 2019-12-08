@@ -20,6 +20,7 @@
 
 package io.nuls;
 
+import io.nuls.core.ModuleE;
 import io.nuls.core.basic.ModuleConfig;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.core.annotation.Configuration;
@@ -30,9 +31,6 @@ import io.nuls.core.log.logback.LoggerBuilder;
 import io.nuls.core.log.logback.NulsLogger;
 import io.nuls.core.model.StringUtils;
 import io.nuls.core.parse.config.IniEntity;
-import io.nuls.core.rpc.info.NoUse;
-import io.nuls.core.rpc.model.ModuleE;
-import io.nuls.core.rpc.netty.channel.manager.ConnectManager;
 import io.nuls.core.thread.ThreadUtils;
 import lombok.Cleanup;
 import lombok.Setter;
@@ -46,7 +44,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 虚拟核心模块启动类
@@ -115,10 +112,6 @@ public class Bootstrap implements ModuleConfig {
             }));
             ThreadUtils.createAndRunThread("startModule",()->{
                 try {
-                    //等待mykernel启动完毕
-                    while (!ConnectManager.isReady()) {
-                        TimeUnit.SECONDS.sleep(5);
-                    }
                     //获取Modules目录
                     File modules = new File(args[1]);
                     //遍历modules目录查找带有module.ncf文件的目录
@@ -206,15 +199,6 @@ public class Bootstrap implements ModuleConfig {
 
     public boolean doStart() {
         startOtherModule(args);
-        int port = 7771;
-        String host = "0.0.0.0";
-        String path = "/";
-        try {
-            NoUse.startKernel(host, port, path);
-        } catch (Exception e) {
-            log.error("mykernel start fail",e);
-        }
-        log.info("MYKERNEL STARTED. URL: ws://{}{}", host + ":" + port, path);
         return false;
     }
 

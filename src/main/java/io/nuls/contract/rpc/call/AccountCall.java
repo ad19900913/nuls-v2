@@ -26,13 +26,13 @@ package io.nuls.contract.rpc.call;
 
 import io.nuls.contract.rpc.CallHelper;
 import io.nuls.contract.util.Log;
+import io.nuls.core.ModuleE;
 import io.nuls.core.RPCUtil;
 import io.nuls.core.basic.Result;
 import io.nuls.core.data.Transaction;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.model.StringUtils;
 import io.nuls.core.rpc.info.Constants;
-import io.nuls.core.rpc.model.ModuleE;
 import io.nuls.core.rpc.model.message.Response;
 import io.nuls.core.rpc.netty.processor.ResponseMessageProcessor;
 import io.nuls.core.signture.P2PHKSignature;

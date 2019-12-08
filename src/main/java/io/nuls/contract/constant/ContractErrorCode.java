@@ -24,9 +24,9 @@
  */
 package io.nuls.contract.constant;
 
+import io.nuls.core.ModuleE;
 import io.nuls.core.constant.CommonCodeConstanst;
 import io.nuls.core.constant.ErrorCode;
-import io.nuls.core.rpc.model.ModuleE;
 
 /**
  * @author: PierreLuo

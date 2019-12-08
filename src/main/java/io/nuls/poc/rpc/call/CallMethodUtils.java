@@ -1,17 +1,16 @@
 package io.nuls.poc.rpc.call;
 
+import io.nuls.block.rpc.BlockResource;
+import io.nuls.core.ModuleE;
 import io.nuls.core.RPCUtil;
 import io.nuls.core.basic.AddressTool;
-import io.nuls.core.data.BlockExtendsData;
-import io.nuls.core.data.BlockHeader;
-import io.nuls.core.data.MultiSigAccount;
-import io.nuls.core.data.Transaction;
+import io.nuls.core.core.annotation.Autowired;
+import io.nuls.core.data.*;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.log.Log;
 import io.nuls.core.log.logback.NulsLogger;
 import io.nuls.core.model.StringUtils;
 import io.nuls.core.rpc.info.Constants;
-import io.nuls.core.rpc.model.ModuleE;
 import io.nuls.core.rpc.model.message.Response;
 import io.nuls.core.rpc.netty.processor.ResponseMessageProcessor;
 import io.nuls.core.rpc.util.NulsDateUtils;
@@ -40,6 +39,9 @@ import java.util.Map;
 public class CallMethodUtils {
     public static final long MIN_PACK_SURPLUS_TIME = 2000;
     public static final long TIME_OUT = 1000;
+
+    @Autowired
+    private static BlockResource blockResource;
 
     /**
      * 账户验证
@@ -179,19 +181,11 @@ public class CallMethodUtils {
      *
      * @param chainId chain ID
      * @param block   new block Info
-     * @param timeOut 接口超时时间
      * @return Successful Sending
      */
     @SuppressWarnings("unchecked")
-    public static void receivePackingBlock(int chainId, String block, long timeOut) throws NulsException {
-        Map<String, Object> params = new HashMap(4);
-        params.put(Constants.CHAIN_ID, chainId);
-        params.put("block", block);
-        try {
-            ResponseMessageProcessor.requestAndResponse(ModuleE.BL.abbr, "receivePackingBlock", params, timeOut);
-        } catch (Exception e) {
-            throw new NulsException(e);
-        }
+    public static void receivePackingBlock(int chainId, Block block) {
+        blockResource.receivePackingBlock(chainId, block);
     }
 
     /**
@@ -486,35 +480,8 @@ public class CallMethodUtils {
      * @param chain chain info
      */
     @SuppressWarnings("unchecked")
-    public static void loadBlockHeader(Chain chain) throws Exception {
-        Map params = new HashMap(ConsensusConstant.INIT_CAPACITY);
-        params.put(Constants.CHAIN_ID, chain.getConfig().getChainId());
-        params.put("round", ConsensusConstant.INIT_BLOCK_HEADER_COUNT);
-        Response response = ResponseMessageProcessor.requestAndResponse(ModuleE.BL.abbr, "getLatestRoundBlockHeaders", params);
-        Map<String, Object> responseData;
-        List<String> blockHeaderHexs = new ArrayList<>();
-        if (response.isSuccess()) {
-            responseData = (Map<String, Object>) response.getResponseData();
-            Map result = (Map) responseData.get("getLatestRoundBlockHeaders");
-            blockHeaderHexs = (List<String>) result.get("value");
-        }
-        while (!response.isSuccess() && blockHeaderHexs.size() == 0) {
-            response = ResponseMessageProcessor.requestAndResponse(ModuleE.BL.abbr, "getLatestRoundBlockHeaders", params);
-            if (response.isSuccess()) {
-                responseData = (Map<String, Object>) response.getResponseData();
-                Map result = (Map) responseData.get("getLatestRoundBlockHeaders");
-                blockHeaderHexs = (List<String>) result.get("value");
-                break;
-            }
-            Log.debug("---------------------------区块加载失败！");
-            Thread.sleep(1000);
-        }
-        List<BlockHeader> blockHeaders = new ArrayList<>();
-        for (String blockHeaderHex : blockHeaderHexs) {
-            BlockHeader blockHeader = new BlockHeader();
-            blockHeader.parse(RPCUtil.decode(blockHeaderHex), 0);
-            blockHeaders.add(blockHeader);
-        }
+    public static void loadBlockHeader(Chain chain) {
+        List<BlockHeader> blockHeaders = blockResource.getLatestRoundBlockHeaders(chain.getConfig().getChainId(), ConsensusConstant.INIT_BLOCK_HEADER_COUNT)
         blockHeaders.sort(new BlockHeaderComparator());
         chain.setBlockHeaderList(blockHeaders);
         chain.setNewestHeader(blockHeaders.get(blockHeaders.size() - 1));
@@ -529,38 +496,9 @@ public class CallMethodUtils {
      * @param chain chain info
      */
     @SuppressWarnings("unchecked")
-    public static void getRoundBlockHeaders(Chain chain, long roundCount, long startHeight) throws Exception {
-        Map params = new HashMap(ConsensusConstant.INIT_CAPACITY);
-        params.put(Constants.CHAIN_ID, chain.getConfig().getChainId());
-        params.put("round", roundCount);
-        params.put("height", startHeight);
-        Response response = ResponseMessageProcessor.requestAndResponse(ModuleE.BL.abbr, "getRoundBlockHeaders", params);
-        Map<String, Object> responseData;
-        List<String> blockHeaderHexs = new ArrayList<>();
-        if (response.isSuccess()) {
-            responseData = (Map<String, Object>) response.getResponseData();
-            Map result = (Map) responseData.get("getRoundBlockHeaders");
-            blockHeaderHexs = (List<String>) result.get("value");
-        }
-        int tryCount = 0;
-        while (!response.isSuccess() && blockHeaderHexs.size() == 0 && tryCount < ConsensusConstant.RPC_CALL_TRY_COUNT) {
-            response = ResponseMessageProcessor.requestAndResponse(ModuleE.BL.abbr, "getRoundBlockHeaders", params);
-            if (response.isSuccess()) {
-                responseData = (Map<String, Object>) response.getResponseData();
-                Map result = (Map) responseData.get("getRoundBlockHeaders");
-                blockHeaderHexs = (List<String>) result.get("value");
-                break;
-            }
-            tryCount++;
-            Log.debug("---------------------------回滚区块轮次变化从新加载区块失败！");
-            Thread.sleep(1000);
-        }
-        List<BlockHeader> blockHeaders = new ArrayList<>();
-        for (String blockHeaderHex : blockHeaderHexs) {
-            BlockHeader blockHeader = new BlockHeader();
-            blockHeader.parse(RPCUtil.decode(blockHeaderHex), 0);
-            blockHeaders.add(blockHeader);
-        }
+    public static void getRoundBlockHeaders(Chain chain, int roundCount, long startHeight) {
+        int chainId = chain.getConfig().getChainId();
+        List<BlockHeader> blockHeaders = blockResource.getRoundBlockHeaders(chainId, startHeight, roundCount);
         blockHeaders.sort(new BlockHeaderComparator());
         chain.getBlockHeaderList().addAll(0, blockHeaders);
         Log.debug("---------------------------回滚区块轮次变化从新加载区块成功！");

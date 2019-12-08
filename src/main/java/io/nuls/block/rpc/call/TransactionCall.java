@@ -22,6 +22,7 @@ package io.nuls.block.rpc.call;
 
 import io.nuls.block.manager.ContextManager;
 import io.nuls.block.utils.BlockUtil;
+import io.nuls.core.ModuleE;
 import io.nuls.core.RPCUtil;
 import io.nuls.core.basic.NulsByteBuffer;
 import io.nuls.core.data.NulsHash;
@@ -29,7 +30,6 @@ import io.nuls.core.data.Transaction;
 import io.nuls.core.data.po.BlockHeaderPo;
 import io.nuls.core.log.logback.NulsLogger;
 import io.nuls.core.rpc.info.Constants;
-import io.nuls.core.rpc.model.ModuleE;
 import io.nuls.core.rpc.model.message.Response;
 import io.nuls.core.rpc.netty.processor.ResponseMessageProcessor;
 

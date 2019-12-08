@@ -24,10 +24,10 @@
 package io.nuls.contract.config;
 
 import io.nuls.contract.model.bo.config.ConfigBean;
+import io.nuls.core.ModuleE;
 import io.nuls.core.basic.ModuleConfig;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.core.annotation.Configuration;
-import io.nuls.core.rpc.model.ModuleE;
 
 /**
  * @author: PierreLuo

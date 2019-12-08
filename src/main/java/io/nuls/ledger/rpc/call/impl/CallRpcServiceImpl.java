@@ -24,17 +24,10 @@
  */
 package io.nuls.ledger.rpc.call.impl;
 
+import io.nuls.block.rpc.BlockResource;
+import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
-import io.nuls.core.parse.JSONUtils;
-import io.nuls.core.rpc.model.ModuleE;
-import io.nuls.core.rpc.model.message.Response;
-import io.nuls.core.rpc.netty.processor.ResponseMessageProcessor;
-import io.nuls.ledger.constant.CmdConstant;
 import io.nuls.ledger.rpc.call.CallRpcService;
-import io.nuls.ledger.utils.LoggerUtil;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author lanjinsheng
@@ -43,26 +36,11 @@ import java.util.Map;
  */
 @Component
 public class CallRpcServiceImpl implements CallRpcService {
+    @Autowired
+    private static BlockResource blockResource;
+
     @Override
     public long getBlockLatestHeight(int chainId) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("chainId", chainId);
-        try {
-            Response response = ResponseMessageProcessor.requestAndResponse(ModuleE.BL.abbr, CmdConstant.CMD_LATEST_HEIGHT, map);
-            if (null != response && response.isSuccess()) {
-                Map responseData = (Map) response.getResponseData();
-                if (null != responseData) {
-                    Map datas = (Map) responseData.get(CmdConstant.CMD_LATEST_HEIGHT);
-                    if (null != datas) {
-                        return Long.parseLong(datas.get("value").toString());
-                    }
-                }
-            } else {
-                LoggerUtil.logger(chainId).error("getBlockLatestHeight fail.response={}", JSONUtils.obj2json(response));
-            }
-        } catch (Exception e) {
-            LoggerUtil.logger(chainId).error(e);
-        }
-        return 0;
+        return blockResource.latestHeight(chainId);
     }
 }

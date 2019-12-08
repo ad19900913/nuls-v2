@@ -24,9 +24,9 @@
  */
 package io.nuls.protocol.utils;
 
+import io.nuls.core.ModuleE;
 import io.nuls.core.log.logback.LoggerBuilder;
 import io.nuls.core.log.logback.NulsLogger;
-import io.nuls.core.rpc.model.ModuleE;
 import io.nuls.protocol.manager.ContextManager;
 import io.nuls.protocol.model.ProtocolContext;
 

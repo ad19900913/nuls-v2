@@ -1,11 +1,11 @@
 package io.nuls.account.config;
 
 import io.nuls.account.model.bo.config.ConfigBean;
+import io.nuls.core.ModuleE;
 import io.nuls.core.basic.ModuleConfig;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.core.annotation.Configuration;
 import io.nuls.core.core.annotation.Persist;
-import io.nuls.core.rpc.model.ModuleE;
 
 /**
  * @Author: zhoulijun

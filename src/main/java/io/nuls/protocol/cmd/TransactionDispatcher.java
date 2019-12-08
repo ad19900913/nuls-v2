@@ -10,7 +10,6 @@ import io.nuls.core.data.Transaction;
 import io.nuls.core.log.Log;
 import io.nuls.core.model.ObjectUtils;
 import io.nuls.core.model.StringUtils;
-import io.nuls.core.rpc.cmd.BaseCmd;
 import io.nuls.core.rpc.info.Constants;
 import io.nuls.core.rpc.model.CmdAnnotation;
 import io.nuls.core.rpc.model.Parameter;
@@ -32,7 +31,7 @@ import java.util.stream.Collectors;
  * @date 2019/5/24 19:02
  */
 @Component
-public final class TransactionDispatcher extends BaseCmd {
+public final class TransactionDispatcher {
 
     private List<TransactionProcessor> processors;
     @Autowired("EmptyCommonAdvice")

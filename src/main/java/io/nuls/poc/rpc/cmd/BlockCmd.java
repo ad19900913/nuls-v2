@@ -3,7 +3,6 @@ package io.nuls.poc.rpc.cmd;
 import io.nuls.core.basic.Result;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
-import io.nuls.core.rpc.cmd.BaseCmd;
 import io.nuls.core.rpc.model.*;
 import io.nuls.core.rpc.model.message.Response;
 import io.nuls.poc.service.BlockService;
@@ -17,7 +16,7 @@ import java.util.Map;
  * 2018/11/7
  */
 @Component
-public class BlockCmd extends BaseCmd {
+public class BlockCmd {
     @Autowired
     private BlockService service;
 

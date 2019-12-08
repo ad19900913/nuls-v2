@@ -3,7 +3,6 @@ package io.nuls.poc.rpc.cmd;
 import io.nuls.core.basic.Result;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
-import io.nuls.core.rpc.cmd.BaseCmd;
 import io.nuls.core.rpc.model.*;
 import io.nuls.core.rpc.model.message.Response;
 import io.nuls.poc.service.AgentService;
@@ -13,11 +12,12 @@ import java.util.Map;
 
 /**
  * 共识模块交易验证器
+ *
  * @author tag
  * @date 2019/6/1
  */
 @Component
-public class ConsensusTransactionHandler extends BaseCmd {
+public class ConsensusTransactionHandler {
 
     @Autowired
     private AgentService agentService;

@@ -23,7 +23,6 @@ import io.nuls.core.data.Transaction;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.exception.NulsRuntimeException;
 import io.nuls.core.parse.JSONUtils;
-import io.nuls.core.rpc.cmd.BaseCmd;
 import io.nuls.core.rpc.model.*;
 import io.nuls.core.rpc.model.message.Response;
 
@@ -39,7 +38,7 @@ import static io.nuls.account.util.LoggerUtil.LOG;
  * @date: 2018/11/5
  */
 @Component
-public class TransactionCmd extends BaseCmd {
+public class TransactionCmd {
 
     @Autowired
     private TransactionService transactionService;

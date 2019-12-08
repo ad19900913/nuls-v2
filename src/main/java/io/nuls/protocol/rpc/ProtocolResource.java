@@ -21,21 +21,12 @@
 package io.nuls.protocol.rpc;
 
 import com.google.common.collect.Maps;
-import io.nuls.core.RPCUtil;
-import io.nuls.core.basic.NulsByteBuffer;
 import io.nuls.core.basic.ProtocolVersion;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
-import io.nuls.core.crypto.HexUtil;
 import io.nuls.core.data.BlockExtendsData;
 import io.nuls.core.data.BlockHeader;
-import io.nuls.core.exception.NulsException;
 import io.nuls.core.log.logback.NulsLogger;
-import io.nuls.core.parse.JSONUtils;
-import io.nuls.core.rpc.cmd.BaseCmd;
-import io.nuls.core.rpc.info.Constants;
-import io.nuls.core.rpc.model.*;
-import io.nuls.core.rpc.model.message.Response;
 import io.nuls.protocol.Protocol;
 import io.nuls.protocol.manager.ContextManager;
 import io.nuls.protocol.model.ProtocolContext;
@@ -46,8 +37,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static io.nuls.protocol.constant.CommandConstant.*;
-
 /**
  * 模块的对外接口类
  *
@@ -56,152 +45,78 @@ import static io.nuls.protocol.constant.CommandConstant.*;
  * @date 18-11-9 下午2:04
  */
 @Component
-public class ProtocolResource extends BaseCmd {
+public class ProtocolResource {
     @Autowired
     private ProtocolService service;
 
     /**
      * 获取当前主网版本信息
      *
-     * @param map
      * @return
      */
-    @CmdAnnotation(cmd = GET_VERSION, version = 1.0, description = "get mainnet version")
-    @Parameters({
-            @Parameter(parameterName = "chainId", requestType = @TypeDescriptor(value = int.class), parameterDes = "链ID"),
-    })
-    @ResponseData(name = "返回值", description = "返回一个Map对象，包含三个属性", responseType = @TypeDescriptor(value = Map.class, mapKeys = {
-            @Key(name = "version", valueType = Short.class, description = "协议版本号"),
-            @Key(name = "effectiveRatio", valueType = Byte.class, description = "每个统计区间内的最小生效比例"),
-            @Key(name = "continuousIntervalCount", valueType = Short.class, description = "协议生效要满足的连续区间数")})
-    )
-    public Response getVersion(Map map) {
-        int chainId = Integer.parseInt(map.get(Constants.CHAIN_ID).toString());
+    public Map<String, ProtocolVersion> getVersion(int chainId) {
         ProtocolContext context = ContextManager.getContext(chainId);
         ProtocolVersion currentProtocolVersion = context.getCurrentProtocolVersion();
         ProtocolVersion localProtocolVersion = context.getLocalProtocolVersion();
         Map<String, ProtocolVersion> result = new HashMap<>();
         result.put("currentProtocolVersion", currentProtocolVersion);
         result.put("localProtocolVersion", localProtocolVersion);
-        return success(result);
+        return result;
     }
 
     /**
      * 验证新收到区块的版本号是否正确
      *
-     * @param map
      * @return
      */
-    @CmdAnnotation(cmd = CHECK_BLOCK_VERSION, version = 1.0, description = "check block version")
-    @Parameters({
-            @Parameter(parameterName = "chainId", requestType = @TypeDescriptor(value = int.class), parameterDes = "链ID"),
-            @Parameter(parameterName = "extendsData", requestType = @TypeDescriptor(value = String.class), parameterDes = "BlockExtendsData序列化后的hex字符串")
-    })
-    @ResponseData(name = "返回值", description = "无返回值")
-    public Response checkBlockVersion(Map map) {
-        int chainId = Integer.parseInt(map.get(Constants.CHAIN_ID).toString());
-        String extendStr = map.get("extendsData").toString();
-        BlockExtendsData extendsData = new BlockExtendsData(RPCUtil.decode(extendStr));
-
+    public boolean checkBlockVersion(int chainId, BlockExtendsData extendsData) {
         ProtocolContext context = ContextManager.getContext(chainId);
         ProtocolVersion currentProtocol = context.getCurrentProtocolVersion();
         //收到的新区块和本地主网版本不一致，验证不通过
         if (currentProtocol.getVersion() != extendsData.getMainVersion()) {
             NulsLogger logger = context.getLogger();
             logger.info("------block version error, mainVersion:" + currentProtocol.getVersion() + ",blockVersion:" + extendsData.getMainVersion());
-            return failed("block version error");
+            return false;
         }
-        return success();
+        return true;
     }
 
     /**
      * 保存区块
      *
-     * @param map
      * @return
      */
-    @CmdAnnotation(cmd = SAVE_BLOCK, version = 1.0, description = "save block header")
-    @Parameters({
-            @Parameter(parameterName = "chainId", requestType = @TypeDescriptor(value = int.class), parameterDes = "链ID"),
-            @Parameter(parameterName = "blockHeader", requestType = @TypeDescriptor(value = String.class), parameterDes = "区块头hex")
-    })
-    @ResponseData(name = "返回值", description = "无返回值")
-    public Response save(Map map) {
-        int chainId = Integer.parseInt(map.get(Constants.CHAIN_ID).toString());
-        String hex = map.get("blockHeader").toString();
-        BlockHeader blockHeader = new BlockHeader();
-        try {
-            blockHeader.parse(new NulsByteBuffer(HexUtil.decode(hex)));
-            if (service.save(chainId, blockHeader)) {
-                return success();
-            } else {
-                return failed("protocol save failed!");
-            }
-        } catch (NulsException e) {
-            return failed(e.getMessage());
-        }
+    public boolean save(int chainId, BlockHeader blockHeader) {
+        return service.save(chainId, blockHeader);
     }
 
     /**
      * 回滚区块
      *
-     * @param map
      * @return
      */
-    @CmdAnnotation(cmd = ROLLBACK_BLOCK, version = 1.0, description = "rollback block header")
-    @Parameters({
-            @Parameter(parameterName = "chainId", requestType = @TypeDescriptor(value = int.class), parameterDes = "链ID"),
-            @Parameter(parameterName = "blockHeader", requestType = @TypeDescriptor(value = String.class), parameterDes = "区块头hex")
-    })
-    @ResponseData(name = "返回值", description = "无返回值")
-    public Response rollback(Map map) {
-        int chainId = Integer.parseInt(map.get(Constants.CHAIN_ID).toString());
-        String hex = map.get("blockHeader").toString();
-        BlockHeader blockHeader = new BlockHeader();
-        try {
-            blockHeader.parse(new NulsByteBuffer(HexUtil.decode(hex)));
-            if (service.rollback(chainId, blockHeader)) {
-                return success();
-            } else {
-                return failed("protocol rollback failed!");
-            }
-        } catch (NulsException e) {
-            return failed(e.getMessage());
-        }
+    public boolean rollback(int chainId, BlockHeader blockHeader) {
+        return service.rollback(chainId, blockHeader);
     }
 
     /**
      * 接受各模块注册多版本配置
      *
-     * @param map
      * @return
      */
-    @CmdAnnotation(cmd = REGISTER_PROTOCOL, version = 1.0, description = "register protocol")
-    @Parameters({
-            @Parameter(parameterName = "chainId", requestType = @TypeDescriptor(value = int.class), parameterDes = "链ID"),
-            @Parameter(parameterName = "moduleCode", requestType = @TypeDescriptor(value = String.class), parameterDes = "模块标志"),
-            @Parameter(parameterName = "list", requestType = @TypeDescriptor(value = List.class), parameterDes = "Protocol序列化后的hex字符串"),
-    })
-    @ResponseData(name = "返回值", description = "无返回值")
-    public Response registerProtocol(Map map) {
-        int chainId = Integer.parseInt(map.get(Constants.CHAIN_ID).toString());
+    public boolean registerProtocol(int chainId, String moduleCode, List<Protocol> list) {
         ProtocolContext context = ContextManager.getContext(chainId);
         Map<Short, List<Map.Entry<String, Protocol>>> protocolMap = context.getProtocolMap();
         NulsLogger logger = context.getLogger();
-        String moduleCode = map.get("moduleCode").toString();
-        List list = (List) map.get("list");
         logger.info("--------------------registerProtocol---------------------------");
         logger.info("moduleCode-" + moduleCode);
-//        JSONUtils.getInstance().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        for (Object o : list) {
-            Map m = (Map) o;
-            Protocol protocol = JSONUtils.map2pojo(m, Protocol.class);
+        for (Protocol protocol : list) {
             short version = protocol.getVersion();
             List<Map.Entry<String, Protocol>> protocolList = protocolMap.computeIfAbsent(version, k -> new ArrayList<>());
             protocolList.add(Maps.immutableEntry(moduleCode, protocol));
             logger.info("protocol-" + protocol);
         }
-        return success();
+        return true;
     }
 
 }

@@ -25,7 +25,6 @@ package io.nuls.protocol.cmd;
 import io.nuls.core.basic.VersionChangeInvoker;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.log.Log;
-import io.nuls.core.rpc.cmd.BaseCmd;
 import io.nuls.core.rpc.info.Constants;
 import io.nuls.core.rpc.model.CmdAnnotation;
 import io.nuls.core.rpc.model.Parameter;
@@ -43,7 +42,7 @@ import java.util.Map;
  * @date 18-11-14 下午4:23
  */
 @Component
-public class CommonProtocolCmd extends BaseCmd {
+public class CommonProtocolCmd {
 
     @CmdAnnotation(cmd = "protocolVersionChange", version = 1.0, scope = Constants.PRIVATE, description = "")
     @Parameter(parameterName = "chainId", parameterType = "int")

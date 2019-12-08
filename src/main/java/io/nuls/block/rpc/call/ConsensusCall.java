@@ -24,6 +24,7 @@ import io.nuls.block.constant.BlockErrorCode;
 import io.nuls.block.manager.ContextManager;
 import io.nuls.block.model.ChainContext;
 import io.nuls.block.service.BlockService;
+import io.nuls.core.ModuleE;
 import io.nuls.core.RPCUtil;
 import io.nuls.core.basic.AddressTool;
 import io.nuls.core.basic.Result;
@@ -34,7 +35,6 @@ import io.nuls.core.data.Block;
 import io.nuls.core.data.BlockHeader;
 import io.nuls.core.log.logback.NulsLogger;
 import io.nuls.core.rpc.info.Constants;
-import io.nuls.core.rpc.model.ModuleE;
 import io.nuls.core.rpc.model.message.Response;
 import io.nuls.core.rpc.netty.processor.ResponseMessageProcessor;
 

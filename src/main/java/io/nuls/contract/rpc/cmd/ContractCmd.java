@@ -51,7 +51,6 @@ import io.nuls.core.data.Transaction;
 import io.nuls.core.model.ObjectUtils;
 import io.nuls.core.model.StringUtils;
 import io.nuls.core.parse.JSONUtils;
-import io.nuls.core.rpc.cmd.BaseCmd;
 import io.nuls.core.rpc.model.*;
 import io.nuls.core.rpc.model.message.Response;
 
@@ -71,7 +70,7 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
  * @date: 2019-03-11
  */
 @Component
-public class ContractCmd extends BaseCmd {
+public class ContractCmd {
 
     @Autowired
     private ContractService contractService;

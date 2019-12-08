@@ -1,8 +1,8 @@
 package io.nuls.protocol;
 
+import io.nuls.core.ModuleE;
 import io.nuls.core.log.Log;
 import io.nuls.core.rpc.info.Constants;
-import io.nuls.core.rpc.model.ModuleE;
 import io.nuls.core.rpc.model.message.Response;
 import io.nuls.core.rpc.netty.channel.manager.ConnectManager;
 import io.nuls.core.rpc.netty.processor.ResponseMessageProcessor;

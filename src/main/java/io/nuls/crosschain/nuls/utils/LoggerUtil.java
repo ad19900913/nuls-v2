@@ -1,8 +1,8 @@
 package io.nuls.crosschain.nuls.utils;
 
+import io.nuls.core.ModuleE;
 import io.nuls.core.log.logback.LoggerBuilder;
 import io.nuls.core.log.logback.NulsLogger;
-import io.nuls.core.rpc.model.ModuleE;
 import io.nuls.crosschain.nuls.model.bo.Chain;
 
 /**

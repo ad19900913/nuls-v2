@@ -24,6 +24,7 @@
  */
 package io.nuls.transaction.service.impl;
 
+import io.nuls.core.ModuleE;
 import io.nuls.core.RPCUtil;
 import io.nuls.core.basic.AddressTool;
 import io.nuls.core.basic.NulsByteBuffer;
@@ -42,7 +43,6 @@ import io.nuls.core.model.BigIntegerUtils;
 import io.nuls.core.model.ByteArrayWrapper;
 import io.nuls.core.parse.JSONUtils;
 import io.nuls.core.parse.SerializeUtils;
-import io.nuls.core.rpc.model.ModuleE;
 import io.nuls.core.rpc.util.NulsDateUtils;
 import io.nuls.core.signture.MultiSignTxSignature;
 import io.nuls.core.signture.SignatureUtil;

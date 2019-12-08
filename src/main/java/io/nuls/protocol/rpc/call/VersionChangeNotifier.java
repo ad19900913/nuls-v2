@@ -1,8 +1,8 @@
 package io.nuls.protocol.rpc.call;
 
+import io.nuls.core.ModuleE;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.rpc.info.Constants;
-import io.nuls.core.rpc.model.ModuleE;
 import io.nuls.core.rpc.util.RpcCall;
 import io.nuls.protocol.ModuleHelper;
 import io.nuls.protocol.Protocol;

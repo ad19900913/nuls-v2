@@ -3,7 +3,6 @@ package io.nuls.crosschain.base.rpc.cmd;
 import io.nuls.core.basic.Result;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
-import io.nuls.core.rpc.cmd.BaseCmd;
 import io.nuls.core.rpc.model.*;
 import io.nuls.core.rpc.model.message.Response;
 import io.nuls.crosschain.base.model.bo.ChainInfo;
@@ -20,7 +19,7 @@ import java.util.Map;
  * @date 2019/4/8
  */
 @Component
-public class CrossChainCmd extends BaseCmd {
+public class CrossChainCmd {
     @Autowired
     private CrossChainService service;
 

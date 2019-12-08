@@ -23,7 +23,6 @@ import io.nuls.core.exception.NulsException;
 import io.nuls.core.exception.NulsRuntimeException;
 import io.nuls.core.model.FormatValidUtils;
 import io.nuls.core.model.StringUtils;
-import io.nuls.core.rpc.cmd.BaseCmd;
 import io.nuls.core.rpc.model.*;
 import io.nuls.core.rpc.model.message.Response;
 
@@ -37,7 +36,7 @@ import static io.nuls.account.util.LoggerUtil.LOG;
  * @date: Dec.20th 2018
  */
 @Component
-public class MultiSignAccountCmd extends BaseCmd {
+public class MultiSignAccountCmd {
     @Autowired
     private MultiSignAccountService multiSignAccountService;
     @Autowired

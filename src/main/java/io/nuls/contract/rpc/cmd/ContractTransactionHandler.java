@@ -10,7 +10,6 @@ import io.nuls.core.RPCUtil;
 import io.nuls.core.basic.Result;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Service;
-import io.nuls.core.rpc.cmd.BaseCmd;
 import io.nuls.core.rpc.model.*;
 import io.nuls.core.rpc.model.message.Response;
 
@@ -22,7 +21,7 @@ import static io.nuls.contract.util.ContractUtil.wrapperFailed;
 import static io.nuls.core.constant.TxType.*;
 
 @Service
-public class ContractTransactionHandler extends BaseCmd {
+public class ContractTransactionHandler {
 
     @Autowired
     private ContractTxValidatorManager contractTxValidatorManager;

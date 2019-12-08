@@ -26,7 +26,6 @@ package io.nuls.poc.rpc.cmd;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.log.Log;
-import io.nuls.core.rpc.cmd.BaseCmd;
 import io.nuls.core.rpc.model.*;
 import io.nuls.core.rpc.model.message.Response;
 import io.nuls.poc.model.dto.RandomSeedDTO;
@@ -43,16 +42,16 @@ import java.util.Map;
  * @date: 2019-07-17
  */
 @Component
-public class RandomCmd extends BaseCmd {
+public class RandomCmd {
     @Autowired
     private RandomSeedsStorageService randomSeedService;
 
     @CmdAnnotation(cmd = "cs_random_seed_count", version = 1.0, description = "根据高度和原始种子个数生成一个随机种子并返回")
     @Parameters(value = {
-        @Parameter(parameterName = "chainId", requestType = @TypeDescriptor(value = int.class), parameterDes = "链id"),
-        @Parameter(parameterName = "height", requestType = @TypeDescriptor(value = long.class), parameterDes = "最大高度"),
-        @Parameter(parameterName = "count", requestType = @TypeDescriptor(value = int.class), parameterDes = "原始种子个数"),
-        @Parameter(parameterName = "algorithm", parameterDes = "算法标识：SHA3...")
+            @Parameter(parameterName = "chainId", requestType = @TypeDescriptor(value = int.class), parameterDes = "链id"),
+            @Parameter(parameterName = "height", requestType = @TypeDescriptor(value = long.class), parameterDes = "最大高度"),
+            @Parameter(parameterName = "count", requestType = @TypeDescriptor(value = int.class), parameterDes = "原始种子个数"),
+            @Parameter(parameterName = "algorithm", parameterDes = "算法标识：SHA3...")
     })
     @ResponseData(name = "返回值", responseType = @TypeDescriptor(value = RandomSeedDTO.class))
     public Response getRandomSeedByCount(Map<String,Object> params){

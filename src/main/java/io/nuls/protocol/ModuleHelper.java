@@ -1,8 +1,7 @@
 package io.nuls.protocol;
 
+import io.nuls.core.ModuleE;
 import io.nuls.core.log.Log;
-import io.nuls.core.rpc.model.ModuleE;
-import io.nuls.core.rpc.modulebootstrap.Module;
 import io.nuls.core.rpc.modulebootstrap.RpcModule;
 
 import java.util.Set;

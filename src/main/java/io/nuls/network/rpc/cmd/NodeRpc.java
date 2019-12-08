@@ -27,7 +27,6 @@ package io.nuls.network.rpc.cmd;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.model.StringUtils;
-import io.nuls.core.rpc.cmd.BaseCmd;
 import io.nuls.core.rpc.model.*;
 import io.nuls.core.rpc.model.message.Response;
 import io.nuls.network.cfg.NetworkConfig;
@@ -54,7 +53,7 @@ import java.util.Map;
  * @create 2018/11/09
  **/
 @Component
-public class NodeRpc extends BaseCmd {
+public class NodeRpc {
     private NodeGroupManager nodeGroupManager = NodeGroupManager.getInstance();
     private static final int STATE_ALL = 0;
     private static final int STATE_CONNECT = 1;

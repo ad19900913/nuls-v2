@@ -24,11 +24,11 @@
  */
 package io.nuls.ledger.manager;
 
+import io.nuls.core.ModuleE;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.core.ioc.SpringLiteContext;
 import io.nuls.core.rockdb.service.RocksDBService;
-import io.nuls.core.rpc.model.ModuleE;
 import io.nuls.ledger.config.LedgerConfig;
 import io.nuls.ledger.model.LedgerChain;
 import io.nuls.ledger.service.BlockDataService;

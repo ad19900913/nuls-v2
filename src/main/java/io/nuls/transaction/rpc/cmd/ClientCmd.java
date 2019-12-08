@@ -31,7 +31,6 @@ import io.nuls.core.data.NulsHash;
 import io.nuls.core.data.Transaction;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.model.ObjectUtils;
-import io.nuls.core.rpc.cmd.BaseCmd;
 import io.nuls.core.rpc.model.*;
 import io.nuls.core.rpc.model.message.Response;
 import io.nuls.transaction.cache.PackablePool;
@@ -59,7 +58,7 @@ import static io.nuls.transaction.utils.LoggerUtil.LOG;
  * @date: 2019/3/12
  */
 @Component
-public class ClientCmd extends BaseCmd {
+public class ClientCmd {
 
     @Autowired
     private TxService txService;

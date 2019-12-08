@@ -22,11 +22,11 @@
 
 package io.nuls.protocol.model;
 
+import io.nuls.core.ModuleE;
 import io.nuls.core.basic.ModuleConfig;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.core.annotation.Configuration;
 import io.nuls.core.core.annotation.Value;
-import io.nuls.core.rpc.model.ModuleE;
 
 import java.io.File;
 
