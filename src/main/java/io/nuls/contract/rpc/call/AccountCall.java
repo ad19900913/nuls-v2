@@ -24,7 +24,6 @@
 
 package io.nuls.contract.rpc.call;
 
-import io.nuls.contract.rpc.CallHelper;
 import io.nuls.contract.util.Log;
 import io.nuls.core.ModuleE;
 import io.nuls.core.RPCUtil;

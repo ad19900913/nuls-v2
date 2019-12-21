@@ -30,9 +30,8 @@ import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.rockdb.service.RocksDBService;
 import io.nuls.core.rpc.info.HostInfo;
+import io.nuls.core.rpc.modulebootstrap.ModuleState;
 import io.nuls.core.rpc.modulebootstrap.NulsRpcModuleBootstrap;
-import io.nuls.core.rpc.modulebootstrap.RpcModule;
-import io.nuls.core.rpc.modulebootstrap.RpcModuleState;
 import io.nuls.core.rpc.util.AddressPrefixDatas;
 import io.nuls.core.rpc.util.NulsDateUtils;
 import io.nuls.protocol.ModuleHelper;
@@ -55,7 +54,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  * @date: 2019/3/4
  */
 @Component
-public class TransactionBootstrap extends RpcModule {
+public class TransactionBootstrap {
 
     @Autowired
     private TxConfig txConfig;
@@ -117,14 +116,14 @@ public class TransactionBootstrap extends RpcModule {
     }
 
     @Override
-    public RpcModuleState onDependenciesReady() {
+    public ModuleState onDependenciesReady() {
         LOG.info("Transaction onDependenciesReady");
         NulsDateUtils.getInstance().start();
-        return RpcModuleState.Running;
+        return ModuleState.Running;
     }
 
     @Override
-    public RpcModuleState onDependenciesLoss(Module module) {
+    public ModuleState onDependenciesLoss(Module module) {
         if (ModuleE.BL.abbr.equals(module.getName())) {
             for (Chain chain : chainManager.getChainMap().values()) {
                 chain.getProcessTxStatus().set(false);
@@ -135,7 +134,7 @@ public class TransactionBootstrap extends RpcModule {
                 chain.getPackaging().set(false);
             }
         }
-        return RpcModuleState.Ready;
+        return ModuleState.Ready;
     }
 
     @Override

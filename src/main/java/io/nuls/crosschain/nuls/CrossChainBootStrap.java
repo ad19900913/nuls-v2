@@ -7,8 +7,8 @@ import io.nuls.core.core.annotation.Component;
 import io.nuls.core.log.Log;
 import io.nuls.core.rockdb.service.RocksDBService;
 import io.nuls.core.rpc.info.HostInfo;
+import io.nuls.core.rpc.modulebootstrap.ModuleState;
 import io.nuls.core.rpc.modulebootstrap.NulsRpcModuleBootstrap;
-import io.nuls.core.rpc.modulebootstrap.RpcModuleState;
 import io.nuls.core.rpc.util.AddressPrefixDatas;
 import io.nuls.crosschain.base.BaseCrossChainBootStrap;
 import io.nuls.crosschain.base.message.RegisteredChainMessage;
@@ -165,14 +165,14 @@ public class CrossChainBootStrap extends BaseCrossChainBootStrap {
     }
 
     @Override
-    public RpcModuleState onDependenciesReady() {
+    public ModuleState onDependenciesReady() {
         Log.debug("cc onDependenciesReady");
-        return RpcModuleState.Running;
+        return ModuleState.Running;
     }
 
     @Override
-    public RpcModuleState onDependenciesLoss(Module dependenciesModule) {
-        return RpcModuleState.Ready;
+    public ModuleState onDependenciesLoss(Module dependenciesModule) {
+        return ModuleState.Ready;
     }
 
     /**

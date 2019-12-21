@@ -23,9 +23,8 @@ import io.nuls.core.core.ioc.SpringLiteContext;
 import io.nuls.core.model.BigIntegerUtils;
 import io.nuls.core.rockdb.service.RocksDBService;
 import io.nuls.core.rpc.info.HostInfo;
+import io.nuls.core.rpc.modulebootstrap.ModuleState;
 import io.nuls.core.rpc.modulebootstrap.NulsRpcModuleBootstrap;
-import io.nuls.core.rpc.modulebootstrap.RpcModule;
-import io.nuls.core.rpc.modulebootstrap.RpcModuleState;
 import io.nuls.core.rpc.util.AddressPrefixDatas;
 import io.nuls.core.rpc.util.NulsDateUtils;
 import io.nuls.protocol.CommonAdvice;
@@ -49,7 +48,7 @@ import java.util.Map;
  * @date 2018/11/7
  */
 @Component
-public class ChainManagerBootstrap extends RpcModule {
+public class ChainManagerBootstrap {
     @Autowired
     private NulsChainConfig nulsChainConfig;
     @Autowired
@@ -247,7 +246,7 @@ public class ChainManagerBootstrap extends RpcModule {
     }
 
     @Override
-    public RpcModuleState onDependenciesReady() {
+    public ModuleState onDependenciesReady() {
         try {
             /* 进行数据库数据初始化（避免异常关闭造成的事务不一致） */
             initChainDatas();
@@ -260,11 +259,11 @@ public class ChainManagerBootstrap extends RpcModule {
         cmTaskManager.start();
         NulsDateUtils.getInstance().start(5 * 60 * 1000);
         LoggerUtil.logger().info("onDependenciesReady ok....");
-        return RpcModuleState.Running;
+        return ModuleState.Running;
     }
 
     @Override
-    public RpcModuleState onDependenciesLoss(Module dependenciesModule) {
-        return RpcModuleState.Start;
+    public ModuleState onDependenciesLoss(Module dependenciesModule) {
+        return ModuleState.Start;
     }
 }

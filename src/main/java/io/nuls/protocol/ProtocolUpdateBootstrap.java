@@ -6,9 +6,8 @@ import io.nuls.core.core.annotation.Component;
 import io.nuls.core.log.Log;
 import io.nuls.core.rockdb.service.RocksDBService;
 import io.nuls.core.rpc.info.HostInfo;
+import io.nuls.core.rpc.modulebootstrap.ModuleState;
 import io.nuls.core.rpc.modulebootstrap.NulsRpcModuleBootstrap;
-import io.nuls.core.rpc.modulebootstrap.RpcModule;
-import io.nuls.core.rpc.modulebootstrap.RpcModuleState;
 import io.nuls.protocol.manager.ChainManager;
 import io.nuls.protocol.model.ProtocolConfig;
 
@@ -22,7 +21,7 @@ import static io.nuls.protocol.constant.Constant.PROTOCOL_CONFIG;
  * @date 19-3-4 下午4:09
  */
 @Component
-public class ProtocolUpdateBootstrap extends RpcModule {
+public class ProtocolUpdateBootstrap {
 
     @Autowired
     public static ProtocolConfig protocolConfig;
@@ -105,22 +104,24 @@ public class ProtocolUpdateBootstrap extends RpcModule {
 
     /**
      * 所有外部依赖进入ready状态后会调用此方法,正常启动后返回Running状态
+     *
      * @return
      */
     @Override
-    public RpcModuleState onDependenciesReady() {
+    public ModuleState onDependenciesReady() {
         Log.info("protocol onDependenciesReady");
-        return RpcModuleState.Running;
+        return ModuleState.Running;
     }
 
     /**
      * 某个外部依赖连接丢失后,会调用此方法,可控制模块状态,如果返回Ready,则表明模块退化到Ready状态,当依赖重新准备完毕后,将重新触发onDependenciesReady方法,若返回的状态是Running,将不会重新触发onDependenciesReady
+     *
      * @param module
      * @return
      */
     @Override
-    public RpcModuleState onDependenciesLoss(Module module) {
-        return RpcModuleState.Running;
+    public ModuleState onDependenciesLoss(Module module) {
+        return ModuleState.Running;
     }
 
 }

@@ -1,18 +1,17 @@
 package io.nuls.account.rpc.cmd;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import io.nuls.account.constant.AccountConstant;
 import io.nuls.account.constant.AccountErrorCode;
+import io.nuls.account.constant.RpcConstant;
 import io.nuls.account.model.bo.Account;
 import io.nuls.account.model.bo.AccountKeyStore;
 import io.nuls.account.model.bo.Chain;
-import io.nuls.account.model.dto.AccountKeyStoreDTO;
-import io.nuls.account.model.dto.AccountOfflineDTO;
-import io.nuls.account.model.dto.SimpleAccountDTO;
-import io.nuls.account.service.AccountKeyStoreService;
-import io.nuls.account.service.AccountService;
-import io.nuls.account.service.TransactionService;
+import io.nuls.account.model.dto.*;
+import io.nuls.account.service.*;
 import io.nuls.account.util.AccountTool;
+import io.nuls.account.util.LoggerUtil;
 import io.nuls.account.util.manager.ChainManager;
 import io.nuls.core.RPCUtil;
 import io.nuls.core.basic.AddressTool;
@@ -22,6 +21,8 @@ import io.nuls.core.core.annotation.Component;
 import io.nuls.core.crypto.ECKey;
 import io.nuls.core.crypto.HexUtil;
 import io.nuls.core.data.Address;
+import io.nuls.core.data.MultiSigAccount;
+import io.nuls.core.data.Transaction;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.exception.NulsRuntimeException;
 import io.nuls.core.model.FormatValidUtils;
@@ -31,12 +32,7 @@ import io.nuls.core.signture.BlockSignature;
 import io.nuls.core.signture.P2PHKSignature;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static io.nuls.account.util.LoggerUtil.LOG;
+import java.util.*;
 
 /**
  * @author: qinyifeng
@@ -54,6 +50,60 @@ public class AccountResource {
     private TransactionService transactionService;
     @Autowired
     private ChainManager chainManager;
+    @Autowired
+    private AliasService aliasService;
+    @Autowired
+    private MultiSignAccountService multiSignAccountService;
+
+    public List<Map<String, Object>> getAllAddressPrefix() {
+        List<Map<String, Object>> rtList = new ArrayList<>();
+        Map<Integer, String> addressPreFixMap = AddressTool.getAddressPreFixMap();
+        for (Map.Entry<Integer, String> entry : addressPreFixMap.entrySet()) {
+            Map<String, Object> rtValue = new HashMap<>();
+            rtValue.put("chainId", entry.getKey());
+            rtValue.put("addressPrefix", entry.getValue());
+            rtList.add(rtValue);
+        }
+        return rtList;
+    }
+
+    public Map<String, Object> getAddressPrefixByChainId(int chainId) {
+        Map<String, Object> rtValue = new HashMap<>();
+        Map<Integer, String> addressPreFixMap = new HashMap<>();
+        rtValue.put("chainId", addressPreFixMap.get(chainId));
+        rtValue.put("addressPrefix", chainId);
+        return rtValue;
+    }
+
+    public void addAddressPrefix(List<Map<String, Object>> prefixList) {
+        for (Map<String, Object> prefixMap : prefixList) {
+            AddressTool.addPrefix(Integer.parseInt(prefixMap.get("chainId").toString()), String.valueOf(prefixMap.get("addressPrefix")));
+            LoggerUtil.LOG.debug("chainId={},prefix={}", prefixMap.get("chainId"), prefixMap.get("addressPrefix"));
+        }
+    }
+
+    public String setAlias(int chainId, String address, String password, String alias) throws Exception {
+        String txHash = null;
+        Chain chain = chainManager.getChain(chainId);
+        Transaction transaction = aliasService.setAlias(chain, address, password, alias);
+        if (transaction != null && transaction.getHash() != null) {
+            txHash = transaction.getHash().toHex();
+        }
+        return txHash;
+    }
+
+    public String getAliasByAddress(int chainId, String address) {
+        return aliasService.getAliasByAddress(chainId, address);
+    }
+
+    /**
+     * check whether the account is usable
+     *
+     * @return CmdResponse
+     */
+    public boolean isAliasUsable(int chainId, String alias) {
+        return aliasService.isAliasUsable(chainId, alias);
+    }
 
     public List<String> createAccount(int chainId, int count, String password) {
         List<String> list = new ArrayList<>();
@@ -310,11 +360,156 @@ public class AccountResource {
         return ECKey.verify(RPCUtil.decode(data), RPCUtil.decode(sig), RPCUtil.decode(pubKey));
     }
 
-    private void errorLogProcess(Chain chain, Exception e) {
-        if (chain == null) {
-            LOG.error(e);
-        } else {
-            chain.getLogger().error(e);
+    public Map<String, String> transfer(TransferDTO transferDto) throws NulsException {
+        Chain chain;
+        // parse params
+        JSONUtils.getInstance().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        chain = chainManager.getChain(transferDto.getChainId());
+        if (null == chain) {
+            throw new NulsRuntimeException(AccountErrorCode.CHAIN_NOT_EXIST);
         }
+        Transaction tx = transactionService.transfer(chain, transferDto);
+        Map<String, String> map = new HashMap<>(AccountConstant.INIT_CAPACITY_2);
+        map.put(RpcConstant.VALUE, tx.getHash().toHex());
+        return map;
+    }
+
+    public Map<String, Object> multiSignTransfer(MultiSignTransferDTO multiSignTransferDTO) throws IOException, NulsException {
+        Chain chain = null;
+        // parse params
+        JSONUtils.getInstance().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        chain = chainManager.getChain(multiSignTransferDTO.getChainId());
+        MultiSignTransactionResultDTO multiSignTransactionResultDto = transactionService.multiSignTransfer(chain, multiSignTransferDTO);
+        boolean result = false;
+        if (multiSignTransactionResultDto.isBroadcasted()) {
+            result = true;
+        }
+        Transaction tx = multiSignTransactionResultDto.getTransaction();
+        Map<String, Object> map = new HashMap<>(AccountConstant.INIT_CAPACITY_8);
+        map.put("completed", result);
+        map.put("txHash", tx.getHash().toHex());
+        map.put("tx", RPCUtil.encode(tx.serialize()));
+        return map;
+    }
+
+    public Map<String, Object> signMultiSignTransaction(int chainId, String txStr, String signAddress, String password) throws IOException, NulsException {
+        Chain chain = chainManager.getChain(chainId);
+        //查询出账户
+        Account account = accountService.getAccount(chainId, signAddress);
+        if (account == null) {
+            throw new NulsRuntimeException(AccountErrorCode.ACCOUNT_NOT_EXIST);
+        }
+        MultiSignTransactionResultDTO multiSignTransactionResultDto = transactionService.signMultiSignTransaction(chain, account, password, txStr);
+        boolean result = false;
+        if (multiSignTransactionResultDto.isBroadcasted()) {
+            result = true;
+        }
+        Transaction tx = multiSignTransactionResultDto.getTransaction();
+        Map<String, Object> map = new HashMap<>(AccountConstant.INIT_CAPACITY_8);
+        map.put("completed", result);
+        map.put("txHash", tx.getHash().toHex());
+        map.put("tx", RPCUtil.encode(tx.serialize()));
+        return map;
+    }
+
+    public Map<String, Object> createMultiSignAccount(int chainId, List<String> pubKeysList, int minSigns) throws NulsException {
+        Map<String, Object> map = new HashMap<>(AccountConstant.INIT_CAPACITY_8);
+        Chain chain = chainManager.getChain(chainId);
+        if (minSigns == 0) {
+            minSigns = pubKeysList.size();
+        }
+        if (pubKeysList.size() < minSigns) {
+            throw new NulsRuntimeException(AccountErrorCode.SIGN_COUNT_TOO_LARGE);
+        }
+
+        MultiSigAccount multiSigAccount = multiSignAccountService.createMultiSigAccount(chain, pubKeysList, minSigns);
+        if (multiSigAccount == null) {
+            throw new NulsRuntimeException(AccountErrorCode.FAILED);
+        }
+        List<String> pubKeys = new ArrayList<>();
+        for (byte[] pubkey : multiSigAccount.getPubKeyList()) {
+            pubKeys.add(HexUtil.encode(pubkey));
+        }
+        map.put("address", multiSigAccount.getAddress().getBase58());
+        map.put("pubKeys", pubKeys);
+        map.put("minSign", multiSigAccount.getM());
+        return map;
+    }
+
+
+    public boolean removeMultiSignAccount(int chainId, String address) {
+        return multiSignAccountService.removeMultiSigAccount(chainId, address);
+    }
+
+    public Map<String, Object> setMultiAlias(int chainId, String address, String alias, String signAddress, String signPassword) throws IOException, NulsException {
+        Chain chain = chainManager.getChain(chainId);
+        if (null != signAddress && !AddressTool.validAddress(chainId, signAddress)) {
+            throw new NulsRuntimeException(AccountErrorCode.ADDRESS_ERROR);
+        }
+        if (!AddressTool.validAddress(chainId, address) || !AddressTool.isMultiSignAddress(address)) {
+            throw new NulsRuntimeException(AccountErrorCode.IS_NOT_MULTI_SIGNATURE_ADDRESS);
+        }
+        if (StringUtils.isBlank(alias)) {
+            throw new NulsRuntimeException(AccountErrorCode.PARAMETER_ERROR);
+        }
+        if (!FormatValidUtils.validAlias(alias)) {
+            throw new NulsRuntimeException(AccountErrorCode.ALIAS_FORMAT_WRONG);
+        }
+        if (!aliasService.isAliasUsable(chainId, alias)) {
+            throw new NulsRuntimeException(AccountErrorCode.ALIAS_EXIST);
+        }
+        MultiSignTransactionResultDTO multiSignTransactionResultDto = transactionService.setMultiSignAccountAlias(chain, address, alias, signAddress, signPassword);
+        boolean result = false;
+        if (multiSignTransactionResultDto.isBroadcasted()) {
+            result = true;
+        }
+        Transaction tx = multiSignTransactionResultDto.getTransaction();
+        Map<String, Object> map = new HashMap<>(AccountConstant.INIT_CAPACITY_8);
+        map.put("completed", result);
+        map.put("txHash", tx.getHash().toHex());
+        map.put("tx", RPCUtil.encode(tx.serialize()));
+        return map;
+
+    }
+
+    public String getMultiSignAccount(int chainId, String address) throws IOException {
+        MultiSigAccount multiSigAccount;
+        if (!AddressTool.validAddress(chainId, address) || !AddressTool.isMultiSignAddress(address)) {
+            throw new NulsRuntimeException(AccountErrorCode.IS_NOT_MULTI_SIGNATURE_ADDRESS);
+        }
+        multiSigAccount = multiSignAccountService.getMultiSigAccountByAddress(address);
+        return null == multiSigAccount ? null : RPCUtil.encode(multiSigAccount.serialize());
+    }
+
+    public boolean isMultiSignAccountBuilder(int chainId, String address, String pubkey) throws NulsException {
+        Chain chain = null;
+        MultiSigAccount multiSigAccount;
+        chain = chainManager.getChain(chainId);
+        byte[] pubkeyByte = null;
+        if (AddressTool.validAddress(chain.getChainId(), pubkey) && AddressTool.validNormalAddress(AddressTool.getAddress(pubkey), chain.getChainId())) {
+            //按地址处理,获取该地址的公钥
+            Account account = accountService.getAccount(chain.getChainId(), pubkey);
+            if (null == account) {
+                throw new NulsException(AccountErrorCode.ACCOUNT_NOT_EXIST);
+            }
+            pubkeyByte = account.getPubKey();
+        } else {
+            pubkeyByte = HexUtil.decode(pubkey);
+        }
+        if (!AddressTool.validAddress(chain.getChainId(), address) || !AddressTool.isMultiSignAddress(address)) {
+            throw new NulsRuntimeException(AccountErrorCode.IS_NOT_MULTI_SIGNATURE_ADDRESS);
+        }
+        multiSigAccount = multiSignAccountService.getMultiSigAccountByAddress(address);
+        if (null == multiSigAccount) {
+            throw new NulsException(AccountErrorCode.MULTISIGN_ACCOUNT_NOT_EXIST);
+        }
+        boolean rs = false;
+        for (byte[] pubk : multiSigAccount.getPubKeyList()) {
+            if (Arrays.equals(pubk, pubkeyByte)) {
+                rs = true;
+                break;
+            }
+        }
+        return rs;
     }
 }

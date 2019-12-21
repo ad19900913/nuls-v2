@@ -32,9 +32,8 @@ import io.nuls.core.core.annotation.Component;
 import io.nuls.core.core.ioc.SpringLiteContext;
 import io.nuls.core.crypto.HexUtil;
 import io.nuls.core.rpc.info.HostInfo;
+import io.nuls.core.rpc.modulebootstrap.ModuleState;
 import io.nuls.core.rpc.modulebootstrap.NulsRpcModuleBootstrap;
-import io.nuls.core.rpc.modulebootstrap.RpcModule;
-import io.nuls.core.rpc.modulebootstrap.RpcModuleState;
 import io.nuls.core.rpc.util.AddressPrefixDatas;
 import io.nuls.core.rpc.util.NulsDateUtils;
 import io.nuls.ledger.config.LedgerConfig;
@@ -47,7 +46,7 @@ import io.nuls.ledger.utils.LoggerUtil;
  * @date: 2018/10/15
  */
 @Component
-public class LedgerBootstrap extends RpcModule {
+public class LedgerBootstrap {
     @Autowired
     LedgerConfig ledgerConfig;
     @Autowired
@@ -121,14 +120,14 @@ public class LedgerBootstrap extends RpcModule {
     }
 
     @Override
-    public RpcModuleState onDependenciesReady() {
+    public ModuleState onDependenciesReady() {
         LoggerUtil.COMMON_LOG.info("Ledger onDependenciesReady");
         NulsDateUtils.getInstance().start(5 * 60 * 1000);
-        return RpcModuleState.Running;
+        return ModuleState.Running;
     }
 
     @Override
-    public RpcModuleState onDependenciesLoss(Module dependenciesModule) {
-        return RpcModuleState.Ready;
+    public ModuleState onDependenciesLoss(Module dependenciesModule) {
+        return ModuleState.Ready;
     }
 }

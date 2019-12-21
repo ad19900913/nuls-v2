@@ -40,7 +40,11 @@ import io.nuls.network.model.NodeGroup;
 import io.nuls.network.model.message.base.MessageHeader;
 import io.nuls.network.utils.LoggerUtil;
 
-import java.util.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author lan
@@ -93,21 +97,16 @@ public class MessageRpc {
     @ResponseData(description = "无特定返回值，没有错误即成功")
     public Response protocolRegisterWithPriority(Map params) {
         String role = String.valueOf(params.get("role"));
-        try {
-            /*
-             * 如果外部模块修改了调用注册信息，进行重启，则清理缓存信息，并重新注册
-             * clear cache protocolRoleHandler
-             */
-            messageHandlerFactory.clearCacheProtocolRoleHandlerMap(role);
-            List<Map<String, Object>> protocolCmds = (List<Map<String, Object>>) params.get("protocolCmds");
-            for (Map<String, Object> cmdMap : protocolCmds) {
-                String cmd = (String) cmdMap.get("cmd");
-                String priority = cmdMap.get("priority") == null ? "DEFAULT" : cmdMap.get("priority").toString();
-                messageHandlerFactory.addProtocolRoleHandlerMap(cmd, CmdPriority.valueOf(priority), role);
-            }
-        } catch (Exception e) {
-            LoggerUtil.COMMON_LOG.error(role, e);
-            return failed(NetworkErrorCode.PARAMETER_ERROR);
+        /*
+         * 如果外部模块修改了调用注册信息，进行重启，则清理缓存信息，并重新注册
+         * clear cache protocolRoleHandler
+         */
+        messageHandlerFactory.clearCacheProtocolRoleHandlerMap(role);
+        List<Map<String, Object>> protocolCmds = (List<Map<String, Object>>) params.get("protocolCmds");
+        for (Map<String, Object> cmdMap : protocolCmds) {
+            String cmd = (String) cmdMap.get("cmd");
+            String priority = cmdMap.get("priority") == null ? "DEFAULT" : cmdMap.get("priority").toString();
+            messageHandlerFactory.addProtocolRoleHandlerMap(cmd, CmdPriority.valueOf(priority), role);
         }
         return success();
     }
@@ -116,118 +115,65 @@ public class MessageRpc {
      * nw_broadcast
      * 外部广播接收
      */
-    @CmdAnnotation(cmd = CmdConstant.CMD_NW_BROADCAST, version = 1.0,
-            description = "广播消息")
-    @Parameters(value = {
-            @Parameter(parameterName = "chainId", requestType = @TypeDescriptor(value = int.class), parameterValidRange = "[1-65535]", parameterDes = "连接的链Id,取值区间[1-65535]"),
-            @Parameter(parameterName = "excludeNodes", requestType = @TypeDescriptor(value = String.class), parameterDes = "排除peer节点Id，用逗号分割"),
-            @Parameter(parameterName = "messageBody", requestType = @TypeDescriptor(value = String.class), parameterDes = "消息体Hex"),
-            @Parameter(parameterName = "command", requestType = @TypeDescriptor(value = String.class), parameterDes = "消息协议指令"),
-            @Parameter(parameterName = "isCross", requestType = @TypeDescriptor(value = boolean.class), parameterDes = "是否是跨链"),
-            @Parameter(parameterName = "percent", requestType = @TypeDescriptor(value = int.class), parameterDes = "广播发送比例,不填写,默认100"),
-
-    })
-    @ResponseData(name = "返回值", description = "返回一个Map对象", responseType = @TypeDescriptor(value = Map.class, mapKeys = {
-            @Key(name = "value", valueType = Boolean.class, description = "一个节点都没发送出去时返回false")
-    }))
-    public Response broadcast(Map params) {
-        Map<String, Object> rtMap = new HashMap<>();
-        rtMap.put("value", true);
-        int percent = NetworkConstant.FULL_BROADCAST_PERCENT;
-        try {
-            int chainId = Integer.valueOf(String.valueOf(params.get("chainId")));
-            String excludeNodes = String.valueOf(params.get("excludeNodes"));
-            String messageBodyStr = String.valueOf(params.get("messageBody"));
-            byte[] messageBody = RPCUtil.decode(messageBodyStr);
-            String cmd = String.valueOf(params.get("command"));
-            Object percentParam = params.get("percent");
-            if (null != percentParam) {
-                percent = Integer.valueOf(String.valueOf(percentParam));
-            }
-            MessageManager messageManager = MessageManager.getInstance();
-            NodeGroup nodeGroup = NodeGroupManager.getInstance().getNodeGroupByChainId(chainId);
-            if (null == nodeGroup) {
-                LoggerUtil.logger(chainId).error("chain is not exist!");
-                return failed(NetworkErrorCode.PARAMETER_ERROR);
-            }
-            long magicNumber = nodeGroup.getMagicNumber();
-            long checksum = messageManager.getCheckSum(messageBody);
-            MessageHeader header = new MessageHeader(cmd, magicNumber, checksum, messageBody.length);
-            byte[] headerByte = header.serialize();
-            byte[] message = new byte[headerByte.length + messageBody.length];
-            boolean isCross = false;
-            if (null != params.get("isCross")) {
-                isCross = Boolean.valueOf(params.get("isCross").toString());
-            }
-            System.arraycopy(headerByte, 0, message, 0, headerByte.length);
-            System.arraycopy(messageBody, 0, message, headerByte.length, messageBody.length);
-            Collection<Node> nodesCollection = nodeGroup.getAvailableNodes(isCross);
-            excludeNodes = NetworkConstant.COMMA + excludeNodes + NetworkConstant.COMMA;
-            List<Node> nodes = new ArrayList<>();
-            for (Node node : nodesCollection) {
-                if (!excludeNodes.contains(NetworkConstant.COMMA + node.getId() + NetworkConstant.COMMA)) {
-                    nodes.add(node);
-                }
-            }
-            if (0 == nodes.size()) {
-                rtMap.put("value", false);
-            } else {
-                messageManager.broadcastToNodes(message, cmd, nodes, true, percent);
-            }
-        } catch (Exception e) {
-            LoggerUtil.COMMON_LOG.error(e);
-            return failed(NetworkErrorCode.PARAMETER_ERROR);
+    public boolean broadcast(int chainId, String excludeNodes, String messageBodyStr, String command, boolean isCross, int percent) throws IOException {
+        byte[] messageBody = RPCUtil.decode(messageBodyStr);
+        MessageManager messageManager = MessageManager.getInstance();
+        NodeGroup nodeGroup = NodeGroupManager.getInstance().getNodeGroupByChainId(chainId);
+        if (null == nodeGroup) {
+            LoggerUtil.logger(chainId).error("chain is not exist!");
+            return false;
         }
-        return success(rtMap);
+        long magicNumber = nodeGroup.getMagicNumber();
+        long checksum = messageManager.getCheckSum(messageBody);
+        MessageHeader header = new MessageHeader(command, magicNumber, checksum, messageBody.length);
+        byte[] headerByte = header.serialize();
+        byte[] message = new byte[headerByte.length + messageBody.length];
+        System.arraycopy(headerByte, 0, message, 0, headerByte.length);
+        System.arraycopy(messageBody, 0, message, headerByte.length, messageBody.length);
+        Collection<Node> nodesCollection = nodeGroup.getAvailableNodes(isCross);
+        excludeNodes = NetworkConstant.COMMA + excludeNodes + NetworkConstant.COMMA;
+        List<Node> nodes = new ArrayList<>();
+        for (Node node : nodesCollection) {
+            if (!excludeNodes.contains(NetworkConstant.COMMA + node.getId() + NetworkConstant.COMMA)) {
+                nodes.add(node);
+            }
+        }
+        if (0 == nodes.size()) {
+            return false;
+        } else {
+            messageManager.broadcastToNodes(message, command, nodes, true, percent);
+        }
+        return true;
     }
 
     /**
      * nw_sendPeersMsg
      */
 
-    @CmdAnnotation(cmd = CmdConstant.CMD_NW_SEND_PEERS_MSG, version = 1.0,
-            description = "向指定节点发送消息")
-    @Parameters(value = {
-            @Parameter(parameterName = "chainId", requestType = @TypeDescriptor(value = int.class), parameterValidRange = "[1-65535]", parameterDes = "连接的链Id,取值区间[1-65535]"),
-            @Parameter(parameterName = "nodes", requestType = @TypeDescriptor(value = String.class), parameterDes = "指定发送peer节点Id，用逗号拼接的字符串"),
-            @Parameter(parameterName = "messageBody", requestType = @TypeDescriptor(value = String.class), parameterDes = "消息体Hex"),
-            @Parameter(parameterName = "command", requestType = @TypeDescriptor(value = String.class), parameterDes = "消息协议指令")
-    })
-    @ResponseData(description = "无特定返回值，没有错误即成功")
-    public Response sendPeersMsg(Map params) {
-        try {
-            int chainId = Integer.valueOf(String.valueOf(params.get("chainId")));
-            String nodes = String.valueOf(params.get("nodes"));
-            String messageBodyStr = String.valueOf(params.get("messageBody"));
-            byte[] messageBody = RPCUtil.decode(messageBodyStr);
-            String cmd = String.valueOf(params.get("command"));
-            MessageManager messageManager = MessageManager.getInstance();
-            NodeGroupManager nodeGroupManager = NodeGroupManager.getInstance();
-            NodeGroup nodeGroup = nodeGroupManager.getNodeGroupByChainId(chainId);
-            long magicNumber = nodeGroup.getMagicNumber();
-            long checksum = messageManager.getCheckSum(messageBody);
-            MessageHeader header = new MessageHeader(cmd, magicNumber, checksum, messageBody.length);
-            byte[] headerByte = header.serialize();
-            byte[] message = new byte[headerByte.length + messageBody.length];
-            System.arraycopy(headerByte, 0, message, 0, headerByte.length);
-            System.arraycopy(messageBody, 0, message, headerByte.length, messageBody.length);
-            String[] nodeIds = nodes.split(",");
-            List<Node> nodesList = new ArrayList<>();
-            for (String nodeId : nodeIds) {
-                Node availableNode = nodeGroup.getAvailableNode(nodeId);
-                if (null != availableNode) {
-                    nodesList.add(availableNode);
-                } else {
-                    LoggerUtil.logger(chainId).error("cmd={},node = {} is not available!", cmd, nodeId);
-                }
+    public void sendPeersMsg(int chainId, String nodes, String messageBodyStr, String command) throws IOException {
+        byte[] messageBody = RPCUtil.decode(messageBodyStr);
+        MessageManager messageManager = MessageManager.getInstance();
+        NodeGroupManager nodeGroupManager = NodeGroupManager.getInstance();
+        NodeGroup nodeGroup = nodeGroupManager.getNodeGroupByChainId(chainId);
+        long magicNumber = nodeGroup.getMagicNumber();
+        long checksum = messageManager.getCheckSum(messageBody);
+        MessageHeader header = new MessageHeader(command, magicNumber, checksum, messageBody.length);
+        byte[] headerByte = header.serialize();
+        byte[] message = new byte[headerByte.length + messageBody.length];
+        System.arraycopy(headerByte, 0, message, 0, headerByte.length);
+        System.arraycopy(messageBody, 0, message, headerByte.length, messageBody.length);
+        String[] nodeIds = nodes.split(",");
+        List<Node> nodesList = new ArrayList<>();
+        for (String nodeId : nodeIds) {
+            Node availableNode = nodeGroup.getAvailableNode(nodeId);
+            if (null != availableNode) {
+                nodesList.add(availableNode);
+            } else {
+                LoggerUtil.logger(chainId).error("cmd={},node = {} is not available!", command, nodeId);
             }
-            if (nodesList.size() > 0) {
-                messageManager.broadcastToNodes(message, cmd, nodesList, true, NetworkConstant.FULL_BROADCAST_PERCENT);
-            }
-        } catch (Exception e) {
-            LoggerUtil.COMMON_LOG.error(e);
-            return failed(NetworkErrorCode.PARAMETER_ERROR);
         }
-        return success();
+        if (nodesList.size() > 0) {
+            messageManager.broadcastToNodes(message, command, nodesList, true, NetworkConstant.FULL_BROADCAST_PERCENT);
+        }
     }
 }

@@ -11,7 +11,6 @@ import io.nuls.protocol.cmd.TransactionDispatcher;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -83,8 +82,8 @@ public class ProtocolGroupManager {
         return o.getProtocol();
     }
 
-    public static Collection<Protocol> getProtocols(int chainId) {
-        return protocolGroupMap.get(chainId).getProtocolsMap().values();
+    public static List<Protocol> getProtocols(int chainId) {
+        return new ArrayList<>(protocolGroupMap.get(chainId).getProtocolsMap().values());
     }
 
     public static void updateProtocol(int chainId, short protocolVersion) {

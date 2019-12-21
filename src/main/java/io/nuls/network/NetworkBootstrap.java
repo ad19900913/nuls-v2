@@ -33,9 +33,8 @@ import io.nuls.core.log.Log;
 import io.nuls.core.model.StringUtils;
 import io.nuls.core.rockdb.service.RocksDBService;
 import io.nuls.core.rpc.info.HostInfo;
+import io.nuls.core.rpc.modulebootstrap.ModuleState;
 import io.nuls.core.rpc.modulebootstrap.NulsRpcModuleBootstrap;
-import io.nuls.core.rpc.modulebootstrap.RpcModule;
-import io.nuls.core.rpc.modulebootstrap.RpcModuleState;
 import io.nuls.network.cfg.NetworkConfig;
 import io.nuls.network.constant.ManagerStatusEnum;
 import io.nuls.network.constant.NetworkConstant;
@@ -57,7 +56,7 @@ import java.util.List;
  * @date 2018/11/01
  */
 @Component
-public class NetworkBootstrap extends RpcModule {
+public class NetworkBootstrap {
     @Autowired
     NetworkConfig networkConfig;
     private boolean hadRun = false;
@@ -196,7 +195,7 @@ public class NetworkBootstrap extends RpcModule {
      * @return
      */
     @Override
-    public RpcModuleState onDependenciesReady() {
+    public ModuleState onDependenciesReady() {
         LoggerUtil.COMMON_LOG.info("network onDependenciesReady");
         try {
             if (!hadRun) {
@@ -214,11 +213,11 @@ public class NetworkBootstrap extends RpcModule {
             System.exit(-1);
         }
         LoggerUtil.COMMON_LOG.info("network RUNNING......");
-        return RpcModuleState.Running;
+        return ModuleState.Running;
     }
 
     @Override
-    public RpcModuleState onDependenciesLoss(Module dependenciesModule) {
+    public ModuleState onDependenciesLoss(Module dependenciesModule) {
         LoggerUtil.COMMON_LOG.info("onDependenciesLoss module={}......", dependenciesModule.getName());
         try {
             //关闭连接
@@ -227,6 +226,6 @@ public class NetworkBootstrap extends RpcModule {
         } catch (Exception e) {
             LoggerUtil.COMMON_LOG.error(e);
         }
-        return RpcModuleState.Ready;
+        return ModuleState.Ready;
     }
 }

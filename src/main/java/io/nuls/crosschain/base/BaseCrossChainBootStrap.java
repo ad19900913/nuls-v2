@@ -1,7 +1,6 @@
 package io.nuls.crosschain.base;
 
 import io.nuls.core.ModuleE;
-import io.nuls.core.rpc.modulebootstrap.RpcModule;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,7 +14,7 @@ import static io.nuls.crosschain.base.constant.CrossChainConstant.RPC_PATH;
  * @author tag
  * 2019/4/10
  */
-public abstract class BaseCrossChainBootStrap extends RpcModule {
+public abstract class BaseCrossChainBootStrap {
     private Set<String> rpcPaths = new HashSet<>() {{
         add(RPC_PATH);
     }};

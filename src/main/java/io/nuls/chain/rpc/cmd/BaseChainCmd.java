@@ -26,56 +26,24 @@ package io.nuls.chain.rpc.cmd;
 
 import io.nuls.chain.info.CmConstants;
 import io.nuls.chain.info.CmErrorCode;
-import io.nuls.chain.info.CmRuntimeInfo;
 import io.nuls.chain.model.dto.AccountBalance;
 import io.nuls.chain.model.po.Asset;
-import io.nuls.chain.util.LoggerUtil;
 import io.nuls.chain.util.TxUtil;
-import io.nuls.core.RPCUtil;
-import io.nuls.core.basic.NulsByteBuffer;
 import io.nuls.core.basic.TransactionFeeCalculator;
 import io.nuls.core.data.CoinData;
 import io.nuls.core.data.CoinFrom;
 import io.nuls.core.data.CoinTo;
-import io.nuls.core.data.Transaction;
-import io.nuls.core.exception.NulsException;
 import io.nuls.core.exception.NulsRuntimeException;
 import io.nuls.core.model.BigIntegerUtils;
-import io.nuls.core.model.StringUtils;
-import io.nuls.core.rpc.model.message.Response;
 import io.nuls.core.signture.P2PHKSignature;
 
 import java.math.BigInteger;
-import java.util.List;
 
 /**
  * @author lan
  * @date 2018/11/28
  */
 public class BaseChainCmd {
-
-
-    boolean isMainAsset(String assetKey) {
-        return CmRuntimeInfo.getMainAssetKey().equals(assetKey);
-    }
-
-    Response parseTxs(List<String> txHexList, List<Transaction> txList) {
-        for (String txHex : txHexList) {
-            if (StringUtils.isBlank(txHex)) {
-                return failed("txHex is blank");
-            }
-            byte[] txStream = RPCUtil.decode(txHex);
-            Transaction tx = new Transaction();
-            try {
-                tx.parse(new NulsByteBuffer(txStream));
-                txList.add(tx);
-            } catch (NulsException e) {
-                LoggerUtil.logger().error("transaction parse error", e);
-                return failed("transaction parse error");
-            }
-        }
-        return success();
-    }
 
     /**
      * 注册链或资产封装coinData,x%资产进入黑洞，y%资产进入锁定
@@ -106,8 +74,7 @@ public class BaseChainCmd {
     /**
      * 注销资产进行处理
      */
-    CoinData getDisableCoinData(Asset asset, int nulsChainId, int nulsAssetId,
-                                int txSize, AccountBalance accountBalance) throws NulsRuntimeException {
+    CoinData getDisableCoinData(Asset asset, int nulsChainId, int nulsAssetId, int txSize) throws NulsRuntimeException {
         txSize = txSize + P2PHKSignature.SERIALIZE_LENGTH;
 
         BigInteger lockAmount = asset.getDepositNuls().subtract(asset.getDestroyNuls());

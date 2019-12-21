@@ -23,7 +23,6 @@
  */
 package io.nuls.contract.rpc.call;
 
-import io.nuls.contract.rpc.CallHelper;
 import io.nuls.core.ModuleE;
 import io.nuls.core.RPCUtil;
 import io.nuls.core.data.Transaction;

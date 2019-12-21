@@ -7,9 +7,8 @@ import io.nuls.core.core.annotation.Component;
 import io.nuls.core.log.Log;
 import io.nuls.core.rockdb.service.RocksDBService;
 import io.nuls.core.rpc.info.HostInfo;
+import io.nuls.core.rpc.modulebootstrap.ModuleState;
 import io.nuls.core.rpc.modulebootstrap.NulsRpcModuleBootstrap;
-import io.nuls.core.rpc.modulebootstrap.RpcModule;
-import io.nuls.core.rpc.modulebootstrap.RpcModuleState;
 import io.nuls.core.rpc.util.AddressPrefixDatas;
 import io.nuls.core.rpc.util.NulsDateUtils;
 import io.nuls.poc.constant.ConsensusConfig;
@@ -35,7 +34,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  * 2018/3/4
  */
 @Component
-public class ConsensusBootStrap extends RpcModule {
+public class ConsensusBootStrap {
 
     @Autowired
     private ConsensusConfig consensusConfig;
@@ -134,23 +133,23 @@ public class ConsensusBootStrap extends RpcModule {
     }
 
     @Override
-    public RpcModuleState onDependenciesReady() {
+    public ModuleState onDependenciesReady() {
         for (Chain chain : chainManager.getChainMap().values()) {
             chain.setConsensusStatus(ConsensusStatus.RUNNING);
         }
         Log.debug("cs onDependenciesReady");
         NulsDateUtils.getInstance().start();
-        return RpcModuleState.Running;
+        return ModuleState.Running;
     }
 
     @Override
-    public RpcModuleState onDependenciesLoss(Module dependenciesModule) {
+    public ModuleState onDependenciesLoss(Module dependenciesModule) {
         if (dependenciesModule.getName().equals(ModuleE.TX.abbr) || dependenciesModule.getName().equals(ModuleE.BL.abbr)) {
             for (Chain chain : chainManager.getChainMap().values()) {
                 chain.setConsensusStatus(ConsensusStatus.WAIT_RUNNING);
             }
         }
-        return RpcModuleState.Ready;
+        return ModuleState.Ready;
     }
 
     /**

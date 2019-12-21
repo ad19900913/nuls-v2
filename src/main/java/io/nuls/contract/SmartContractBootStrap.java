@@ -21,9 +21,8 @@ import io.nuls.core.log.Log;
 import io.nuls.core.parse.JSONUtils;
 import io.nuls.core.rockdb.service.RocksDBService;
 import io.nuls.core.rpc.info.HostInfo;
+import io.nuls.core.rpc.modulebootstrap.ModuleState;
 import io.nuls.core.rpc.modulebootstrap.NulsRpcModuleBootstrap;
-import io.nuls.core.rpc.modulebootstrap.RpcModule;
-import io.nuls.core.rpc.modulebootstrap.RpcModuleState;
 import io.nuls.core.rpc.util.AddressPrefixDatas;
 import io.nuls.core.rpc.util.NulsDateUtils;
 import io.nuls.protocol.ModuleHelper;
@@ -48,7 +47,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  * @date: 2019-03-14
  */
 @Component
-public class SmartContractBootStrap extends RpcModule {
+public class SmartContractBootStrap {
 
     @Autowired
     private ContractConfig contractConfig;
@@ -221,10 +220,10 @@ public class SmartContractBootStrap extends RpcModule {
      * @return
      */
     @Override
-    public RpcModuleState onDependenciesReady() {
+    public ModuleState onDependenciesReady() {
         Log.info("all dependency module ready");
         NulsDateUtils.getInstance().start();
-        return RpcModuleState.Running;
+        return ModuleState.Running;
     }
 
     @Override
@@ -261,7 +260,7 @@ public class SmartContractBootStrap extends RpcModule {
      * @return
      */
     @Override
-    public RpcModuleState onDependenciesLoss(Module dependenciesModule) {
-        return RpcModuleState.Ready;
+    public ModuleState onDependenciesLoss(Module dependenciesModule) {
+        return ModuleState.Ready;
     }
 }

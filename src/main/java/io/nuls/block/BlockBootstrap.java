@@ -1,23 +1,20 @@
 package io.nuls.block;
 
-import io.nuls.block.constant.StatusEnum;
+import io.nuls.AddressPrefixDatas;
+import io.nuls.ModuleState;
 import io.nuls.block.manager.ChainManager;
 import io.nuls.block.manager.ContextManager;
 import io.nuls.block.model.BlockConfig;
 import io.nuls.block.thread.BlockSynchronizer;
 import io.nuls.block.thread.monitor.*;
 import io.nuls.core.ModuleE;
+import io.nuls.core.NulsDateUtils;
 import io.nuls.core.basic.AddressTool;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.log.Log;
 import io.nuls.core.rockdb.service.RocksDBService;
-import io.nuls.core.rpc.info.HostInfo;
 import io.nuls.core.rpc.modulebootstrap.NulsRpcModuleBootstrap;
-import io.nuls.core.rpc.modulebootstrap.RpcModule;
-import io.nuls.core.rpc.modulebootstrap.RpcModuleState;
-import io.nuls.core.rpc.util.AddressPrefixDatas;
-import io.nuls.core.rpc.util.NulsDateUtils;
 import io.nuls.core.thread.ThreadUtils;
 import io.nuls.core.thread.commom.NulsThreadFactory;
 import io.nuls.protocol.ModuleHelper;
@@ -38,7 +35,7 @@ import static io.nuls.block.constant.Constant.*;
  * @date 19-3-4 下午4:09
  */
 @Component
-public class BlockBootstrap extends RpcModule {
+public class BlockBootstrap {
 
     @Autowired
     public static BlockConfig blockConfig;
@@ -49,20 +46,17 @@ public class BlockBootstrap extends RpcModule {
     private ChainManager chainManager;
 
     public static void main(String[] args) {
-        if (args == null || args.length == 0) {
-            args = new String[]{"ws://" + HostInfo.getLocalIP() + ":7771"};
-        }
         NulsRpcModuleBootstrap.run("io.nuls", args);
     }
 
     @Override
-    public Module[] declareDependent() {
-        return new Module[]{
-                Module.build(ModuleE.TX),
-                Module.build(ModuleE.AC),
-                Module.build(ModuleE.LG),
-                Module.build(ModuleE.CS),
-                Module.build(ModuleE.NW)
+    public ModuleE[] declareDependent() {
+        return new ModuleE[]{
+                ModuleE.TX,
+                ModuleE.AC,
+                ModuleE.LG,
+                ModuleE.CS,
+                ModuleE.NW
         };
     }
 
@@ -72,8 +66,8 @@ public class BlockBootstrap extends RpcModule {
      * @return
      */
     @Override
-    public Module moduleInfo() {
-        return new Module(ModuleE.BL.abbr, "1.0");
+    public ModuleE moduleInfo() {
+        return ModuleE.BL;
     }
 
 
@@ -136,7 +130,7 @@ public class BlockBootstrap extends RpcModule {
      * @return
      */
     @Override
-    public RpcModuleState onDependenciesReady() {
+    public ModuleState onDependenciesReady() {
         Log.info("block onDependenciesReady");
         NulsDateUtils.getInstance().start();
         if (started) {
@@ -174,22 +168,7 @@ public class BlockBootstrap extends RpcModule {
             nodesExecutor.scheduleWithFixedDelay(NodesMonitor.getInstance(), 0, blockConfig.getNodesMonitorInterval(), TimeUnit.MILLISECONDS);
             started = true;
         }
-        return RpcModuleState.Running;
-    }
-
-    /**
-     * 某个外部依赖连接丢失后,会调用此方法,可控制模块状态,如果返回Ready,则表明模块退化到Ready状态,当依赖重新准备完毕后,将重新触发onDependenciesReady方法,若返回的状态是Running,将不会重新触发onDependenciesReady
-     *
-     * @param module
-     * @return
-     */
-    @Override
-    public RpcModuleState onDependenciesLoss(Module module) {
-        List<Integer> chainIds = ContextManager.CHAIN_ID_LIST;
-        for (Integer chainId : chainIds) {
-            ContextManager.getContext(chainId).setStatus(StatusEnum.INITIALIZING);
-        }
-        return RpcModuleState.Ready;
+        return ModuleState.Running;
     }
 
     @Override

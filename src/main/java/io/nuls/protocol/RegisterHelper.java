@@ -1,11 +1,13 @@
 package io.nuls.protocol;
 
 import io.nuls.core.ModuleE;
+import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.log.Log;
 import io.nuls.core.rpc.info.Constants;
 import io.nuls.core.rpc.model.message.Response;
 import io.nuls.core.rpc.netty.channel.manager.ConnectManager;
 import io.nuls.core.rpc.netty.processor.ResponseMessageProcessor;
+import io.nuls.protocol.rpc.ProtocolResource;
 
 import java.util.*;
 
@@ -17,6 +19,9 @@ import java.util.*;
  * @date 2019/5/28 11:44
  */
 public class RegisterHelper {
+
+    @Autowired
+    private static ProtocolResource protocolResource;
 
     /**
      * 向交易模块注册交易
@@ -103,24 +108,9 @@ public class RegisterHelper {
         if (!ModuleHelper.isSupportProtocolUpdate()) {
             return true;
         }
-        try {
-            Collection<Protocol> protocols = ProtocolGroupManager.getProtocols(chainId);
-            Map<String, Object> params = new HashMap<>();
-            params.put(Constants.VERSION_KEY_STR, "1.0");
-            params.put(Constants.CHAIN_ID, chainId);
-            List<Protocol> list = new ArrayList<>(protocols);
-            params.put("list", list);
+        List<Protocol> protocols = ProtocolGroupManager.getProtocols(chainId);
             params.put("moduleCode", ConnectManager.LOCAL.getAbbreviation());
-
-            Response cmdResp = ResponseMessageProcessor.requestAndResponse(ModuleE.PU.abbr, "registerProtocol", params);
-            if (!cmdResp.isSuccess()) {
-                Log.error("chain ：" + chainId + " Failure of transaction registration,errorMsg: " + cmdResp.getResponseComment());
-                return false;
-            }
-        } catch (Exception e) {
-            Log.error("", e);
-        }
-        return true;
+        return protocolResource.registerProtocol(chainId, null, protocols);
     }
 
 }
