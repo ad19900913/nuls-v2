@@ -50,7 +50,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 import java.util.concurrent.locks.StampedLock;
 
-import static io.nuls.block.BlockBootstrap.blockConfig;
+import static io.nuls.block.BlockModule.blockConfig;
 import static io.nuls.block.constant.Constant.MODULE_WORKING;
 import static io.nuls.block.constant.LocalBlockStateEnum.*;
 

@@ -25,6 +25,7 @@
 package io.nuls;
 
 import io.nuls.account.rpc.cmd.AccountResource;
+import io.nuls.core.basic.AddressPrefixInf;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.log.Log;
@@ -40,7 +41,7 @@ import java.util.Map;
  * @date 2019-07-25
  */
 @Component
-public class AddressPrefixDatas {
+public class AddressPrefixDatas implements AddressPrefixInf {
     /**
      * chainId-地址映射表
      */
@@ -63,6 +64,7 @@ public class AddressPrefixDatas {
         return ADDRESS_PREFIX_MAP;
     }
 
+    @Override
     public Map<Integer, String> syncAddressPrefix() {
         return getPrefixFromAccountModule();
     }

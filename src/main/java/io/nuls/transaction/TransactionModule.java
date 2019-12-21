@@ -24,16 +24,15 @@
 
 package io.nuls.transaction;
 
+import io.nuls.AddressPrefixDatas;
+import io.nuls.ModuleState;
 import io.nuls.core.ModuleE;
+import io.nuls.core.NulsDateUtils;
+import io.nuls.core.NulsModule;
 import io.nuls.core.basic.AddressTool;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.rockdb.service.RocksDBService;
-import io.nuls.core.rpc.info.HostInfo;
-import io.nuls.core.rpc.modulebootstrap.ModuleState;
-import io.nuls.core.rpc.modulebootstrap.NulsRpcModuleBootstrap;
-import io.nuls.core.rpc.util.AddressPrefixDatas;
-import io.nuls.core.rpc.util.NulsDateUtils;
 import io.nuls.protocol.ModuleHelper;
 import io.nuls.protocol.ProtocolGroupManager;
 import io.nuls.protocol.RegisterHelper;
@@ -54,7 +53,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  * @date: 2019/3/4
  */
 @Component
-public class TransactionBootstrap {
+public class TransactionModule extends NulsModule {
 
     @Autowired
     private TxConfig txConfig;
@@ -62,13 +61,6 @@ public class TransactionBootstrap {
     private AddressPrefixDatas addressPrefixDatas;
     @Autowired
     private ChainManager chainManager;
-
-    public static void main(String[] args) {
-        if (args == null || args.length == 0) {
-            args = new String[]{"ws://" + HostInfo.getLocalIP() + ":7771"};
-        }
-        NulsRpcModuleBootstrap.run("io.nuls", args);
-    }
 
     @Override
     public void init() {
@@ -91,7 +83,7 @@ public class TransactionBootstrap {
     public boolean doStart() {
         try {
             chainManager.runChain();
-            while (!isDependencieReady(ModuleE.NW.abbr)) {
+            while (!isDependencieReady(ModuleE.NW)) {
                 LOG.debug("wait depend modules ready");
                 Thread.sleep(2000L);
             }
@@ -113,6 +105,11 @@ public class TransactionBootstrap {
         if (ModuleE.PU.abbr.equals(module.getName())) {
             chainManager.getChainMap().keySet().forEach(RegisterHelper::registerProtocol);
         }
+    }
+
+    @Override
+    public Set<Module> getDependencies() {
+        return null;
     }
 
     @Override
@@ -138,23 +135,18 @@ public class TransactionBootstrap {
     }
 
     @Override
-    public Module[] declareDependent() {
-        return new Module[]{
-                Module.build(ModuleE.NW),
-                Module.build(ModuleE.LG),
-                Module.build(ModuleE.BL),
-                Module.build(ModuleE.AC)
+    public ModuleE[] declareDependent() {
+        return new ModuleE[]{
+                ModuleE.NW,
+                ModuleE.LG,
+                ModuleE.BL,
+                ModuleE.AC
         };
     }
 
     @Override
-    public Module moduleInfo() {
-        return new Module(ModuleE.TX.abbr, TxConstant.RPC_VERSION);
-    }
-
-    @Override
-    public Set<String> getRpcCmdPackage() {
-        return Set.of(TxConstant.TX_CMD_PATH);
+    public ModuleE moduleInfo() {
+        return ModuleE.TX;
     }
 
     /**

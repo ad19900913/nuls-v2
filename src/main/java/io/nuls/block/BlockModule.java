@@ -9,12 +9,12 @@ import io.nuls.block.thread.BlockSynchronizer;
 import io.nuls.block.thread.monitor.*;
 import io.nuls.core.ModuleE;
 import io.nuls.core.NulsDateUtils;
+import io.nuls.core.NulsModule;
 import io.nuls.core.basic.AddressTool;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.log.Log;
 import io.nuls.core.rockdb.service.RocksDBService;
-import io.nuls.core.rpc.modulebootstrap.NulsRpcModuleBootstrap;
 import io.nuls.core.thread.ThreadUtils;
 import io.nuls.core.thread.commom.NulsThreadFactory;
 import io.nuls.protocol.ModuleHelper;
@@ -22,6 +22,7 @@ import io.nuls.protocol.ProtocolGroupManager;
 import io.nuls.protocol.RegisterHelper;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -35,7 +36,7 @@ import static io.nuls.block.constant.Constant.*;
  * @date 19-3-4 下午4:09
  */
 @Component
-public class BlockBootstrap {
+public class BlockModule extends NulsModule {
 
     @Autowired
     public static BlockConfig blockConfig;
@@ -45,8 +46,13 @@ public class BlockBootstrap {
     @Autowired
     private ChainManager chainManager;
 
-    public static void main(String[] args) {
-        NulsRpcModuleBootstrap.run("io.nuls", args);
+    public BlockModule(String abbr, String s) {
+
+    }
+
+    @Override
+    public ModuleState onDependenciesLoss(Module module) {
+        return null;
     }
 
     @Override
@@ -77,7 +83,6 @@ public class BlockBootstrap {
     @Override
     public void init() {
         try {
-            super.init();
             /**
              * 地址工具初始化
              */
@@ -111,7 +116,7 @@ public class BlockBootstrap {
     @Override
     public boolean doStart() {
         try {
-            while (!isDependencieReady(new Module(ModuleE.TX.abbr, "1.0"))) {
+            while (!isDependencieReady(ModuleE.TX)) {
                 Thread.sleep(1000);
             }
             //启动链
@@ -179,5 +184,10 @@ public class BlockBootstrap {
         if (ModuleE.PU.abbr.equals(module.getName())) {
             ContextManager.CHAIN_ID_LIST.forEach(RegisterHelper::registerProtocol);
         }
+    }
+
+    @Override
+    public Set<Module> getDependencies() {
+        return null;
     }
 }

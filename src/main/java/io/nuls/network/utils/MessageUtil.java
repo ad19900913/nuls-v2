@@ -24,7 +24,7 @@
  */
 package io.nuls.network.utils;
 
-import io.nuls.core.rpc.model.CmdPriority;
+import io.nuls.network.rpc.CmdPriority;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -26,11 +26,11 @@
 package io.nuls.network.manager.handler;
 
 
-import io.nuls.core.rpc.model.CmdPriority;
 import io.nuls.network.locker.Lockers;
 import io.nuls.network.manager.StorageManager;
 import io.nuls.network.manager.handler.base.BaseMeesageHandlerInf;
 import io.nuls.network.manager.handler.message.OtherModuleMessageHandler;
+import io.nuls.network.rpc.CmdPriority;
 import io.nuls.network.utils.MessageUtil;
 
 import java.util.Collection;

@@ -1,15 +1,16 @@
 package io.nuls.protocol;
 
+import io.nuls.ModuleState;
 import io.nuls.core.ModuleE;
+import io.nuls.core.NulsModule;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.log.Log;
 import io.nuls.core.rockdb.service.RocksDBService;
-import io.nuls.core.rpc.info.HostInfo;
-import io.nuls.core.rpc.modulebootstrap.ModuleState;
-import io.nuls.core.rpc.modulebootstrap.NulsRpcModuleBootstrap;
 import io.nuls.protocol.manager.ChainManager;
 import io.nuls.protocol.model.ProtocolConfig;
+
+import java.util.Set;
 
 import static io.nuls.protocol.constant.Constant.PROTOCOL_CONFIG;
 
@@ -21,7 +22,7 @@ import static io.nuls.protocol.constant.Constant.PROTOCOL_CONFIG;
  * @date 19-3-4 下午4:09
  */
 @Component
-public class ProtocolUpdateBootstrap {
+public class ProtocolUpdateModule extends NulsModule {
 
     @Autowired
     public static ProtocolConfig protocolConfig;
@@ -29,21 +30,14 @@ public class ProtocolUpdateBootstrap {
     @Autowired
     private ChainManager chainManager;
 
-    public static void main(String[] args) {
-        if (args == null || args.length == 0) {
-            args = new String[]{"ws://" + HostInfo.getLocalIP() + ":7771"};
-        }
-        NulsRpcModuleBootstrap.run("io.nuls", args);
-    }
-
     /**
      * 返回此模块的依赖模块
      *
      * @return
      */
     @Override
-    public Module[] declareDependent() {
-        return new Module[]{Module.build(ModuleE.BL)};
+    public ModuleE[] declareDependent() {
+        return new ModuleE[]{ModuleE.BL};
     }
 
     /**
@@ -51,8 +45,8 @@ public class ProtocolUpdateBootstrap {
      * @return
      */
     @Override
-    public Module moduleInfo() {
-        return new Module(ModuleE.PU.abbr, "1.0");
+    public ModuleE moduleInfo() {
+        return ModuleE.PU;
     }
 
 
@@ -62,7 +56,6 @@ public class ProtocolUpdateBootstrap {
     @Override
     public void init() {
         try {
-            super.init();
             initDb();
             chainManager.initChain();
             ModuleHelper.init(this);
@@ -89,7 +82,7 @@ public class ProtocolUpdateBootstrap {
     @Override
     public boolean doStart() {
         try {
-            while (!isDependencieReady(new Module(ModuleE.BL.abbr, ROLE))) {
+            while (!isDependencieReady(ModuleE.BL)) {
                 Thread.sleep(1000);
             }
             //启动链
@@ -111,6 +104,16 @@ public class ProtocolUpdateBootstrap {
     public ModuleState onDependenciesReady() {
         Log.info("protocol onDependenciesReady");
         return ModuleState.Running;
+    }
+
+    @Override
+    public void onDependenciesReady(Module module) {
+
+    }
+
+    @Override
+    public Set<Module> getDependencies() {
+        return null;
     }
 
     /**

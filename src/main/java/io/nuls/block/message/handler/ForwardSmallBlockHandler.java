@@ -39,7 +39,7 @@ import io.nuls.protocol.MessageProcessor;
 
 import java.util.List;
 
-import static io.nuls.block.BlockBootstrap.blockConfig;
+import static io.nuls.block.BlockModule.blockConfig;
 import static io.nuls.block.constant.CommandConstant.FORWARD_SMALL_BLOCK_MESSAGE;
 import static io.nuls.block.constant.CommandConstant.GET_SMALL_BLOCK_MESSAGE;
 

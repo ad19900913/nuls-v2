@@ -50,7 +50,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static io.nuls.block.BlockBootstrap.blockConfig;
+import static io.nuls.block.BlockModule.blockConfig;
 import static io.nuls.block.constant.BlockForwardEnum.*;
 import static io.nuls.block.constant.CommandConstant.GET_TXGROUP_MESSAGE;
 import static io.nuls.block.constant.CommandConstant.SMALL_BLOCK_MESSAGE;

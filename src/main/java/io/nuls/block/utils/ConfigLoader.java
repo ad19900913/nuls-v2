@@ -30,7 +30,7 @@ import io.nuls.core.core.annotation.Component;
 
 import java.util.List;
 
-import static io.nuls.block.BlockBootstrap.blockConfig;
+import static io.nuls.block.BlockModule.blockConfig;
 
 /**
  * 配置加载器

@@ -1,5 +1,7 @@
 package io.nuls.account;
 
+import io.nuls.AddressPrefixDatas;
+import io.nuls.ModuleState;
 import io.nuls.account.config.AccountConfig;
 import io.nuls.account.config.NulsConfig;
 import io.nuls.account.constant.AccountErrorCode;
@@ -8,6 +10,7 @@ import io.nuls.account.rpc.cmd.AccountResource;
 import io.nuls.account.util.LoggerUtil;
 import io.nuls.account.util.manager.ChainManager;
 import io.nuls.core.ModuleE;
+import io.nuls.core.NulsModule;
 import io.nuls.core.basic.AddressTool;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
@@ -16,21 +19,19 @@ import io.nuls.core.exception.NulsException;
 import io.nuls.core.model.StringUtils;
 import io.nuls.core.rockdb.constant.DBErrorCode;
 import io.nuls.core.rockdb.service.RocksDBService;
-import io.nuls.core.rpc.info.HostInfo;
-import io.nuls.core.rpc.modulebootstrap.NulsRpcModuleBootstrap;
-import io.nuls.core.rpc.util.AddressPrefixDatas;
 import io.nuls.protocol.ModuleHelper;
 import io.nuls.protocol.ProtocolGroupManager;
 import io.nuls.protocol.RegisterHelper;
 
 import java.io.File;
+import java.util.Set;
 
 /**
  * @author: qinyifeng
  * @date: 2018/10/15
  */
 @Component
-public class AccountBootstrap {
+public class AccountModule extends NulsModule {
 
     @Autowired
     private AccountConfig accountConfig;
@@ -42,11 +43,19 @@ public class AccountBootstrap {
     @Autowired
     private AddressPrefixDatas addressPrefixDatas;
 
-    public static void main(String[] args) {
-        if (args == null || args.length == 0) {
-            args = new String[]{"ws://" + HostInfo.getLocalIP() + ":7771"};
-        }
-        NulsRpcModuleBootstrap.run("io.nuls", args);
+    @Override
+    public ModuleState onDependenciesLoss(Module module) {
+        return null;
+    }
+
+    @Override
+    public ModuleE[] declareDependent() {
+        return new ModuleE[0];
+    }
+
+    @Override
+    public ModuleE moduleInfo() {
+        return null;
     }
 
     /**
@@ -78,6 +87,11 @@ public class AccountBootstrap {
     }
 
     @Override
+    public ModuleState onDependenciesReady() {
+        return null;
+    }
+
+    @Override
     public void onDependenciesReady(Module module) {
         if (ModuleE.TX.abbr.equals(module.getName())) {
             //注册账户模块相关交易
@@ -93,6 +107,11 @@ public class AccountBootstrap {
             chainManager.getChainMap().keySet().forEach(RegisterHelper::registerProtocol);
             LoggerUtil.LOG.info("register protocol ...");
         }
+    }
+
+    @Override
+    public Set<Module> getDependencies() {
+        return null;
     }
 
     public void initCfg() {

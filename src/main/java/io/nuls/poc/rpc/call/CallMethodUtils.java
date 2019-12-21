@@ -1,5 +1,6 @@
 package io.nuls.poc.rpc.call;
 
+import io.nuls.account.rpc.cmd.AccountResource;
 import io.nuls.block.rpc.BlockResource;
 import io.nuls.core.ModuleE;
 import io.nuls.core.RPCUtil;
@@ -18,16 +19,20 @@ import io.nuls.core.signture.BlockSignature;
 import io.nuls.core.signture.P2PHKSignature;
 import io.nuls.core.signture.SignatureUtil;
 import io.nuls.core.signture.TransactionSignature;
+import io.nuls.network.rpc.cmd.NetworkResource;
 import io.nuls.poc.constant.ConsensusConstant;
 import io.nuls.poc.constant.ConsensusErrorCode;
 import io.nuls.poc.model.bo.Chain;
 import io.nuls.poc.model.dto.CmdRegisterDto;
 import io.nuls.poc.utils.compare.BlockHeaderComparator;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static io.nuls.Constant.CHAIN_ID;
 
 /**
  * 公共远程方法调用工具类
@@ -42,6 +47,10 @@ public class CallMethodUtils {
 
     @Autowired
     private static BlockResource blockResource;
+    @Autowired
+    private static AccountResource accountResource;
+    @Autowired
+    private static NetworkResource networkResource;
 
     /**
      * 账户验证
@@ -52,26 +61,8 @@ public class CallMethodUtils {
      * @param password
      * @return validate result
      */
-    public static HashMap accountValid(int chainId, String address, String password) throws NulsException {
-        try {
-            Map<String, Object> callParams = new HashMap<>(4);
-            callParams.put(Constants.CHAIN_ID, chainId);
-            callParams.put("address", address);
-            callParams.put("password", password);
-            Response cmdResp = ResponseMessageProcessor.requestAndResponse(ModuleE.AC.abbr, "ac_getPriKeyByAddress", callParams);
-            if (!cmdResp.isSuccess()) {
-                throw new NulsException(ConsensusErrorCode.ACCOUNT_VALID_ERROR);
-            }
-            HashMap callResult = (HashMap) ((HashMap) cmdResp.getResponseData()).get("ac_getPriKeyByAddress");
-            if (callResult == null || callResult.size() == 0) {
-                throw new NulsException(ConsensusErrorCode.ACCOUNT_VALID_ERROR);
-            }
-            return callResult;
-        } catch (NulsException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new NulsException(e);
-        }
+    public static Map accountValid(int chainId, String address, String password) {
+        return accountResource.getPriKeyByAddress(CHAIN_ID, address, password);
     }
 
     /**
@@ -82,27 +73,11 @@ public class CallMethodUtils {
      * @param address
      * @return validate result
      */
-    public static MultiSigAccount getMultiSignAccount(int chainId, String address) throws NulsException {
-        try {
-            Map<String, Object> callParams = new HashMap<>(4);
-            callParams.put(Constants.CHAIN_ID, chainId);
-            callParams.put("address", address);
-            Response cmdResp = ResponseMessageProcessor.requestAndResponse(ModuleE.AC.abbr, "ac_getMultiSignAccount", callParams);
-            if (!cmdResp.isSuccess()) {
-                throw new NulsException(ConsensusErrorCode.ACCOUNT_VALID_ERROR);
-            }
-            HashMap callResult = (HashMap) ((HashMap) cmdResp.getResponseData()).get("ac_getMultiSignAccount");
-            if (callResult == null || callResult.size() == 0) {
-                throw new NulsException(ConsensusErrorCode.ACCOUNT_VALID_ERROR);
-            }
-            MultiSigAccount multiSigAccount = new MultiSigAccount();
-            multiSigAccount.parse(RPCUtil.decode((String) callResult.get("value")), 0);
-            return multiSigAccount;
-        } catch (NulsException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new NulsException(ConsensusErrorCode.INTERFACE_CALL_FAILED);
-        }
+    public static MultiSigAccount getMultiSignAccount(int chainId, String address) throws IOException, NulsException {
+        String s = accountResource.getMultiSignAccount(CHAIN_ID, address);
+        MultiSigAccount multiSigAccount = new MultiSigAccount();
+        multiSigAccount.parse(RPCUtil.decode(s), 0);
+        return multiSigAccount;
     }
 
 
@@ -122,17 +97,8 @@ public class CallMethodUtils {
             if (!StringUtils.isBlank(priKey)) {
                 p2PHKSignature = SignatureUtil.createSignatureByPriKey(tx, priKey);
             } else {
-                Map<String, Object> callParams = new HashMap<>(4);
-                callParams.put(Constants.CHAIN_ID, chainId);
-                callParams.put("address", address);
-                callParams.put("password", password);
-                callParams.put("data", RPCUtil.encode(tx.getHash().getBytes()));
-                Response signResp = ResponseMessageProcessor.requestAndResponse(ModuleE.AC.abbr, "ac_signDigest", callParams);
-                if (!signResp.isSuccess()) {
-                    throw new NulsException(ConsensusErrorCode.TX_SIGNTURE_ERROR);
-                }
-                HashMap signResult = (HashMap) ((HashMap) signResp.getResponseData()).get("ac_signDigest");
-                p2PHKSignature.parse(RPCUtil.decode((String) signResult.get("signature")), 0);
+                String s = accountResource.signDigest(CHAIN_ID, address, password, RPCUtil.encode(tx.getHash().getBytes()));
+                p2PHKSignature.parse(RPCUtil.decode(s), 0);
             }
             TransactionSignature signature = new TransactionSignature();
             List<P2PHKSignature> p2PHKSignatures = new ArrayList<>();
@@ -156,18 +122,9 @@ public class CallMethodUtils {
      */
     public static void blockSignature(Chain chain, String address, BlockHeader header) throws NulsException {
         try {
-            Map<String, Object> callParams = new HashMap<>(4);
-            callParams.put(Constants.CHAIN_ID, chain.getConfig().getChainId());
-            callParams.put("address", address);
-            callParams.put("password", chain.getConfig().getPassword());
-            callParams.put("data", RPCUtil.encode(header.getHash().getBytes()));
-            Response signResp = ResponseMessageProcessor.requestAndResponse(ModuleE.AC.abbr, "ac_signBlockDigest", callParams);
-            if (!signResp.isSuccess()) {
-                throw new NulsException(ConsensusErrorCode.TX_SIGNTURE_ERROR);
-            }
-            HashMap signResult = (HashMap) ((HashMap) signResp.getResponseData()).get("ac_signBlockDigest");
+            String s = accountResource.signBlockDigest(CHAIN_ID, address, chain.getConfig().getPassword(), RPCUtil.encode(header.getHash().getBytes()));
             BlockSignature blockSignature = new BlockSignature();
-            blockSignature.parse(RPCUtil.decode((String) signResult.get("signature")), 0);
+            blockSignature.parse(RPCUtil.decode(s), 0);
             header.setBlockSignature(blockSignature);
         } catch (NulsException e) {
             throw e;
@@ -195,20 +152,8 @@ public class CallMethodUtils {
      * @param isCross 是否获取跨链节点连接数/Whether to Get the Number of Connections across Chains
      * @return int    连接节点数/Number of Connecting Nodes
      */
-    public static int getAvailableNodeAmount(int chainId, boolean isCross) throws NulsException {
-        Map<String, Object> callParams = new HashMap<>(4);
-        callParams.put(Constants.CHAIN_ID, chainId);
-        callParams.put("isCross", isCross);
-        try {
-            Response callResp = ResponseMessageProcessor.requestAndResponse(ModuleE.NW.abbr, "nw_getChainConnectAmount", callParams);
-            if (!callResp.isSuccess()) {
-                throw new NulsException(ConsensusErrorCode.INTERFACE_CALL_FAILED);
-            }
-            HashMap callResult = (HashMap) ((HashMap) callResp.getResponseData()).get("nw_getChainConnectAmount");
-            return (Integer) callResult.get("connectAmount");
-        } catch (Exception e) {
-            throw new NulsException(e);
-        }
+    public static int getAvailableNodeAmount(int chainId, boolean isCross) {
+        return networkResource.getChainConnectAmount(CHAIN_ID, isCross);
     }
 
     /**

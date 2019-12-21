@@ -78,7 +78,7 @@ public class Bootstrap implements ModuleConfig {
 
     static NulsLogger log = LoggerBuilder.getLogger("kernel");
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         System.setProperty("io.netty.tryReflectionSetAccessible", "true");
         Bootstrap.args = args;
         SpringLiteContext.init("io.nuls");
@@ -92,7 +92,7 @@ public class Bootstrap implements ModuleConfig {
      * 找到模块后，调用./start.sh脚本启动子模块
      * @param args
      */
-    private void startOtherModule(String[] args) {
+    private void startAllModules(String[] args) {
         //启动时第一个参数值为"startModule"时启动所有子模块
         if (args.length > 0 && "startModule".equals(args[0])) {
             //增加程序结束的钩子，监听到主线程停止时，调用./stop.sh停止所有的子模块
@@ -100,8 +100,8 @@ public class Bootstrap implements ModuleConfig {
                 log.info("jvm shutdown");
                 log.info("停止子模块");
                 log.info("停止脚本列表");
-                MODULE_STOP_LIST_SCRIPT.stream().forEach(log::info);
-                MODULE_STOP_LIST_SCRIPT.stream().forEach(stop->{
+                MODULE_STOP_LIST_SCRIPT.forEach(log::info);
+                MODULE_STOP_LIST_SCRIPT.forEach(stop->{
                     try {
                         printRuntimeConsole(Runtime.getRuntime().exec(stop));
                         log.info("停止子模块:{}",stop);
@@ -124,7 +124,6 @@ public class Bootstrap implements ModuleConfig {
                     log.error("启动模块发生错误");
                 }
             });
-
         }
     }
 
@@ -198,7 +197,7 @@ public class Bootstrap implements ModuleConfig {
     }
 
     public boolean doStart() {
-        startOtherModule(args);
+        startAllModules(args);
         return false;
     }
 

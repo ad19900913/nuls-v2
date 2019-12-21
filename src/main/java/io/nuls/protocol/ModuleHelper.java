@@ -1,8 +1,9 @@
 package io.nuls.protocol;
 
-import io.nuls.core.ModuleE;
+import io.nuls.contract.SmartContractModule;
+import io.nuls.core.NulsModule;
 import io.nuls.core.log.Log;
-import io.nuls.core.rpc.modulebootstrap.RpcModule;
+import io.nuls.crosschain.nuls.CrossChainModule;
 
 import java.util.Set;
 
@@ -40,7 +41,7 @@ public class ModuleHelper {
         return supportCrossChain;
     }
 
-    public static void init(RpcModule module) {
+    public static void init(NulsModule module) {
         supportProtocolUpdate = enableProtocolUpdate(module);
         supportSmartContract = enableSmartContract(module);
         supportCrossChain = enableCrossChain(module);
@@ -51,20 +52,20 @@ public class ModuleHelper {
         Log.info("supportCrossChain-" + supportCrossChain);
     }
 
-    private static boolean enableProtocolUpdate(RpcModule module) {
-        Module m = new Module(ModuleE.PU.abbr, "1.0");
+    private static boolean enableProtocolUpdate(NulsModule module) {
+        NulsModule m = new ProtocolUpdateModule();
         Set<Module> dependencies = module.getDependencies();
         return module.moduleInfo().equals(m) || dependencies.contains(m);
     }
 
-    private static boolean enableSmartContract(RpcModule module) {
-        Module m = new Module(ModuleE.SC.abbr, "1.0");
+    private static boolean enableSmartContract(NulsModule module) {
+        NulsModule m = new SmartContractModule();
         Set<Module> dependencies = module.getDependencies();
         return module.moduleInfo().equals(m) || dependencies.contains(m);
     }
 
-    private static boolean enableCrossChain(RpcModule module) {
-        Module m = new Module(ModuleE.CC.abbr, "1.0");
+    private static boolean enableCrossChain(NulsModule module) {
+        NulsModule m = new CrossChainModule();
         Set<Module> dependencies = module.getDependencies();
         return module.moduleInfo().equals(m) || dependencies.contains(m);
     }

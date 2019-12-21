@@ -1,5 +1,7 @@
 package io.nuls.chain;
 
+import io.nuls.AddressPrefixDatas;
+import io.nuls.ModuleState;
 import io.nuls.chain.config.NulsChainConfig;
 import io.nuls.chain.info.CmConstants;
 import io.nuls.chain.info.CmRuntimeInfo;
@@ -16,17 +18,14 @@ import io.nuls.chain.storage.InitDB;
 import io.nuls.chain.storage.impl.*;
 import io.nuls.chain.util.LoggerUtil;
 import io.nuls.core.ModuleE;
+import io.nuls.core.NulsDateUtils;
+import io.nuls.core.NulsModule;
 import io.nuls.core.basic.AddressTool;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.core.ioc.SpringLiteContext;
 import io.nuls.core.model.BigIntegerUtils;
 import io.nuls.core.rockdb.service.RocksDBService;
-import io.nuls.core.rpc.info.HostInfo;
-import io.nuls.core.rpc.modulebootstrap.ModuleState;
-import io.nuls.core.rpc.modulebootstrap.NulsRpcModuleBootstrap;
-import io.nuls.core.rpc.util.AddressPrefixDatas;
-import io.nuls.core.rpc.util.NulsDateUtils;
 import io.nuls.protocol.CommonAdvice;
 import io.nuls.protocol.ProtocolGroupManager;
 import io.nuls.protocol.ProtocolLoader;
@@ -35,10 +34,7 @@ import io.nuls.protocol.cmd.TransactionDispatcher;
 
 import java.io.File;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 链管理模块启动类
@@ -48,7 +44,7 @@ import java.util.Map;
  * @date 2018/11/7
  */
 @Component
-public class ChainManagerBootstrap {
+public class ChainManagerModule extends NulsModule {
     @Autowired
     private NulsChainConfig nulsChainConfig;
     @Autowired
@@ -58,19 +54,11 @@ public class ChainManagerBootstrap {
     @Autowired
     private ChainService chainService;
 
-    public static void main(String[] args) {
-        if (args == null || args.length == 0) {
-            args = new String[]{"ws://" + HostInfo.getLocalIP() + ":7771"};
-        }
-        NulsRpcModuleBootstrap.run("io.nuls", args);
-    }
-
-
     /**
      * 读取resources/module.ini，初始化配置
      * Read resources/module.ini to initialize the configuration
      */
-    private void initCfg() throws Exception {
+    private void initCfg() {
         CmRuntimeInfo.nulsAssetId = nulsChainConfig.getMainAssetId();
         CmRuntimeInfo.nulsChainId = nulsChainConfig.getMainChainId();
         long decimal = (long) Math.pow(10, Integer.valueOf(nulsChainConfig.getDefaultDecimalPlaces()));
@@ -144,19 +132,19 @@ public class ChainManagerBootstrap {
 
 
     @Override
-    public Module[] declareDependent() {
-        return new Module[]{
-                Module.build(ModuleE.TX),
-                Module.build(ModuleE.LG),
-                Module.build(ModuleE.NW),
-                Module.build(ModuleE.AC),
-                Module.build(ModuleE.CS)
+    public ModuleE[] declareDependent() {
+        return new ModuleE[]{
+                ModuleE.TX,
+                ModuleE.LG,
+                ModuleE.NW,
+                ModuleE.AC,
+                ModuleE.CS
         };
     }
 
     @Override
-    public Module moduleInfo() {
-        return new Module(ModuleE.CM.abbr, "1.0");
+    public ModuleE moduleInfo() {
+        return ModuleE.CM;
     }
 
     /**
@@ -164,7 +152,6 @@ public class ChainManagerBootstrap {
      */
     @Override
     public void init() {
-        super.init();
         try {
             /* Read resources/module.ini to initialize the configuration */
             initCfg();
@@ -225,7 +212,7 @@ public class ChainManagerBootstrap {
                     List<BlockChain> blockChains = chainService.getBlockList();
                     List<Map<String, Object>> list = new ArrayList<>();
                     for (BlockChain blockChain : blockChains) {
-                        if (blockChain.getChainId() == Integer.valueOf(nulsChainConfig.getMainChainId())) {
+                        if (blockChain.getChainId() == Integer.parseInt(nulsChainConfig.getMainChainId())) {
                             continue;
                         }
                         Map<String, Object> prefix = new HashMap<>();
@@ -243,6 +230,11 @@ public class ChainManagerBootstrap {
             System.exit(-1);
 
         }
+    }
+
+    @Override
+    public Set<Module> getDependencies() {
+        return null;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package io.nuls.contract;
 
+import io.nuls.AddressPrefixDatas;
+import io.nuls.ModuleState;
 import io.nuls.contract.config.ContractConfig;
 import io.nuls.contract.config.NulsConfig;
 import io.nuls.contract.constant.ContractConstant;
@@ -12,6 +14,8 @@ import io.nuls.contract.util.LogUtil;
 import io.nuls.contract.util.VMContext;
 import io.nuls.contract.vm.program.ProgramMethod;
 import io.nuls.core.ModuleE;
+import io.nuls.core.NulsDateUtils;
+import io.nuls.core.NulsModule;
 import io.nuls.core.basic.AddressTool;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
@@ -20,11 +24,6 @@ import io.nuls.core.io.IoUtils;
 import io.nuls.core.log.Log;
 import io.nuls.core.parse.JSONUtils;
 import io.nuls.core.rockdb.service.RocksDBService;
-import io.nuls.core.rpc.info.HostInfo;
-import io.nuls.core.rpc.modulebootstrap.ModuleState;
-import io.nuls.core.rpc.modulebootstrap.NulsRpcModuleBootstrap;
-import io.nuls.core.rpc.util.AddressPrefixDatas;
-import io.nuls.core.rpc.util.NulsDateUtils;
 import io.nuls.protocol.ModuleHelper;
 import io.nuls.protocol.ProtocolGroupManager;
 import io.nuls.protocol.RegisterHelper;
@@ -35,6 +34,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.nio.charset.Charset;
 import java.util.Map;
+import java.util.Set;
 
 import static io.nuls.contract.constant.ContractConstant.*;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -47,7 +47,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  * @date: 2019-03-14
  */
 @Component
-public class SmartContractBootStrap {
+public class SmartContractModule extends NulsModule {
 
     @Autowired
     private ContractConfig contractConfig;
@@ -55,14 +55,6 @@ public class SmartContractBootStrap {
     private ChainManager chainManager;
     @Autowired
     private AddressPrefixDatas addressPrefixDatas;
-
-    public static void main(String[] args) throws Exception {
-        systemConfig();
-        if (args == null || args.length == 0) {
-            args = new String[]{"ws://" + HostInfo.getLocalIP() + ":7771"};
-        }
-        NulsRpcModuleBootstrap.run("io.nuls", args);
-    }
 
     /**
      * 初始化系统编码
@@ -82,7 +74,6 @@ public class SmartContractBootStrap {
     @Override
     public void init() {
         try {
-            super.init();
             //增加地址工具类初始化
             AddressTool.init(addressPrefixDatas);
             initContractDefaultLog();
@@ -181,13 +172,15 @@ public class SmartContractBootStrap {
      * @return
      */
     @Override
-    public Module[] declareDependent() {
-        return new Module[]{new Module(ModuleE.TX.abbr, "1.0"),
-                new Module(ModuleE.LG.abbr, "1.0"),
-                new Module(ModuleE.BL.abbr, "1.0"),
-                new Module(ModuleE.AC.abbr, "1.0"),
-                new Module(ModuleE.NW.abbr, "1.0"),
-                new Module(ModuleE.CS.abbr, "1.0")};
+    public ModuleE[] declareDependent() {
+        return new ModuleE[]{
+                ModuleE.TX,
+                ModuleE.LG,
+                ModuleE.BL,
+                ModuleE.AC,
+                ModuleE.NW,
+                ModuleE.CS
+        };
     }
 
     /**
@@ -196,8 +189,8 @@ public class SmartContractBootStrap {
      * @return
      */
     @Override
-    public Module moduleInfo() {
-        return new Module(ModuleE.SC.abbr, "1.0");
+    public ModuleE moduleInfo() {
+        return ModuleE.SC;
     }
 
     /**
@@ -251,6 +244,11 @@ public class SmartContractBootStrap {
                 Log.info("register protocol to pu module, chain id is {}", chainId);
             }
         }
+    }
+
+    @Override
+    public Set<Module> getDependencies() {
+        return null;
     }
 
     /**

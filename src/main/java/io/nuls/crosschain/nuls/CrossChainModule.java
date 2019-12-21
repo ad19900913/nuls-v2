@@ -1,16 +1,14 @@
 package io.nuls.crosschain.nuls;
 
+import io.nuls.AddressPrefixDatas;
+import io.nuls.ModuleState;
 import io.nuls.core.ModuleE;
+import io.nuls.core.NulsModule;
 import io.nuls.core.basic.AddressTool;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
 import io.nuls.core.log.Log;
 import io.nuls.core.rockdb.service.RocksDBService;
-import io.nuls.core.rpc.info.HostInfo;
-import io.nuls.core.rpc.modulebootstrap.ModuleState;
-import io.nuls.core.rpc.modulebootstrap.NulsRpcModuleBootstrap;
-import io.nuls.core.rpc.util.AddressPrefixDatas;
-import io.nuls.crosschain.base.BaseCrossChainBootStrap;
 import io.nuls.crosschain.base.message.RegisteredChainMessage;
 import io.nuls.crosschain.nuls.constant.NulsCrossChainConfig;
 import io.nuls.crosschain.nuls.model.bo.Chain;
@@ -24,6 +22,7 @@ import io.nuls.protocol.RegisterHelper;
 
 import java.lang.reflect.Field;
 import java.nio.charset.Charset;
+import java.util.Set;
 
 import static io.nuls.crosschain.nuls.constant.NulsCrossChainConstant.*;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -37,7 +36,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  * 2019/4/10
  */
 @Component
-public class CrossChainBootStrap extends BaseCrossChainBootStrap {
+public class CrossChainModule extends NulsModule {
     @Autowired
     private NulsCrossChainConfig nulsCrossChainConfig;
     @Autowired
@@ -46,13 +45,6 @@ public class CrossChainBootStrap extends BaseCrossChainBootStrap {
     @Autowired
     private ChainManager chainManager;
 
-    public static void main(String[] args) {
-        if (args == null || args.length == 0) {
-            args = new String[]{"ws://" + HostInfo.getLocalIP() + ":7771"};
-        }
-        NulsRpcModuleBootstrap.run(CONTEXT_PATH, args);
-    }
-
     /**
      * 初始化模块，比如初始化RockDB等，在此处初始化后，可在其他bean的afterPropertiesSet中使用
      * 在onStart前会调用此方法
@@ -60,7 +52,6 @@ public class CrossChainBootStrap extends BaseCrossChainBootStrap {
     @Override
     public void init() {
         try {
-            super.init();
             initSys();
             //增加地址工具类初始化
             AddressTool.init(new AddressPrefixDatas());
@@ -69,7 +60,6 @@ public class CrossChainBootStrap extends BaseCrossChainBootStrap {
              * 添加RPC接口目录
              * Add RPC Interface Directory
              * */
-            registerRpcPath(RPC_PATH);
             chainManager.initChain();
         } catch (Exception e) {
             Log.error(e);
@@ -77,33 +67,38 @@ public class CrossChainBootStrap extends BaseCrossChainBootStrap {
     }
 
     @Override
-    public Module[] declareDependent() {
+    public ModuleE[] declareDependent() {
         if (nulsCrossChainConfig.getMainChainId() == nulsCrossChainConfig.getChainId()) {
-            return new Module[]{
-                    new Module(ModuleE.NW.abbr, VERSION),
-                    new Module(ModuleE.TX.abbr, VERSION),
-                    new Module(ModuleE.CM.abbr, VERSION),
-                    new Module(ModuleE.AC.abbr, VERSION),
-                    new Module(ModuleE.CS.abbr, VERSION),
-                    new Module(ModuleE.LG.abbr, VERSION),
-                    new Module(ModuleE.BL.abbr, VERSION)
+            return new ModuleE[]{
+                    ModuleE.NW,
+                    ModuleE.TX,
+                    ModuleE.CM,
+                    ModuleE.AC,
+                    ModuleE.CS,
+                    ModuleE.LG,
+                    ModuleE.BL
             };
         } else {
-            return new Module[]{
-                    new Module(ModuleE.NW.abbr, VERSION),
-                    new Module(ModuleE.TX.abbr, VERSION),
-                    new Module(ModuleE.AC.abbr, VERSION),
-                    new Module(ModuleE.CS.abbr, VERSION),
-                    new Module(ModuleE.LG.abbr, VERSION),
-                    new Module(ModuleE.BL.abbr, VERSION)
+            return new ModuleE[]{
+                    ModuleE.NW,
+                    ModuleE.TX,
+                    ModuleE.AC,
+                    ModuleE.CS,
+                    ModuleE.LG,
+                    ModuleE.BL
             };
         }
     }
 
     @Override
+    public ModuleE moduleInfo() {
+        return null;
+    }
+
+    @Override
     public boolean doStart() {
         try {
-            while (!isDependencieReady(ModuleE.NW.abbr) || !isDependencieReady(ModuleE.TX.abbr) || !isDependencieReady(ModuleE.CS.abbr)) {
+            while (!isDependencieReady(ModuleE.NW) || !isDependencieReady(ModuleE.TX) || !isDependencieReady(ModuleE.CS)) {
                 Log.debug("wait depend modules ready");
                 Thread.sleep(2000L);
             }
@@ -162,6 +157,11 @@ public class CrossChainBootStrap extends BaseCrossChainBootStrap {
         } catch (Exception e) {
             Log.error(e);
         }
+    }
+
+    @Override
+    public Set<Module> getDependencies() {
+        return null;
     }
 
     @Override
