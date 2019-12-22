@@ -30,11 +30,7 @@ import io.nuls.core.core.annotation.Component;
 import io.nuls.core.data.NulsHash;
 import io.nuls.core.data.Transaction;
 import io.nuls.core.exception.NulsException;
-import io.nuls.core.model.ObjectUtils;
-import io.nuls.core.rpc.model.*;
-import io.nuls.core.rpc.model.message.Response;
-import io.nuls.transaction.cache.PackablePool;
-import io.nuls.transaction.constant.TxCmd;
+import io.nuls.core.exception.NulsRuntimeException;
 import io.nuls.transaction.constant.TxConstant;
 import io.nuls.transaction.constant.TxErrorCode;
 import io.nuls.transaction.manager.ChainManager;
@@ -45,9 +41,8 @@ import io.nuls.transaction.model.po.TransactionConfirmedPO;
 import io.nuls.transaction.rpc.call.LedgerCall;
 import io.nuls.transaction.service.ConfirmedTxService;
 import io.nuls.transaction.service.TxService;
-import io.nuls.transaction.storage.UnconfirmedTxStorageService;
-import io.nuls.transaction.utils.TxUtil;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,74 +64,25 @@ public class ClientCmd {
     @Autowired
     private ChainManager chainManager;
 
-    @Autowired
-    private UnconfirmedTxStorageService unconfirmedTxStorageService;
-
-    @Autowired
-    private PackablePool packablePool;
-
-    @CmdAnnotation(cmd = TxCmd.CLIENT_GETTX, version = 1.0, description = "根据hash获取交易，先查未确认，查不到再查已确认/Get transaction by tx hash")
-    @Parameters(value = {
-            @Parameter(parameterName = "chainId", requestType = @TypeDescriptor(value = int.class), parameterDes = "链id"),
-            @Parameter(parameterName = "txHash", parameterType = "String", parameterDes = "待查询交易hash")
-    })
-    @ResponseData(name = "返回值", description = "返回一个Map对象，包含三个key", responseType = @TypeDescriptor(value = Map.class, mapKeys = {
-            @Key(name = "tx", description = "获取到的交易的序列化数据的字符串"),
-            @Key(name = "height", description = "获取到的交易的确认高度，未确认交易高度为-1"),
-            @Key(name = "status", description = "获取到的交易是否确认的状态")
-    }))
-    public Response getTx(Map params) {
-        Chain chain = null;
-        try {
-            ObjectUtils.canNotEmpty(params.get("chainId"), TxErrorCode.PARAMETER_ERROR.getMsg());
-            ObjectUtils.canNotEmpty(params.get("txHash"), TxErrorCode.PARAMETER_ERROR.getMsg());
-            chain = chainManager.getChain((Integer) params.get("chainId"));
-            if (null == chain) {
-                throw new NulsException(TxErrorCode.CHAIN_NOT_FOUND);
-            }
-            String txHash = (String) params.get("txHash");
-            if (!NulsHash.validHash(txHash)) {
-                throw new NulsException(TxErrorCode.HASH_ERROR);
-            }
-            TransactionConfirmedPO tx = txService.getTransaction(chain, NulsHash.fromHex(txHash));
-            Map<String, Object> resultMap = new HashMap<>(TxConstant.INIT_CAPACITY_4);
-            if (tx == null) {
-                resultMap.put("tx", null);
-            } else {
-                resultMap.put("tx", RPCUtil.encode(tx.getTx().serialize()));
-                resultMap.put("height", tx.getBlockHeight());
-                resultMap.put("status", tx.getStatus());
-            }
-            return success(resultMap);
-        } catch (NulsException e) {
-            errorLogProcess(chain, e);
-            return failed(e.getErrorCode());
-        } catch (Exception e) {
-            errorLogProcess(chain, e);
-            return failed(TxErrorCode.SYS_UNKOWN_EXCEPTION);
+    public Map<String, Object> getTx(int chainId, String txHash) throws NulsException, IOException {
+        Chain chain = chainManager.getChain(chainId);
+        if (!NulsHash.validHash(txHash)) {
+            throw new NulsException(TxErrorCode.HASH_ERROR);
         }
+        TransactionConfirmedPO tx = txService.getTransaction(chain, NulsHash.fromHex(txHash));
+        Map<String, Object> resultMap = new HashMap<>(TxConstant.INIT_CAPACITY_4);
+        if (tx == null) {
+            resultMap.put("tx", null);
+        } else {
+            resultMap.put("tx", RPCUtil.encode(tx.getTx().serialize()));
+            resultMap.put("height", tx.getBlockHeight());
+            resultMap.put("status", tx.getStatus());
+        }
+        return resultMap;
     }
 
-    @CmdAnnotation(cmd = TxCmd.CLIENT_GETTX_CONFIRMED, version = 1.0, description = "根据hash获取已确认交易(只查已确认)/Get confirmed transaction by tx hash")
-    @Parameters(value = {
-            @Parameter(parameterName = "chainId", requestType = @TypeDescriptor(value = int.class), parameterDes = "链id"),
-            @Parameter(parameterName = "txHash", parameterType = "String", parameterDes = "待查询交易hash")
-    })
-    @ResponseData(name = "返回值", description = "返回一个Map对象，包含三个key", responseType = @TypeDescriptor(value = Map.class, mapKeys = {
-            @Key(name = "tx", description = "获取到的交易的序列化数据的字符串"),
-            @Key(name = "height", description = "获取到的交易的确认高度"),
-            @Key(name = "status", description = "获取到的交易是否确认的状态")
-    }))
-    public Response getConfirmedTx(Map params) {
-        Chain chain = null;
-        try {
-            ObjectUtils.canNotEmpty(params.get("chainId"), TxErrorCode.PARAMETER_ERROR.getMsg());
-            ObjectUtils.canNotEmpty(params.get("txHash"), TxErrorCode.PARAMETER_ERROR.getMsg());
-            chain = chainManager.getChain((Integer) params.get("chainId"));
-            if (null == chain) {
-                throw new NulsException(TxErrorCode.CHAIN_NOT_FOUND);
-            }
-            String txHash = (String) params.get("txHash");
+    public Map<String, Object> getConfirmedTx(int chainId, String txHash) throws NulsException, IOException {
+        Chain chain = chainManager.getChain(chainId);
             if (!NulsHash.validHash(txHash)) {
                 throw new NulsException(TxErrorCode.HASH_ERROR);
             }
@@ -151,56 +97,21 @@ public class ClientCmd {
                 resultMap.put("height", tx.getBlockHeight());
                 resultMap.put("status", tx.getStatus());
             }
-            return success(resultMap);
-        } catch (NulsException e) {
-            errorLogProcess(chain, e);
-            return failed(e.getErrorCode());
-        } catch (Exception e) {
-            errorLogProcess(chain, e);
-            return failed(TxErrorCode.SYS_UNKOWN_EXCEPTION);
-        }
+            return resultMap;
     }
 
 
-    @CmdAnnotation(cmd = TxCmd.TX_VERIFYTX, version = 1.0, description = "验证交易接口，包括含基础验证、验证器、账本验证/Verify transation")
-    @Parameters(value = {
-            @Parameter(parameterName = "chainId", requestType = @TypeDescriptor(value = int.class), parameterDes = "链id"),
-            @Parameter(parameterName = "tx", parameterType = "String", parameterDes = "待验证交易完整字符串")
-    })
-    @ResponseData(name = "返回值", description = "返回一个Map", responseType = @TypeDescriptor(value = Map.class, mapKeys = {
-            @Key(name = "value", description = "交易hash")
-    }))
-    public Response verifyTx(Map params) {
-        Chain chain = null;
-        try {
-            ObjectUtils.canNotEmpty(params.get("chainId"), TxErrorCode.PARAMETER_ERROR.getMsg());
-            ObjectUtils.canNotEmpty(params.get("tx"), TxErrorCode.PARAMETER_ERROR.getMsg());
-            chain = chainManager.getChain((Integer) params.get("chainId"));
-            if (null == chain) {
-                throw new NulsException(TxErrorCode.CHAIN_NOT_FOUND);
-            }
-            String txStr = (String) params.get("tx");
-            //将txStr转换为Transaction对象
-            Transaction tx = TxUtil.getInstanceRpcStr(txStr, Transaction.class);
-
-            VerifyResult verifyResult = txService.verify(chain, tx, true);
-            if (!verifyResult.getResult()) {
-                return failed(verifyResult.getErrorCode());
-            }
-            VerifyLedgerResult verifyLedgerResult = LedgerCall.verifyCoinData(chain, RPCUtil.encode(tx.serialize()));
-            if (!verifyLedgerResult.getSuccess()) {
-                return failed(verifyLedgerResult.getErrorCode());
-            }
-            Map<String, Object> resultMap = new HashMap<>(TxConstant.INIT_CAPACITY_2);
-            resultMap.put("value", tx.getHash().toHex());
-            return success(resultMap);
-        } catch (NulsException e) {
-            errorLogProcess(chain, e);
-            return failed(e.getErrorCode());
-        } catch (Exception e) {
-            errorLogProcess(chain, e);
-            return failed(TxErrorCode.SYS_UNKOWN_EXCEPTION);
+    public String verifyTx(int chainId, Transaction tx) throws IOException {
+        Chain chain = chainManager.getChain(chainId);
+        VerifyResult verifyResult = txService.verify(chain, tx, true);
+        if (!verifyResult.getResult()) {
+            throw new NulsRuntimeException(verifyResult.getErrorCode());
         }
+        VerifyLedgerResult verifyLedgerResult = LedgerCall.verifyCoinData(chain, RPCUtil.encode(tx.serialize()));
+        if (!verifyLedgerResult.getSuccess()) {
+            throw new NulsRuntimeException(verifyLedgerResult.getErrorCode());
+        }
+        return tx.getHash().toHex();
     }
 
     private void errorLogProcess(Chain chain, Exception e) {

@@ -2,6 +2,7 @@ package io.nuls.poc.rpc.call;
 
 import io.nuls.account.rpc.cmd.AccountResource;
 import io.nuls.block.rpc.BlockResource;
+import io.nuls.contract.vm.util.Constants;
 import io.nuls.core.ModuleE;
 import io.nuls.core.RPCUtil;
 import io.nuls.core.basic.AddressTool;
@@ -11,20 +12,18 @@ import io.nuls.core.exception.NulsException;
 import io.nuls.core.log.Log;
 import io.nuls.core.log.logback.NulsLogger;
 import io.nuls.core.model.StringUtils;
-import io.nuls.core.rpc.info.Constants;
-import io.nuls.core.rpc.model.message.Response;
-import io.nuls.core.rpc.netty.processor.ResponseMessageProcessor;
-import io.nuls.core.rpc.util.NulsDateUtils;
 import io.nuls.core.signture.BlockSignature;
 import io.nuls.core.signture.P2PHKSignature;
 import io.nuls.core.signture.SignatureUtil;
 import io.nuls.core.signture.TransactionSignature;
+import io.nuls.ledger.rpc.cmd.LedgerResource;
 import io.nuls.network.rpc.cmd.NetworkResource;
 import io.nuls.poc.constant.ConsensusConstant;
 import io.nuls.poc.constant.ConsensusErrorCode;
 import io.nuls.poc.model.bo.Chain;
 import io.nuls.poc.model.dto.CmdRegisterDto;
 import io.nuls.poc.utils.compare.BlockHeaderComparator;
+import io.protostuff.Response;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,6 +50,8 @@ public class CallMethodUtils {
     private static AccountResource accountResource;
     @Autowired
     private static NetworkResource networkResource;
+    @Autowired
+    private static LedgerResource ledgerResource;
 
     /**
      * 账户验证
@@ -165,20 +166,7 @@ public class CallMethodUtils {
      */
     @SuppressWarnings("unchecked")
     public static Map<String, Object> getBalanceAndNonce(Chain chain, String address, int assetChainId, int assetId) throws NulsException {
-        Map<String, Object> params = new HashMap(4);
-        params.put(Constants.CHAIN_ID, chain.getConfig().getChainId());
-        params.put("assetChainId", assetChainId);
-        params.put("address", address);
-        params.put("assetId", assetId);
-        try {
-            Response callResp = ResponseMessageProcessor.requestAndResponse(ModuleE.LG.abbr, "getBalanceNonce", params);
-            if (!callResp.isSuccess()) {
-                return null;
-            }
-            return (HashMap) ((HashMap) callResp.getResponseData()).get("getBalanceNonce");
-        } catch (Exception e) {
-            throw new NulsException(e);
-        }
+        return ledgerResource.getBalanceNonce(CHAIN_ID, assetChainId, address, assetId, false);
     }
 
     /**
@@ -190,20 +178,7 @@ public class CallMethodUtils {
      */
     @SuppressWarnings("unchecked")
     public static Map<String, Object> getBalance(Chain chain, String address, int assetChainId, int assetId) throws NulsException {
-        Map<String, Object> params = new HashMap(4);
-        params.put(Constants.CHAIN_ID, chain.getConfig().getChainId());
-        params.put("assetChainId", assetChainId);
-        params.put("address", address);
-        params.put("assetId", assetId);
-        try {
-            Response callResp = ResponseMessageProcessor.requestAndResponse(ModuleE.LG.abbr, "getBalance", params);
-            if (!callResp.isSuccess()) {
-                return null;
-            }
-            return (HashMap) ((HashMap) callResp.getResponseData()).get("getBalance");
-        } catch (Exception e) {
-            throw new NulsException(e);
-        }
+        return ledgerResource.getBalance(CHAIN_ID, assetChainId, address, assetId);
     }
 
     /**
@@ -215,6 +190,7 @@ public class CallMethodUtils {
     @SuppressWarnings("unchecked")
     public static Map<String, Object> getPackingTxList(Chain chain, long blockTime, String packingAddress) {
         try {
+
             long realTime = blockTime * 1000;
             Map<String, Object> params = new HashMap(4);
             params.put(Constants.CHAIN_ID, chain.getConfig().getChainId());

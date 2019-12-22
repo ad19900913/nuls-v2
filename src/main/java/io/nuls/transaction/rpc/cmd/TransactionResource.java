@@ -40,7 +40,7 @@ import static io.nuls.transaction.utils.LoggerUtil.LOG;
  * @date: 2018/11/12
  */
 @Component
-public class TransactionCmd {
+public class TransactionResource {
 
     @Autowired
     private TxService txService;
