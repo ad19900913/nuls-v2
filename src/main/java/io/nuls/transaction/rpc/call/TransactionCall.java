@@ -2,6 +2,7 @@ package io.nuls.transaction.rpc.call;
 
 import io.nuls.core.constant.BaseConstant;
 import io.nuls.core.constant.ErrorCode;
+import io.nuls.core.data.BlockHeader;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.rpc.info.Constants;
 import io.nuls.core.rpc.model.message.Response;
@@ -117,13 +118,13 @@ public class TransactionCall {
      *
      * @return 返回未通过验证的交易hash, 如果出现异常那么交易全部返回(不通过) / return unverified transaction hash
      */
-    public static List<String> txModuleValidator(Chain chain, String moduleCode, List<String> txList, String blockHeaderStr) throws NulsException {
+    public static List<String> txModuleValidator(Chain chain, String moduleCode, List<String> txList, BlockHeader blockHeader) throws NulsException {
         //调用交易模块统一验证器
-        Map<String, Object> result = callTxModuleValidator(chain, moduleCode, txList, blockHeaderStr);
+        Map<String, Object> result = callTxModuleValidator(chain, moduleCode, txList, blockHeader);
         return (List<String>) result.get("list");
     }
 
-    private static Map<String, Object> callTxModuleValidator(Chain chain, String moduleCode, List<String> txList, String blockHeaderStr) throws NulsException {
+    private static Map<String, Object> callTxModuleValidator(Chain chain, String moduleCode, List<String> txList, BlockHeader blockHeader) throws NulsException {
         Map<String, Object> params = new HashMap(TxConstant.INIT_CAPACITY_8);
         params.put(Constants.CHAIN_ID, chain.getChainId());
         params.put("txList", txList);

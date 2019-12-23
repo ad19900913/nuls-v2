@@ -1,5 +1,6 @@
 package io.nuls.transaction.service.impl;
 
+import io.nuls.core.NulsDateUtils;
 import io.nuls.core.RPCUtil;
 import io.nuls.core.constant.BaseConstant;
 import io.nuls.core.constant.TxStatusEnum;
@@ -12,7 +13,6 @@ import io.nuls.core.data.NulsHash;
 import io.nuls.core.data.Transaction;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.log.logback.NulsLogger;
-import io.nuls.core.rpc.util.NulsDateUtils;
 import io.nuls.transaction.cache.PackablePool;
 import io.nuls.transaction.constant.TxConfig;
 import io.nuls.transaction.constant.TxConstant;

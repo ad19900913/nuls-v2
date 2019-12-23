@@ -25,6 +25,7 @@
 package io.nuls.transaction.rpc.call;
 
 import io.nuls.core.ModuleE;
+import io.nuls.core.data.BlockHeader;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.rpc.info.Constants;
 import io.nuls.transaction.constant.TxConstant;
@@ -39,7 +40,7 @@ import java.util.Map;
  */
 public class ConsensusCall {
 
-    public static String triggerCoinBaseContract(Chain chain, String tx, String blockHeader, String stateRoot) {
+    public static String triggerCoinBaseContract(Chain chain, String tx, BlockHeader blockHeader, String stateRoot) {
         try {
             Map<String, Object> params = new HashMap<>(TxConstant.INIT_CAPACITY_8);
             params.put(Constants.VERSION_KEY_STR, TxConstant.RPC_VERSION);

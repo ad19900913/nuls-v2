@@ -125,7 +125,7 @@ public interface TxService {
      * @return
      * @throws NulsException
      */
-    Map<String, Object> batchVerify(Chain chain, List<String> list, BlockHeader blockHeader, String blockHeaderStr, String preStateRoot) throws Exception;
+    Map<String, Object> batchVerify(Chain chain, List<String> list, BlockHeader blockHeader, String preStateRoot) throws Exception;
 
 
     /**

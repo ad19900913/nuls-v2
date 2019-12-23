@@ -25,6 +25,7 @@
 package io.nuls.transaction.service.impl;
 
 import io.nuls.core.ModuleE;
+import io.nuls.core.NulsDateUtils;
 import io.nuls.core.RPCUtil;
 import io.nuls.core.basic.AddressTool;
 import io.nuls.core.basic.NulsByteBuffer;
@@ -1353,7 +1354,7 @@ public class TxServiceImpl implements TxService {
     }
 
     @Override
-    public Map<String, Object> batchVerify(Chain chain, List<String> txStrList, BlockHeader blockHeader, String blockHeaderStr, String preStateRoot) throws NulsException {
+    public Map<String, Object> batchVerify(Chain chain, List<String> txStrList, BlockHeader blockHeader, String preStateRoot) throws NulsException {
         NulsLogger logger = chain.getLogger();
         long s1 = NulsDateUtils.getCurrentTimeMillis();
         long blockHeight = blockHeader.getHeight();
@@ -1495,7 +1496,7 @@ public class TxServiceImpl implements TxService {
         while (it.hasNext()) {
             Map.Entry<String, List<String>> entry = it.next();
             List<String> txHashList = TransactionCall.txModuleValidator(chain,
-                    entry.getKey(), entry.getValue(), blockHeaderStr);
+                    entry.getKey(), entry.getValue(), blockHeader);
             if (txHashList != null && txHashList.size() > 0) {
                 logger.debug("batch module verify fail, module-code:{},  return count:{}", entry.getKey(), txHashList.size());
                 throw new NulsException(TxErrorCode.TX_VERIFY_FAIL);
@@ -1616,7 +1617,7 @@ public class TxServiceImpl implements TxService {
                 break;
             }
         }
-        String stateRootNew = ConsensusCall.triggerCoinBaseContract(chain, coinBaseTx, blockHeaderStr, scStateRoot);
+        String stateRootNew = ConsensusCall.triggerCoinBaseContract(chain, coinBaseTx, blockHeader, scStateRoot);
         String stateRoot = RPCUtil.encode(blockHeader.getExtendsData().getStateRoot());
         if (!stateRoot.equals(stateRootNew)) {
             logger.warn("contract stateRoot error.");
