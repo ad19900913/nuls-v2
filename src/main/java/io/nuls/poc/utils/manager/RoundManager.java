@@ -433,7 +433,7 @@ public class RoundManager {
         round.setIndex(index);
         round.setStartTime(startTime);
         setMemberList(chain, round, startBlockHeader);
-        List<byte[]> packingAddressList = CallMethodUtils.getEncryptedAddressList(chain);
+        List<byte[]> packingAddressList = CallMethodUtils.getEncryptedAddressList();
         if (!packingAddressList.isEmpty()) {
             round.calcLocalPacker(packingAddressList, chain);
         }

@@ -8,11 +8,8 @@ import io.nuls.core.data.NulsHash;
 import io.nuls.core.data.Transaction;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.exception.NulsRuntimeException;
-import io.nuls.core.rpc.model.*;
-import io.nuls.core.rpc.model.message.Response;
 import io.nuls.protocol.TxRegisterDetail;
 import io.nuls.transaction.cache.PackablePool;
-import io.nuls.transaction.constant.TxCmd;
 import io.nuls.transaction.constant.TxConstant;
 import io.nuls.transaction.constant.TxErrorCode;
 import io.nuls.transaction.manager.ChainManager;
@@ -29,7 +26,6 @@ import io.nuls.transaction.service.TxService;
 import io.nuls.transaction.utils.TxUtil;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -121,9 +117,8 @@ public class TransactionResource {
         return map;
     }
 
-    public Map<String, Object> packableTxs(int chainId, long endTimestamp, int maxTxDataSize, long blockTime, String packingAddress, String preStateRoot) {
-        Chain chain = null;
-        chain = chainManager.getChain(chainId);
+    public Map<String, Object> packableTxs(int chainId, long endTimestamp, long maxTxDataSize, long blockTime, String packingAddress, String preStateRoot) {
+        Chain chain = chainManager.getChain(chainId);
         TxPackage txPackage = txService.getPackableTxs(chain, endTimestamp, maxTxDataSize, blockTime, packingAddress, preStateRoot);
         Map<String, Object> map = new HashMap<>(TxConstant.INIT_CAPACITY_4);
         map.put("list", txPackage.getList());
@@ -143,94 +138,27 @@ public class TransactionResource {
      * Save the transaction in the new block that was verified to the database
      * 保存新区块的交易
      *
-     * @param params Map
      * @return Response
      */
-    @CmdAnnotation(cmd = TxCmd.TX_SAVE, priority = CmdPriority.HIGH, version = 1.0, description = "保存新区块的交易/Save the confirmed transaction")
-    @Parameters(value = {
-            @Parameter(parameterName = "chainId", requestType = @TypeDescriptor(value = int.class), parameterDes = "链id"),
-            @Parameter(parameterName = "txList", requestType = @TypeDescriptor(value = List.class, collectionElement = String.class), parameterDes = "待保存的交易集合"),
-            @Parameter(parameterName = "contractList", requestType = @TypeDescriptor(value = List.class, collectionElement = String.class), parameterDes = "智能合约交易"),
-            @Parameter(parameterName = "blockHeader", parameterType = "String", parameterDes = "区块头")
-    })
-    @ResponseData(name = "返回值", description = "返回一个Map", responseType = @TypeDescriptor(value = Map.class, mapKeys = {
-            @Key(name = "value", valueType = boolean.class, description = "是否成功")
-    }))
-    public boolean txSave(int chainId) {
-        Map<String, Boolean> map = new HashMap<>(TxConstant.INIT_CAPACITY_16);
-        boolean result = false;
+    public boolean txSave(int chainId, List<String> txStrList, List<String> contractList, BlockHeader blockHeader) throws NulsException {
         Chain chain = chainManager.getChain(chainId);
-        List<String> txStrList = (List<String>) params.get("txList");
-        if (null == txStrList) {
-            throw new NulsException(TxErrorCode.PARAMETER_ERROR);
-        }
-        List<String> contractList = (List<String>) params.get("contractList");
-        result = confirmedTxService.saveTxList(chain, txStrList, contractList, (String) params.get("blockHeader"));
-        return result;
+        return confirmedTxService.saveTxList(chain, txStrList, contractList, blockHeader);
     }
 
-    @CmdAnnotation(cmd = TxCmd.TX_GENGSIS_SAVE, version = 1.0, description = "保存创世块的交易/Save the transactions of the Genesis block ")
-    @Parameters(value = {
-            @Parameter(parameterName = "chainId", requestType = @TypeDescriptor(value = int.class), parameterDes = "链id"),
-            @Parameter(parameterName = "txList", requestType = @TypeDescriptor(value = List.class, collectionElement = String.class), parameterDes = "待保存的交易集合"),
-            @Parameter(parameterName = "blockHeader", parameterType = "String", parameterDes = "区块头")
-    })
-    @ResponseData(name = "返回值", description = "返回一个Map", responseType = @TypeDescriptor(value = Map.class, mapKeys = {
-            @Key(name = "value", valueType = boolean.class, description = "是否成功")
-    }))
-    public boolean txGengsisSave(Map params) throws NulsException {
-        Map<String, Boolean> map = new HashMap<>(TxConstant.INIT_CAPACITY_16);
-        boolean result = false;
-        Chain chain = chainManager.getChain((Integer) params.get("chainId"));
-        List<String> txStrList = (List<String>) params.get("txList");
-        result = confirmedTxService.saveGengsisTxList(chain, txStrList, (String) params.get("blockHeader"));
-        return result;
+    public boolean txGengsisSave(int chainId, List<String> txStrList, BlockHeader blockHeader) throws NulsException {
+        Chain chain = chainManager.getChain(chainId);
+        return confirmedTxService.saveGengsisTxList(chain, txStrList, blockHeader);
     }
 
-    @CmdAnnotation(cmd = TxCmd.TX_ROLLBACK, priority = CmdPriority.HIGH, version = 1.0, description = "回滚区块的交易/transaction rollback")
-    @Parameters(value = {
-            @Parameter(parameterName = "chainId", requestType = @TypeDescriptor(value = int.class), parameterDes = "链id"),
-            @Parameter(parameterName = "txHashList", requestType = @TypeDescriptor(value = List.class, collectionElement = String.class), parameterDes = "待回滚交易集合"),
-            @Parameter(parameterName = "blockHeader", parameterType = "String", parameterDes = "区块头")
-    })
-    @ResponseData(name = "返回值", description = "返回一个Map", responseType = @TypeDescriptor(value = Map.class, mapKeys = {
-            @Key(name = "value", valueType = boolean.class, description = "是否成功")
-    }))
-    public boolean txRollback(int chainId) throws NulsException {
-        boolean result;
-        Chain chain = chainManager.getChain((Integer) params.get("chainId"));
-        List<String> txHashStrList = (List<String>) params.get("txHashList");
-        List<NulsHash> txHashList = new ArrayList<>();
-        //将交易hashHex解码为交易hash字节数组
-        for (String hashStr : txHashStrList) {
-            txHashList.add(NulsHash.fromHex(hashStr));
-        }
+    public boolean txRollback(int chainId, List<NulsHash> txHashList, BlockHeader blockHeader) throws NulsException {
+        Chain chain = chainManager.getChain(chainId);
         //批量回滚已确认交易
-        result = confirmedTxService.rollbackTxList(chain, txHashList, (String) params.get("blockHeader"));
-        return result;
+        return confirmedTxService.rollbackTxList(chain, txHashList, blockHeader);
     }
 
     public List<Integer> getSystemTypes(int chainId) {
         Chain chain = chainManager.getChain(chainId);
         return TxManager.getSysTypes(chain);
-    }
-
-    public String getTx(int chainId, String txHash) throws NulsException, IOException {
-        Chain chain = chainManager.getChain(chainId);
-        if (!NulsHash.validHash(txHash)) {
-            throw new NulsException(TxErrorCode.HASH_ERROR);
-        }
-        TransactionConfirmedPO tx = txService.getTransaction(chain, NulsHash.fromHex(txHash));
-        return RPCUtil.encode(tx.getTx().serialize());
-    }
-
-    public String getConfirmedTx(int chainId, String txHash) throws IOException, NulsException {
-        Chain chain = chainManager.getChain(chainId);
-        if (!NulsHash.validHash(txHash)) {
-            throw new NulsException(TxErrorCode.HASH_ERROR);
-        }
-        TransactionConfirmedPO tx = confirmedTxService.getConfirmedTransaction(chain, NulsHash.fromHex(txHash));
-        return RPCUtil.encode(tx.getTx().serialize());
     }
 
     public List<String> getBlockTxs(int chainId, List<String> txHashList) {

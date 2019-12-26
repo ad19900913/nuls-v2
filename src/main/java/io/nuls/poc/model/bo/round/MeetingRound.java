@@ -191,7 +191,7 @@ public class MeetingRound {
 
     private boolean validAccount(Chain chain, String address) {
         try {
-            HashMap callResult = CallMethodUtils.accountValid(chain.getConfig().getChainId(), address, chain.getConfig().getPassword());
+            HashMap callResult = CallMethodUtils.accountValid(address, chain.getConfig().getPassword());
             String priKey = (String) callResult.get("priKey");
             if (StringUtils.isNotBlank(priKey)) {
                 return true;
@@ -245,11 +245,11 @@ public class MeetingRound {
             }
         }
         if (myMember != null && !chain.isPacker()) {
-            CallMethodUtils.sendState(chain, true);
+            CallMethodUtils.sendState(true);
             chain.setPacker(true);
         }
         if (myMember == null && chain.isPacker()) {
-            CallMethodUtils.sendState(chain, false);
+            CallMethodUtils.sendState(false);
             chain.setPacker(false);
         }
     }

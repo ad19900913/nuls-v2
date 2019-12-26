@@ -104,7 +104,7 @@ public class StopAgentProcessor implements TransactionProcessor {
                 }
                 Agent agent = new Agent();
                 if (stopAgent.getAddress() == null) {
-                    Transaction createAgentTx = CallMethodUtils.getTransaction(chain, stopAgent.getCreateTxHash().toHex());
+                    Transaction createAgentTx = CallMethodUtils.getTransaction(stopAgent.getCreateTxHash().toHex());
                     if (createAgentTx == null) {
                         invalidTxList.add(stopAgentTx);
                         chain.getLogger().info("The creation node transaction corresponding to intelligent contract cancellation node transaction does not exist");

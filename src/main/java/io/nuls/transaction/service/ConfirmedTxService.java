@@ -1,5 +1,6 @@
 package io.nuls.transaction.service;
 
+import io.nuls.core.data.BlockHeader;
 import io.nuls.core.data.NulsHash;
 import io.nuls.core.exception.NulsException;
 import io.nuls.transaction.model.bo.Chain;
@@ -35,7 +36,7 @@ public interface ConfirmedTxService {
      * @return
      * @throws NulsException
      */
-    boolean saveGengsisTxList(Chain chain, List<String> txStrList, String blockHeader) throws NulsException;
+    boolean saveGengsisTxList(Chain chain, List<String> txStrList, BlockHeader blockHeader) throws NulsException;
 
     /**
      * 保存区块中已确认交易
@@ -45,7 +46,7 @@ public interface ConfirmedTxService {
      * @param blockHeader
      * @return
      */
-    boolean saveTxList(Chain chain, List<String> txStrList, List<String> contractList, String blockHeader) throws NulsException;
+    boolean saveTxList(Chain chain, List<String> txStrList, List<String> contractList, BlockHeader blockHeader) throws NulsException;
 
 
     /**
@@ -56,7 +57,7 @@ public interface ConfirmedTxService {
      * @param blockHeader
      * @return
      */
-    boolean rollbackTxList(Chain chain, List<NulsHash> txHashList, String blockHeader) throws NulsException;
+    boolean rollbackTxList(Chain chain, List<NulsHash> txHashList, BlockHeader blockHeader) throws NulsException;
 
 
     /**

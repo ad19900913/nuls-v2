@@ -47,6 +47,7 @@ import io.nuls.account.storage.MultiSigAccountStorageService;
 import io.nuls.account.util.LoggerUtil;
 import io.nuls.account.util.TxUtil;
 import io.nuls.account.util.manager.ChainManager;
+import io.nuls.core.NulsDateUtils;
 import io.nuls.core.basic.*;
 import io.nuls.core.core.annotation.Autowired;
 import io.nuls.core.core.annotation.Component;
@@ -57,7 +58,6 @@ import io.nuls.core.exception.NulsRuntimeException;
 import io.nuls.core.model.BigIntegerUtils;
 import io.nuls.core.model.FormatValidUtils;
 import io.nuls.core.model.StringUtils;
-import io.nuls.core.rpc.util.NulsDateUtils;
 import io.nuls.core.signture.P2PHKSignature;
 import io.nuls.core.signture.SignatureUtil;
 import io.nuls.core.signture.TransactionSignature;
@@ -292,7 +292,7 @@ public class AliasServiceImpl implements AliasService, InitializingBean {
     }
 
     private Transaction createAliasTrasactionWithoutSign(Chain chain, Account account, String aliasName) throws NulsException {
-        Transaction tx = null;
+        Transaction tx;
         //Second:build the transaction
         tx = new AliasTransaction();
         tx.setTime(NulsDateUtils.getCurrentTimeSeconds());

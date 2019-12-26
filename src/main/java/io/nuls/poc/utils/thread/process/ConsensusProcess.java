@@ -246,9 +246,9 @@ public class ConsensusProcess {
         }
     }
 
-    private void fillProtocol(BlockExtendsData extendsData, int chainId) throws NulsException {
+    private void fillProtocol(BlockExtendsData extendsData) {
         if (ModuleHelper.isSupportProtocolUpdate()) {
-            Map map = CallMethodUtils.getVersion(chainId);
+            Map map = CallMethodUtils.getVersion();
             ProtocolVersion currentProtocolVersion = JSONUtils.map2pojo((Map) map.get("currentProtocolVersion"), ProtocolVersion.class);
             ProtocolVersion localProtocolVersion = JSONUtils.map2pojo((Map) map.get("localProtocolVersion"), ProtocolVersion.class);
             extendsData.setMainVersion(currentProtocolVersion.getVersion());
@@ -276,7 +276,7 @@ public class ConsensusProcess {
         extendsData.setConsensusMemberCount(round.getMemberCount());
         extendsData.setPackingIndexOfRound(self.getPackingIndexOfRound());
         extendsData.setRoundStartTime(round.getStartTime());
-        fillProtocol(extendsData, chain.getConfig().getChainId());
+        fillProtocol(extendsData);
         /*
          * 添加底层随机数支持
          */

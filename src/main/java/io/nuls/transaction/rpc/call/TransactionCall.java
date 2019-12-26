@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static io.nuls.Constant.CHAIN_ID;
 import static io.nuls.transaction.utils.LoggerUtil.LOG;
 
 /**
@@ -69,11 +70,10 @@ public class TransactionCall {
      * @param txList
      * @return
      */
-    public static boolean txProcess(Chain chain, String cmd, String moduleCode,  List<String> txList, String blockHeader) {
+    public static boolean txProcess(Chain chain, String cmd, String moduleCode,  List<String> txList, BlockHeader blockHeader) {
         try {
             //调用单个交易验证器
             Map<String, Object> params = new HashMap(TxConstant.INIT_CAPACITY_8);
-            params.put(Constants.CHAIN_ID, chain.getChainId());
             params.put("txList", txList);
             params.put("blockHeader", blockHeader);
             Map result = (Map) TransactionCall.requestAndResponse(moduleCode, cmd, params, TxConstant.TIMEOUT);

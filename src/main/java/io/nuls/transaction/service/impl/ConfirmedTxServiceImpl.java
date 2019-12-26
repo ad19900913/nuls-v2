@@ -66,10 +66,7 @@ public class ConfirmedTxServiceImpl implements ConfirmedTxService {
     }
 
     @Override
-    public boolean saveGengsisTxList(Chain chain, List<String> txStrList, String blockHeader) throws NulsException {
-        if (null == chain || txStrList == null || txStrList.size() == 0) {
-            throw new NulsException(TxErrorCode.PARAMETER_ERROR);
-        }
+    public boolean saveGengsisTxList(Chain chain, List<String> txStrList, BlockHeader blockHeader) throws NulsException {
         if (!saveBlockTxList(chain, txStrList, blockHeader, true)) {
             chain.getLogger().debug("Save gengsis txs fail");
             return false;
@@ -79,7 +76,7 @@ public class ConfirmedTxServiceImpl implements ConfirmedTxService {
     }
 
     @Override
-    public boolean saveTxList(Chain chain, List<String> txStrList, List<String> contractList, String blockHeader) throws NulsException {
+    public boolean saveTxList(Chain chain, List<String> txStrList, List<String> contractList, BlockHeader blockHeader) throws NulsException {
         if (null == chain || txStrList == null || txStrList.size() == 0) {
             throw new NulsException(TxErrorCode.PARAMETER_ERROR);
         }
@@ -104,17 +101,15 @@ public class ConfirmedTxServiceImpl implements ConfirmedTxService {
         }
     }
 
-    private boolean saveBlockTxList(Chain chain, List<String> txStrList, String blockHeaderStr, boolean gengsis) {
+    private boolean saveBlockTxList(Chain chain, List<String> txStrList, BlockHeader blockHeader, boolean gengsis) {
         long start = NulsDateUtils.getCurrentTimeMillis();
         List<Transaction> txList = new ArrayList<>();
         int chainId = chain.getChainId();
         List<byte[]> txHashs = new ArrayList<>();
         //组装统一验证参数数据,key为各模块统一验证器cmd
         Map<String, List<String>> moduleVerifyMap = new HashMap<>(TxConstant.INIT_CAPACITY_8);
-        BlockHeader blockHeader;
         NulsLogger logger = chain.getLogger();
         try {
-            blockHeader = TxUtil.getInstanceRpcStr(blockHeaderStr, BlockHeader.class);
             logger.debug("[保存区块] 开始 -----高度:{} -----数量:{}", blockHeader.getHeight(), txStrList.size());
             for (String txStr : txStrList) {
                 Transaction tx = TxUtil.getInstanceRpcStr(txStr, Transaction.class);
@@ -139,7 +134,7 @@ public class ConfirmedTxServiceImpl implements ConfirmedTxService {
         logger.debug("[保存区块] 存已确认交易DB 执行时间:{}", NulsDateUtils.getCurrentTimeMillis() - dbStart);
 
         long commitStart = NulsDateUtils.getCurrentTimeMillis();
-        if (!commitTxs(chain, moduleVerifyMap, blockHeaderStr, true)) {
+        if (!commitTxs(chain, moduleVerifyMap, blockHeader, true)) {
             removeTxs(chain, txList, blockHeader.getHeight(), false);
             return false;
         }
@@ -148,7 +143,7 @@ public class ConfirmedTxServiceImpl implements ConfirmedTxService {
         long ledgerStart = NulsDateUtils.getCurrentTimeMillis();
         if (!commitLedger(chain, txStrList, blockHeader.getHeight())) {
             if (!gengsis) {
-                rollbackTxs(chain, moduleVerifyMap, blockHeaderStr, false);
+                rollbackTxs(chain, moduleVerifyMap, blockHeader, false);
             }
             removeTxs(chain, txList, blockHeader.getHeight(), false);
             return false;
@@ -182,7 +177,7 @@ public class ConfirmedTxServiceImpl implements ConfirmedTxService {
         return rs;
     }
 
-    private boolean commitTxs(Chain chain, Map<String, List<String>> moduleVerifyMap, String blockHeader, boolean atomicity) {
+    private boolean commitTxs(Chain chain, Map<String, List<String>> moduleVerifyMap, BlockHeader blockHeader, boolean atomicity) {
         //调用交易模块统一commit接口 批量
         Map<String, List<String>> successed = new HashMap<>(TxConstant.INIT_CAPACITY_8);
         boolean result = true;
@@ -230,7 +225,7 @@ public class ConfirmedTxServiceImpl implements ConfirmedTxService {
         return rs;
     }
 
-    private boolean rollbackTxs(Chain chain, Map<String, List<String>> moduleVerifyMap, String blockHeader, boolean atomicity) {
+    private boolean rollbackTxs(Chain chain, Map<String, List<String>> moduleVerifyMap, BlockHeader blockHeader, boolean atomicity) {
         Map<String, List<String>> successed = new HashMap<>(TxConstant.INIT_CAPACITY_8);
         boolean result = true;
         for (Map.Entry<String, List<String>> entry : moduleVerifyMap.entrySet()) {
@@ -270,13 +265,12 @@ public class ConfirmedTxServiceImpl implements ConfirmedTxService {
     }
 
     @Override
-    public boolean rollbackTxList(Chain chain, List<NulsHash> txHashList, String blockHeaderStr) throws NulsException {
+    public boolean rollbackTxList(Chain chain, List<NulsHash> txHashList, BlockHeader blockHeader) throws NulsException {
         NulsLogger logger = chain.getLogger();
         if (txHashList == null || txHashList.isEmpty()) {
             throw new NulsException(TxErrorCode.PARAMETER_ERROR);
         }
         int chainId = chain.getChainId();
-        BlockHeader blockHeader = TxUtil.getInstanceRpcStr(blockHeaderStr, BlockHeader.class);
         long blockHeight = blockHeader.getHeight();
         logger.info("start rollbackTxList block height:{}", blockHeight);
         long start = NulsDateUtils.getCurrentTimeMillis();
@@ -314,7 +308,7 @@ public class ConfirmedTxServiceImpl implements ConfirmedTxService {
         logger.debug("[回滚区块] 回滚账本 执行时间:{}", NulsDateUtils.getCurrentTimeMillis() - ledgerStart);
 
         long moduleStart = NulsDateUtils.getCurrentTimeMillis();
-        if (!rollbackTxs(chain, moduleVerifyMap, blockHeaderStr, true)) {
+        if (!rollbackTxs(chain, moduleVerifyMap, blockHeader, true)) {
             commitLedger(chain, txStrList, blockHeight);
             return false;
         }
@@ -323,7 +317,7 @@ public class ConfirmedTxServiceImpl implements ConfirmedTxService {
 
         long dbStart = NulsDateUtils.getCurrentTimeMillis();
         if (!removeTxs(chain, txList, blockHeight, true)) {
-            commitTxs(chain, moduleVerifyMap, blockHeaderStr, false);
+            commitTxs(chain, moduleVerifyMap, blockHeader, false);
             saveTxs(chain, txList, blockHeight, false);
             return false;
         }

@@ -220,7 +220,7 @@ public class ContractServiceImpl implements ContractService {
         }
         try {
             byte[] hash = NulsHash.fromHex(dto.getJoinAgentHash()).getBytes();
-            Transaction depositTransaction = CallMethodUtils.getTransaction(chain, dto.getJoinAgentHash());
+            Transaction depositTransaction = CallMethodUtils.getTransaction(dto.getJoinAgentHash());
             if (depositTransaction == null) {
                 return Result.getFailed(ConsensusErrorCode.TX_NOT_EXIST);
             }

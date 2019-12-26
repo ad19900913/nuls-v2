@@ -9,7 +9,6 @@ import io.nuls.core.data.Block;
 import io.nuls.core.data.BlockHeader;
 import io.nuls.core.exception.NulsException;
 import io.nuls.core.parse.JSONUtils;
-import io.nuls.core.rpc.model.message.Response;
 import io.nuls.poc.constant.ConsensusConstant;
 import io.nuls.poc.constant.ConsensusErrorCode;
 import io.nuls.poc.model.bo.Chain;
@@ -20,7 +19,6 @@ import io.nuls.poc.utils.manager.BlockManager;
 import io.nuls.poc.utils.manager.ChainManager;
 import io.nuls.poc.utils.validator.BlockValidator;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -162,18 +160,12 @@ public class BlockServiceImpl implements BlockService {
             Block block = new Block();
             block.parse(new NulsByteBuffer(RPCUtil.decode(blockHex)));
             blockValidator.validate(isDownload, chain, block);
-            Response response = CallMethodUtils.verify(chainId, block.getTxs(), block.getHeader(), chain.getNewestHeader(), chain.getLogger());
-            if (response.isSuccess()) {
-                Map responseData = (Map) response.getResponseData();
-                Map v = (Map) responseData.get("tx_batchVerify");
-                return Result.getSuccess(ConsensusErrorCode.SUCCESS).setData(v);
-            } else {
-                chain.getLogger().info("Block transaction validation failed!");
-            }
+            Map<String, Object> map = CallMethodUtils.verify(block.getTxs(), block.getHeader(), chain.getNewestHeader(), chain.getLogger());
+            return Result.getSuccess(ConsensusErrorCode.SUCCESS).setData(map);
         } catch (NulsException e) {
             chain.getLogger().error(e);
             return Result.getFailed(e.getErrorCode()).setData(validResult);
-        } catch (IOException e) {
+        } catch (Exception e) {
             chain.getLogger().error(e);
         }
         return Result.getFailed(ConsensusErrorCode.FAILED).setData(validResult);

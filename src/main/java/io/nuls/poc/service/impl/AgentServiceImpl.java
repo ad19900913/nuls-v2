@@ -110,7 +110,7 @@ public class AgentServiceImpl implements AgentService {
                 throw new NulsRuntimeException(ConsensusErrorCode.ADDRESS_ERROR);
             }
             //2.账户验证
-            HashMap callResult = CallMethodUtils.accountValid(dto.getChainId(), dto.getAgentAddress(), dto.getPassword());
+            HashMap callResult = CallMethodUtils.accountValid(dto.getAgentAddress(), dto.getPassword());
             //3.组装创建节点交易
             Transaction tx = new Transaction(TxType.REGISTER_AGENT);
             tx.setTime(NulsDateUtils.getCurrentTimeSeconds());
@@ -122,13 +122,13 @@ public class AgentServiceImpl implements AgentService {
             tx.setCoinData(coinData.serialize());
             //4.交易签名
             String priKey = (String) callResult.get("priKey");
-            CallMethodUtils.transactionSignature(dto.getChainId(), dto.getAgentAddress(), dto.getPassword(), priKey, tx);
+            CallMethodUtils.transactionSignature(dto.getAgentAddress(), dto.getPassword(), priKey, tx);
             String txStr = RPCUtil.encode(tx.serialize());
             boolean validResult = validatorManager.validateTx(chain, tx);
             if (!validResult) {
                 return Result.getFailed(ConsensusErrorCode.TX_DATA_VALIDATION_ERROR);
             }
-            CallMethodUtils.sendTx(chain, txStr);
+            CallMethodUtils.sendTx(txStr);
             Map<String, Object> result = new HashMap<>(2);
             result.put("txHash", tx.getHash().toHex());
             return Result.getSuccess(ConsensusErrorCode.SUCCESS).setData(result);
@@ -206,7 +206,7 @@ public class AgentServiceImpl implements AgentService {
             return Result.getFailed(ConsensusErrorCode.CHAIN_NOT_EXIST);
         }
         try {
-            HashMap callResult = CallMethodUtils.accountValid(dto.getChainId(), dto.getAddress(), dto.getPassword());
+            HashMap callResult = CallMethodUtils.accountValid(dto.getAddress(), dto.getPassword());
             Transaction tx = new Transaction(TxType.STOP_AGENT);
             StopAgent stopAgent = new StopAgent();
             stopAgent.setAddress(AddressTool.getAddress(dto.getAddress()));
@@ -234,13 +234,13 @@ public class AgentServiceImpl implements AgentService {
             tx.setCoinData(coinData.serialize());
             //交易签名
             String priKey = (String) callResult.get("priKey");
-            CallMethodUtils.transactionSignature(dto.getChainId(), dto.getAddress(), dto.getPassword(), priKey, tx);
+            CallMethodUtils.transactionSignature(dto.getAddress(), dto.getPassword(), priKey, tx);
             String txStr = RPCUtil.encode(tx.serialize());
             boolean validResult = validatorManager.validateTx(chain, tx);
             if (!validResult) {
                 return Result.getFailed(ConsensusErrorCode.TX_DATA_VALIDATION_ERROR);
             }
-            CallMethodUtils.sendTx(chain, txStr);
+            CallMethodUtils.sendTx(txStr);
             Map<String, Object> result = new HashMap<>(ConsensusConstant.INIT_CAPACITY);
             result.put("txHash", tx.getHash().toHex());
             return Result.getSuccess(ConsensusErrorCode.SUCCESS).setData(result);
@@ -334,8 +334,8 @@ public class AgentServiceImpl implements AgentService {
                 String packingAddress = AddressTool.getStringAddressByBytes(agent.getPackingAddress()).toUpperCase();
                 String agentId = agentManager.getAgentId(agent.getTxHash()).toUpperCase();
                 //从账户模块获取账户别名
-                String agentAlias = CallMethodUtils.getAlias(chain, agentAddress);
-                String packingAlias = CallMethodUtils.getAlias(chain, packingAddress);
+                String agentAlias = CallMethodUtils.getAlias(agentAddress);
+                String packingAlias = CallMethodUtils.getAlias(packingAddress);
                 boolean b = agentId.contains(keyword);
                 b = b || agentAddress.equals(keyword) || packingAddress.equals(keyword);
                 if (StringUtils.isNotBlank(agentAlias)) {

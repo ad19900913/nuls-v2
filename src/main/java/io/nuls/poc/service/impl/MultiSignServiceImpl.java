@@ -68,10 +68,10 @@ public class MultiSignServiceImpl implements MultiSignService {
             return Result.getFailed(ConsensusErrorCode.CHAIN_NOT_EXIST);
         }
         try {
-            MultiSigAccount multiSigAccount = CallMethodUtils.getMultiSignAccount(dto.getChainId(), dto.getAgentAddress());
+            MultiSigAccount multiSigAccount = CallMethodUtils.getMultiSignAccount(dto.getAgentAddress());
             HashMap callResult = null;
             if (StringUtils.isNotBlank(dto.getSignAddress()) && StringUtils.isNotBlank(dto.getPassword())) {
-                callResult = CallMethodUtils.accountValid(dto.getChainId(), dto.getSignAddress(), dto.getPassword());
+                callResult = CallMethodUtils.accountValid(dto.getSignAddress(), dto.getPassword());
             }
 
             Transaction tx = new Transaction(TxType.REGISTER_AGENT);
@@ -101,7 +101,7 @@ public class MultiSignServiceImpl implements MultiSignService {
             result.put("completed", false);
 
             if (callResult != null && multiSigAccount.getM() == 1) {
-                CallMethodUtils.sendTx(chain, txStr);
+                CallMethodUtils.sendTx(txStr);
                 result.put("completed", true);
             }
             return Result.getSuccess(ConsensusErrorCode.SUCCESS).setData(result);
@@ -127,10 +127,10 @@ public class MultiSignServiceImpl implements MultiSignService {
             return Result.getFailed(ConsensusErrorCode.CHAIN_NOT_EXIST);
         }
         try {
-            MultiSigAccount multiSigAccount = CallMethodUtils.getMultiSignAccount(dto.getChainId(), dto.getAddress());
+            MultiSigAccount multiSigAccount = CallMethodUtils.getMultiSignAccount(dto.getAddress());
             HashMap callResult = null;
             if (StringUtils.isNotBlank(dto.getSignAddress()) && StringUtils.isNotBlank(dto.getPassword())) {
-                callResult = CallMethodUtils.accountValid(dto.getChainId(), dto.getSignAddress(), dto.getPassword());
+                callResult = CallMethodUtils.accountValid(dto.getSignAddress(), dto.getPassword());
             }
 
             Transaction tx = new Transaction(TxType.STOP_AGENT);
@@ -177,7 +177,7 @@ public class MultiSignServiceImpl implements MultiSignService {
             result.put("completed", false);
 
             if (callResult != null && multiSigAccount.getM() == 1) {
-                CallMethodUtils.sendTx(chain, txStr);
+                CallMethodUtils.sendTx(txStr);
                 result.put("completed", true);
             }
             return Result.getSuccess(ConsensusErrorCode.SUCCESS).setData(result);
@@ -203,10 +203,10 @@ public class MultiSignServiceImpl implements MultiSignService {
             return Result.getFailed(ConsensusErrorCode.CHAIN_NOT_EXIST);
         }
         try {
-            MultiSigAccount multiSigAccount = CallMethodUtils.getMultiSignAccount(dto.getChainId(), dto.getAddress());
+            MultiSigAccount multiSigAccount = CallMethodUtils.getMultiSignAccount(dto.getAddress());
             HashMap callResult = null;
             if (StringUtils.isNotBlank(dto.getSignAddress()) && StringUtils.isNotBlank(dto.getPassword())) {
-                callResult = CallMethodUtils.accountValid(dto.getChainId(), dto.getSignAddress(), dto.getPassword());
+                callResult = CallMethodUtils.accountValid(dto.getSignAddress(), dto.getPassword());
             }
 
             Transaction tx = new Transaction(TxType.DEPOSIT);
@@ -236,7 +236,7 @@ public class MultiSignServiceImpl implements MultiSignService {
             result.put("completed", false);
 
             if (callResult != null && multiSigAccount.getM() == 1) {
-                CallMethodUtils.sendTx(chain, txStr);
+                CallMethodUtils.sendTx(txStr);
                 result.put("completed", true);
             }
             return Result.getSuccess(ConsensusErrorCode.SUCCESS).setData(result);
@@ -262,14 +262,14 @@ public class MultiSignServiceImpl implements MultiSignService {
             return Result.getFailed(ConsensusErrorCode.CHAIN_NOT_EXIST);
         }
         try {
-            MultiSigAccount multiSigAccount = CallMethodUtils.getMultiSignAccount(dto.getChainId(), dto.getAddress());
+            MultiSigAccount multiSigAccount = CallMethodUtils.getMultiSignAccount(dto.getAddress());
             HashMap callResult = null;
             if (StringUtils.isNotBlank(dto.getSignAddress()) && StringUtils.isNotBlank(dto.getPassword())) {
-                callResult = CallMethodUtils.accountValid(dto.getChainId(), dto.getSignAddress(), dto.getPassword());
+                callResult = CallMethodUtils.accountValid(dto.getSignAddress(), dto.getPassword());
             }
 
             NulsHash hash = NulsHash.fromHex(dto.getTxHash());
-            Transaction depositTransaction = CallMethodUtils.getTransaction(chain, dto.getTxHash());
+            Transaction depositTransaction = CallMethodUtils.getTransaction(dto.getTxHash());
             if (depositTransaction == null) {
                 return Result.getFailed(ConsensusErrorCode.TX_NOT_EXIST);
             }
@@ -318,7 +318,7 @@ public class MultiSignServiceImpl implements MultiSignService {
             result.put("completed", false);
 
             if (callResult != null && multiSigAccount.getM() == 1) {
-                CallMethodUtils.sendTx(chain, txStr);
+                CallMethodUtils.sendTx(txStr);
                 result.put("completed", true);
             }
             return Result.getSuccess(ConsensusErrorCode.SUCCESS).setData(result);

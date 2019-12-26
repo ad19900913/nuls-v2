@@ -227,7 +227,7 @@ public class BatchValidator {
                 continue;
             }
             if (stopAgent.getAddress() == null) {
-                Transaction createAgentTx = CallMethodUtils.getTransaction(chain, stopAgent.getCreateTxHash().toHex());
+                Transaction createAgentTx = CallMethodUtils.getTransaction(stopAgent.getCreateTxHash().toHex());
                 if (createAgentTx == null) {
                     iterator.remove();
                     continue;

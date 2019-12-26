@@ -46,7 +46,7 @@ public class CoinDataManager {
         coinData.addTo(to);
         txSize += to.size();
         //抵押资产金额
-        Map<String, Object> result = CallMethodUtils.getBalanceAndNonce(chain, AddressTool.getStringAddressByBytes(address), assetChainId, assetId);
+        Map<String, Object> result = CallMethodUtils.getBalanceAndNonce(AddressTool.getStringAddressByBytes(address), assetChainId, assetId);
         byte[] nonce = RPCUtil.decode((String) result.get("nonce"));
         BigInteger available = new BigInteger(result.get("available").toString());
         //验证账户余额是否足够
@@ -198,7 +198,7 @@ public class CoinDataManager {
             int agentChainId = chain.getConfig().getAgentChainId();
             int agentAssetId = chain.getConfig().getAgentAssetId();
             NulsHash createTxHash = agent.getTxHash();
-            Transaction createAgentTransaction = CallMethodUtils.getTransaction(chain, createTxHash.toHex());
+            Transaction createAgentTransaction = CallMethodUtils.getTransaction(createTxHash.toHex());
             if (null == createAgentTransaction) {
                 throw new NulsRuntimeException(ConsensusErrorCode.TX_NOT_EXIST);
             }
@@ -239,7 +239,7 @@ public class CoinDataManager {
                 if (!deposit.getAgentHash().equals(agent.getTxHash())) {
                     continue;
                 }
-                Transaction depositTransaction = CallMethodUtils.getTransaction(chain, deposit.getTxHash().toHex());
+                Transaction depositTransaction = CallMethodUtils.getTransaction(deposit.getTxHash().toHex());
                 CoinData depositCoinData = new CoinData();
                 depositCoinData.parse(depositTransaction.getCoinData(), 0);
                 CoinFrom from;

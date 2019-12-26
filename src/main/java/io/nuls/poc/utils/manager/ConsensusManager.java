@@ -188,7 +188,7 @@ public class ConsensusManager {
     public Block createBlock(Chain chain, BlockData blockData, byte[] packingAddress, String packingAddressString) {
         try {
             String password = chain.getConfig().getPassword();
-            CallMethodUtils.accountValid(chain.getConfig().getChainId(), packingAddressString, password);
+            CallMethodUtils.accountValid(packingAddressString, password);
         } catch (NulsException e) {
             chain.getLogger().error(e);
             return null;

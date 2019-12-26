@@ -120,7 +120,7 @@ public class ConsensusBootStrap {
             if (module.getName().equals(ModuleE.SC.abbr)) {
                 chainManager.registerContractTx();
                 for (Chain chain : chainManager.getChainMap().values()) {
-                    CallMethodUtils.sendState(chain, chain.isPacker());
+                    CallMethodUtils.sendState(chain.isPacker());
                 }
             }
             //协议注册

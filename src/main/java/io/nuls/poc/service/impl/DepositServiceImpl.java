@@ -86,7 +86,7 @@ public class DepositServiceImpl implements DepositService {
                 throw new NulsException(ConsensusErrorCode.ADDRESS_ERROR);
             }
             //账户验证
-            HashMap callResult = CallMethodUtils.accountValid(dto.getChainId(), dto.getAddress(), dto.getPassword());
+            HashMap callResult = CallMethodUtils.accountValid(dto.getAddress(), dto.getPassword());
             Transaction tx = new Transaction(TxType.DEPOSIT);
             Deposit deposit = TxUtil.createDeposit(dto);
             tx.setTxData(deposit.serialize());
@@ -95,13 +95,13 @@ public class DepositServiceImpl implements DepositService {
             tx.setCoinData(coinData.serialize());
             //交易签名
             String priKey = (String) callResult.get("priKey");
-            CallMethodUtils.transactionSignature(dto.getChainId(), dto.getAddress(), dto.getPassword(), priKey, tx);
+            CallMethodUtils.transactionSignature(dto.getAddress(), dto.getPassword(), priKey, tx);
             String txStr = RPCUtil.encode(tx.serialize());
             boolean validResult = validatorManager.validateTx(chain, tx);
             if (!validResult) {
                 return Result.getFailed(ConsensusErrorCode.TX_DATA_VALIDATION_ERROR);
             }
-            CallMethodUtils.sendTx(chain, txStr);
+            CallMethodUtils.sendTx(txStr);
             Map<String, Object> result = new HashMap<>(ConsensusConstant.INIT_CAPACITY);
             result.put("txHash", tx.getHash().toHex());
             return Result.getSuccess(ConsensusErrorCode.SUCCESS).setData(result);
@@ -174,9 +174,9 @@ public class DepositServiceImpl implements DepositService {
                 return Result.getFailed(ConsensusErrorCode.PARAM_ERROR);
             }
             //账户验证
-            HashMap callResult = CallMethodUtils.accountValid(dto.getChainId(), dto.getAddress(), dto.getPassword());
+            HashMap callResult = CallMethodUtils.accountValid(dto.getAddress(), dto.getPassword());
             NulsHash hash = NulsHash.fromHex(dto.getTxHash());
-            Transaction depositTransaction = CallMethodUtils.getTransaction(chain, dto.getTxHash());
+            Transaction depositTransaction = CallMethodUtils.getTransaction(dto.getTxHash());
             if (depositTransaction == null) {
                 return Result.getFailed(ConsensusErrorCode.TX_NOT_EXIST);
             }
@@ -206,13 +206,13 @@ public class DepositServiceImpl implements DepositService {
             cancelDepositTransaction.setTime(NulsDateUtils.getCurrentTimeSeconds());
             //交易签名
             String priKey = (String) callResult.get("priKey");
-            CallMethodUtils.transactionSignature(dto.getChainId(), dto.getAddress(), dto.getPassword(), priKey, cancelDepositTransaction);
+            CallMethodUtils.transactionSignature(dto.getAddress(), dto.getPassword(), priKey, cancelDepositTransaction);
             String txStr = RPCUtil.encode(cancelDepositTransaction.serialize());
             boolean validResult = validatorManager.validateTx(chain, cancelDepositTransaction);
             if (!validResult) {
                 return Result.getFailed(ConsensusErrorCode.TX_DATA_VALIDATION_ERROR);
             }
-            CallMethodUtils.sendTx(chain, txStr);
+            CallMethodUtils.sendTx(txStr);
             Map<String, Object> result = new HashMap<>(ConsensusConstant.INIT_CAPACITY);
             result.put("txHash", cancelDepositTransaction.getHash().toHex());
             return Result.getSuccess(ConsensusErrorCode.SUCCESS).setData(result);
